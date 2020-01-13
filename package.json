@@ -1,0 +1,28 @@
+{
+  "name": "smart-parking",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.7.2",
+    "material-ui-phone-number": "^2.2.5",
+    "next": "9.1.5",
+    "next-routes": "^1.4.2",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "react-stripe-elements": "^6.0.1",
+    "react-styled-flexboxgrid": "^3.1.0",
+    "redux": "^4.0.4",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^4.4.1"
+  },
+  "devDependencies": {
+    "@material-ui/icons": "^4.5.1",
+    "react-redux": "^7.1.3"
+  }
+}
