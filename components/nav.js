@@ -1,12 +1,13 @@
 import React from 'react';
 
 import {Box, Typography, Button} from '@material-ui/core';
+import {Row, Col} from "./layout"
 import {Router} from "../routes";
 import Theme from "../constants/theme";
 
 import styled from 'styled-components';
 
-const NavBar = styled.div`
+const NavBar = styled(Row)`
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -58,18 +59,17 @@ class Nav extends React.PureComponent{
     const {loggedIn} = this.props;
     return(
         <NavBar>
-          <Box flex={1}></Box>
-          <Box flex={1}><Typography variant="h4">Park Smart</Typography></Box>
+          <Col smOffset={4} sm={4}><Typography variant="h4">Suvidham</Typography></Col>
           {loggedIn ? (
-              <Box flex={1} justifyContent="flex-end">
+              <Col sm={4} justifyContent="flex-end">
                 <Button color="inherit" onClick={() => this.handleSettings()}>Settings</Button>
                 <Button color="inherit" onClick={() => this.handleLogout()}>Sign out</Button>
-              </Box>
+              </Col>
           ):(
-              <Box flex={1} justifyContent="flex-end">
+              <Col sm={4} justifyContent="flex-end">
                 <Button color="inherit" onClick={() => this.handleLogin()}>Login</Button>
                 <Button color="inherit" onClick={() => this.handleSignUp()}>Sign Up</Button>
-              </Box>
+              </Col>
           )}
           <style jsx>{`
           :global(body) {

@@ -38,7 +38,6 @@ class TextFieldInput extends React.PureComponent{
             autoFocus={autoFocus}
             required
             onChange={this.handleChange}
-            variant="outlined"
         />
     )
   }

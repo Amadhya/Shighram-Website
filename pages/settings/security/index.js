@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
+import Theme from "../../../constants/theme";
 import {Col, Row} from "../../../components/layout";
 import fetchPasswordChange, {getError, getStatus, getSuccess} from "../../../Container/change_password/saga";
 
@@ -68,6 +69,9 @@ class Security extends PureComponent{
 
     this.setState({
       isClicked: true,
+      current: '',
+      newPassword: '',
+      rePassword: '',
     })
   };
 
@@ -155,7 +159,12 @@ class Security extends PureComponent{
               </TypographySuccess>
             )}
             <br/>
-            <Button variant="contained" color="primary" onClick={() => this.handlePasswordSubmit()}>Save</Button>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              disabled={current==="" || newPassword==="" || rePassword===""}
+              onClick={() => this.handlePasswordSubmit()
+            }>Save</Button>
           </Col>
           <hr/>
         </div>

@@ -68,10 +68,13 @@ const ACTIONS = {
   export default function fetchOrederDetails(rfid) {
     return dispatch => {
       dispatch(orderPending());
-      return fetch(`http://127.0.0.1:8000/api/paymentOrder/${rfid}`, {
+      return fetch(`http://127.0.0.1:8000/api/verify_rfid`, {
         method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
         body: JSON.stringify({
-            'user_id': localStorage.getItem('user_id'),
+            'rfid': rfid,
         })
       })
           .then(res => res.json())
@@ -79,7 +82,7 @@ const ACTIONS = {
             if(res.status === 400)
               throw res.message;
   
-            dispatch(orderSuccess(res.order));
+            dispatch(orderSuccess(res));
           })
           .catch(error => {
             dispatch(orderFailure(error))

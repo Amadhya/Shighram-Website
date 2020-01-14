@@ -63,10 +63,9 @@ const ACTIONS = {
   
   //SAGA
   export default function fetchProfileEdit(form) {
-    console.log(form, '()()()()()()');
     return dispatch => {
       dispatch(editProfilePending());
-      return fetch(`http://127.0.0.1:8000/api/edit_profile/${localStorage.getItem('user_id')}`, {
+      return fetch(`http://127.0.0.1:8000/api/editProfile`, {
         method: 'PATCH',
         headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

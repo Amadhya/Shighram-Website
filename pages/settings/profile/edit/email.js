@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
+import Theme from "../../../../constants/theme";
 import {Col, Row} from "../../../../components/layout";
 import fetchProfileEdit, {getError, getStatus, getSuccess} from "../../../../Container/edit_profile/saga";
 
@@ -95,7 +96,7 @@ class Email extends PureComponent{
             <br/>
             {isClicked && typeof pending !== undefined && typeof success !== undefined && !pending && success && error === null && (
               <Fragment>
-                <TypographySuccess variant="caption">Name successfully chaned</TypographySuccess>
+                <TypographySuccess variant="caption">Email successfully chaned</TypographySuccess>
                 <br/>
               </Fragment>
             )}

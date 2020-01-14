@@ -18,6 +18,7 @@ export default class MyDocument extends Document{
               }        
             `}
             </style>
+            <link rel="shortcut icon" href="./images/logo.png"/>
           </Head>
           <body>
           <Main/>

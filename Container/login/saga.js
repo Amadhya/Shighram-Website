@@ -75,7 +75,6 @@ export default function fetchLoginDetails(form) {
             throw res.message;
 
           localStorage.setItem('token', res.token);
-          localStorage.setItem('user_id', res.user_id);
           dispatch(loginSuccess());
         })
         .catch(error => {

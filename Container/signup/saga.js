@@ -74,9 +74,7 @@ export default function fetchSignUpDetails(form) {
             throw res.message;
 
           localStorage.setItem('token', res.token);
-          localStorage.setItem('user_id', res.user_id);
           dispatch(signupSuccess());
-
         })
         .catch(error => {
           dispatch(signupFailure(error))

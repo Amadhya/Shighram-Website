@@ -44,7 +44,6 @@ class MyApp extends React.PureComponent{
   handleLogout = () => {
     if(typeof window !== 'undefined'){
       localStorage.removeItem('token');
-      localStorage.removeItem('user_id');
       this.setState({ loggedIn: false });
       Router.pushRoute('login');
     }

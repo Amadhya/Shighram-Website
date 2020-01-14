@@ -65,7 +65,7 @@ const ACTIONS = {
   export default function fetchPasswordChange(current, newPassword) {
     return dispatch => {
       dispatch(passwordChangePending());
-      return fetch(`http://127.0.0.1:8000/api/change_password/${localStorage.getItem('user_id')}`, {
+      return fetch(`http://127.0.0.1:8000/api/change_password`, {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

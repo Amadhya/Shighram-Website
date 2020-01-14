@@ -6,6 +6,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import Head from "next/dist/next-server/lib/head";
 
+import Theme from "../../constants/theme";
 import {FormWrapper} from "../../components/form";
 import {Router} from "../../routes";
 import {Card, Container} from "../../components/layout";

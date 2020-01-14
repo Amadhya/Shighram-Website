@@ -7,6 +7,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
 import {Router} from "../../routes";
+import Theme from "../../constants/theme"
 import {Card, Container} from "../../components/layout";
 import {FormWrapper} from "../../components/form";
 import TextFieldInput from "../../components/textfield";

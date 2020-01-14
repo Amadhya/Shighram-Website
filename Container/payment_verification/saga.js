@@ -64,7 +64,7 @@ const ACTIONS = {
   export default function fetchPaymentVerification(rfid, response) {
     return dispatch => {
       dispatch(paymentVerificationPending());
-      return fetch(`http://127.0.0.1:8000/api/paymentVerification/${rfid}`, {
+      return fetch(`http://127.0.0.1:8000/api/paymentVerification`, {
         method: 'PATCH',
         body: JSON.stringify({...response})
       })

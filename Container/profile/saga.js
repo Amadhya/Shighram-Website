@@ -68,7 +68,7 @@ const ACTIONS = {
   export default function fetchUserDetails() {
     return dispatch => {
       dispatch(userPending());
-      return fetch(`http://127.0.0.1:8000/api/profile/${localStorage.getItem('user_id')}`, {
+      return fetch(`http://127.0.0.1:8000/api/profile`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
@@ -78,7 +78,7 @@ const ACTIONS = {
           if(res.status === 400)
             throw res.message;
   
-          dispatch(userSuccess(res.user));
+          dispatch(userSuccess(res));
         })
         .catch(error => {
           dispatch(userFailure(error))

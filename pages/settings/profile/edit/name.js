@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
+import Theme from "../../../../constants/theme";
 import TextFieldInput from ".../../../components/textfield";
 import {Col, Row} from "../../../../components/layout";
 import fetchProfileEdit, {getError, getStatus, getSuccess} from "../../../../Container/edit_profile/saga";
