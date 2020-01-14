@@ -55,11 +55,15 @@ class Nav extends React.PureComponent{
     Router.pushRoute('settings');
   };
 
+  handleHome = () => {
+    Router.pushRoute('slots_view');
+  }
+
   render() {
     const {loggedIn} = this.props;
     return(
         <NavBar>
-          <Col smOffset={4} sm={4}><Typography variant="h4">Suvidham</Typography></Col>
+          <Col smOffset={4} sm={4}><TypographyWrapper onClick={() => this.handleHome()} variant="h4">Suvidham</TypographyWrapper></Col>
           {loggedIn ? (
               <Col sm={4} justifyContent="flex-end">
                 <Button color="inherit" onClick={() => this.handleSettings()}>Settings</Button>

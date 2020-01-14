@@ -81,6 +81,9 @@ const ACTIONS = {
           .then(res => {
             if(res.status === 400)
               throw res.message;
+
+            if(res.amount==="0")
+              throw res.message
   
             dispatch(orderSuccess(res));
           })
