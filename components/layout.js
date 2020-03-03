@@ -57,3 +57,7 @@ export const Container = styled(FlexView)`
         padding-top: 120px;
     }
 `;
+
+export const Separator = styled.div`
+    padding-bottom: ${({height})=> height*8}px;
+`;

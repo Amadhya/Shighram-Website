@@ -63,7 +63,7 @@ class Checkout extends Component {
         //   method: 'PATCH',
         //   body: JSON.stringify({...response})
         // })
-        Router.pushRoute('slots_view');
+        Router.pushRoute('payment_success');
       },
       "prefill": {
           "name": order.first_name+' '+order.last_name,

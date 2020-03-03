@@ -8,6 +8,7 @@ const allRoutes=[
   ['profile', '/profile/:id', '/profile'],
   ['settings', '/settings', '/settings'],
   ['payment', '/payment', '/payment'],
+  ['payment_success','/payment_success','/payment_success']
 ];
 
 for (let i = 0; i < allRoutes.length; i += 1) {

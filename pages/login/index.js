@@ -15,7 +15,7 @@ import fetchLoginDetails, {getError, getStatus, getSucces} from "../../Container
 
 const AvatarWrapper = styled(Avatar)`
   margin: 5px;
-  background-color: #f50057 !important;
+  background-color: ${Theme.iconBg} !important;
 `;
 
 const Form = [
