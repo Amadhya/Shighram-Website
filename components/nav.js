@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Box, Typography, Button} from '@material-ui/core';
+import {Typography, Button} from '@material-ui/core';
 import {Row, Col} from "./layout"
 import {Router} from "../routes";
 import Theme from "../constants/theme";
@@ -43,14 +43,6 @@ class Nav extends React.PureComponent{
     this.props.handleLogout()
   };
 
-  handleLogin = () => {
-    Router.pushRoute('login');
-  };
-
-  handleSignUp = () => {
-    Router.pushRoute('signup');
-  };
-
   handleSettings = () => {
     Router.pushRoute('settings');
   };
@@ -64,17 +56,10 @@ class Nav extends React.PureComponent{
     return(
         <NavBar>
           <Col smOffset={4} sm={4}><TypographyWrapper onClick={() => this.handleHome()} variant="h4">Suvidham</TypographyWrapper></Col>
-          {loggedIn ? (
-              <Col sm={4} justifyContent="flex-end">
-                <Button color="inherit" onClick={() => this.handleSettings()}>Settings</Button>
-                <Button color="inherit" onClick={() => this.handleLogout()}>Sign out</Button>
-              </Col>
-          ):(
-              <Col sm={4} justifyContent="flex-end">
-                <Button color="inherit" onClick={() => this.handleLogin()}>Login</Button>
-                <Button color="inherit" onClick={() => this.handleSignUp()}>Sign Up</Button>
-              </Col>
-          )}
+          <Col sm={4} justifyContent="flex-end">
+            <Button color="inherit" onClick={() => this.handleSettings()}>Settings</Button>
+            <Button color="inherit" onClick={() => this.handleLogout()}>Sign out</Button>
+          </Col>
           <style jsx>{`
           :global(body) {
             margin: 0;

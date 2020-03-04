@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import {applyMiddleware, createStore} from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+import { AnimatePresence } from 'framer-motion';
 
 import {Router} from "../routes";
 import rootReducer from "../reducers";
@@ -50,14 +51,16 @@ class MyApp extends React.PureComponent{
   };
 
   render(){
-    const {Component, pageProps} = this.props;
+    const {Component, pageProps, router} = this.props;
     const {loggedIn} = this.state;
 
     return(
         <Provider store={store}>
-          <Nav handleLogout={() => this.handleLogout()} loggedIn={loggedIn}/>
+          {loggedIn && <Nav handleLogout={() => this.handleLogout()} loggedIn={loggedIn}/>}
           <main>
-            <Component loggedIn={loggedIn} {...pageProps} />
+            <AnimatePresence exitBeforeEnter>
+              <Component loggedIn={loggedIn} key={router.route} {...pageProps} />
+            </AnimatePresence>
           </main>
         </Provider>
     )

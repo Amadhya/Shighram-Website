@@ -11,7 +11,7 @@ const onBackToHome = () => {
 
 const PaymentSuccess = () => {
     return (
-        <Container justify="center">
+        <Container justify="center" initial="exit" animate="enter" exit="exit">
             <Head>
                 <title>Payment</title>
             </Head>

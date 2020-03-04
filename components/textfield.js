@@ -2,10 +2,6 @@ import React from "react";
 import {TextField} from '@material-ui/core';
 import styled from "styled-components";
 
-const InputWrapper = styled(TextField)`
-  min-width: 100% !important;
-`;
-
 class TextFieldInput extends React.PureComponent{
 
   handleChange = (e) => {
@@ -27,7 +23,7 @@ class TextFieldInput extends React.PureComponent{
     const {id, label, type, name, autoComplete, value, autoFocus} = this.props;
 
     return(
-        <InputWrapper
+        <TextField
             id={id}
             label={label}
             type={type}

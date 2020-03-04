@@ -40,7 +40,7 @@ const slots = [
 ];
 
 const SlotView = () => (
-    <Container justify="center">
+    <Container justify="center" initial="exit" animate="enter" exit="exit">
         <SlotWrapper wrap="true" justify="center">
             {slots.map(obj => (
                 <ColWrapper sm={4} key={obj.number}>

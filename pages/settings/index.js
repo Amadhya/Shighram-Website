@@ -72,7 +72,7 @@ class Settings extends PureComponent{
   render() {
     const {general, history, security} = this.state;
     return(
-      <ContainerWrapper>
+      <ContainerWrapper initial="exit" animate="enter" exit="exit">
         <Row>
           <OptionsWrapper xs={12} sm={2} smOffset={2}>
             <TypographyWrapper highlight={general.toString()} gutterBottom align="center" variant="body1" onClick={() => this.onGeneralClick()}>General</TypographyWrapper>

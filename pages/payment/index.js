@@ -130,7 +130,7 @@ class Checkout extends Component {
     const {success, pending} = this.props;
 
     return (
-      <Container justify="center">
+      <Container justify="center" initial="exit" animate="enter" exit="exit">
         <Head>
           <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
           <title>Payment</title>

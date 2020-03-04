@@ -1,6 +1,5 @@
 import React, {Fragment, PureComponent} from "react";
-import { Button, Typography, Avatar } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { Button, Typography, IconButton } from '@material-ui/core';
 import styled from 'styled-components';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -8,14 +7,27 @@ import Head from "next/dist/next-server/lib/head";
 
 import Theme from "../../constants/theme";
 import {FormWrapper} from "../../components/form";
+import {ButtonLayout} from "../../components/button";
 import {Router} from "../../routes";
-import {Card, Container} from "../../components/layout";
+import {Row, Col, Separator, MotionCol, MotionRow} from "../../components/layout";
 import TextFieldInput from "../../components/textfield";
 import fetchSignUpDetails, {getSuccess, getError, getStatus} from "../../Container/signup/saga";
 
-const AvatarWrapper = styled(Avatar)`
-  margin: 5px;
-  background-color: ${Theme.iconBg} !important;
+
+const LoginCol = styled(Col)`
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+`;
+const TextWrapper = styled(Typography)`
+  color: white;
+`;
+const ButtonWrapper = styled(Button)`
+  width: 30%;
+`;
+const TitleWrapper = styled(Typography)`
+  color: ${Theme.primaryColor} !important;
 `;
 
 const Form = [
@@ -61,6 +73,27 @@ const Form = [
   },
 ];
 
+const easing = [0.35, 0.40, 0.45, 0.50];
+
+const backVariants = {
+  exit: {
+    x: '100%',
+    opacity: 0,
+    transition: {
+      duration: 0.85,
+      ease: easing
+    }
+  },
+  enter: {
+    x: '0%',
+    opacity: 1,
+    transition: {
+      duration: 0.85,
+      ease: easing
+    }
+  }
+};
+
 
 class SignUp extends PureComponent{
   constructor(props){
@@ -81,6 +114,10 @@ class SignUp extends PureComponent{
         Router.pushRoute('feed');
       }
     }
+  }
+
+  handleSignIn = () => {
+    Router.pushRoute('login');
   }
 
   handleChange = (id,val) => {
@@ -114,46 +151,75 @@ class SignUp extends PureComponent{
     const {error} = this.props;
 
     return (
-        <Container justify="center">
-          <Head>
-            <title>Sign Up</title>
-          </Head>
-          <Card reverse={true} alignItems="center">
-            <AvatarWrapper>
-              <LockOutlinedIcon/>
-            </AvatarWrapper>
-            <Typography component="h1" variant="h5">
-              Sign Up
-            </Typography>
-            <FormWrapper noValidate autoComplete="off">
-              {Form.map(obj => (
-                  <TextFieldInput
-                      id={obj.id}
-                      label={obj.label}
-                      type={obj.type}
-                      name={obj.name}
-                      value={form[obj.id]}
-                      autoComplete={obj.autoComplete}
-                      autoFocus={obj.autoFocus}
-                      onChange={(id,v) => this.handleChange(id,v)}
-                      key={obj.id}
-                  />
-              ))}
-              <br />
-              {isClicked && error !== null && (
-                  <Fragment>
-                    <Typography variant="caption" color="error">
-                      {error}
-                    </Typography>
-                    <br/>
-                  </Fragment>
-              )}
-              <Button variant="contained" color="primary" onClick={() => this.onSubmit()}>
-                Sign Up
-              </Button>
-            </FormWrapper>
-          </Card>
-        </Container>
+      <MotionRow initial="exit" animate="enter" exit="exit">
+        <Head>
+          <title>Sign Up</title>
+        </Head>
+        <MotionCol variants={backVariants} reverse>
+          <TextWrapper component="h1" variant="h3">
+            Welcome Back!
+          </TextWrapper>
+          <Separator height={4}/>
+          <TextWrapper variant="body1">
+            To keep connected with us please login with your personal information.
+          </TextWrapper>
+          <Separator height={8}/>
+          <TextWrapper variant="body1">
+            Already have an account?
+          </TextWrapper>
+          <Separator height={2}/>
+          <ButtonWrapper variant="outlined" color="inherit" onClick={() => this.handleSignIn()}>
+            Sign in
+          </ButtonWrapper>
+        </MotionCol>
+        <LoginCol sm={8} xs={12} align="center">
+          <TitleWrapper component="h1" variant="h2">
+            Create Account
+          </TitleWrapper>
+          <Separator height={4}/>
+          <FormWrapper noValidate autoComplete="off">
+            {Form.map(obj => (
+                <TextFieldInput
+                    id={obj.id}
+                    label={obj.label}
+                    type={obj.type}
+                    name={obj.name}
+                    value={form[obj.id]}
+                    autoComplete={obj.autoComplete}
+                    autoFocus={obj.autoFocus}
+                    onChange={(id,v) => this.handleChange(id,v)}
+                    key={obj.id}
+                />
+            ))}
+            <br />
+            {isClicked && error !== null && (
+                <Fragment>
+                  <Typography variant="caption" color="error">
+                    {error}
+                  </Typography>
+                  <br/>
+                </Fragment>
+            )}
+            <Row alignItems="center">
+              <Col sm={4} xs={4}>
+                <ButtonLayout fullWidth variant="contained" color="primary" onClick={() => this.onSubmit()}>
+                  Sign Up
+                </ButtonLayout>
+              </Col>
+              <Col sm={7} xs={7}>
+                <Typography variant="body2" align="right" color="textSecondary">
+                  Or sign in with
+                </Typography>
+              </Col>
+              <Col sm={1} xs={1}>
+                <IconButton>
+                  <img src="/static/images/google_plus_icon.png"/>
+                </IconButton>
+              </Col>
+            </Row>
+          </FormWrapper>
+        </LoginCol>
+      </MotionRow>
     );
   }
 }
