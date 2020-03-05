@@ -221,7 +221,7 @@ class Checkout extends Component {
             <Typography variant="body1" gutterBottom color="textSecondary">Location:&nbsp;{order.location}</Typography>
             <Typography variant="body1" gutterBottom color="textSecondary">RFID&nbsp;Number:&nbsp;{order.rfid}</Typography>
             <Separator height={2}/>
-            <ButtonLayout variant="contained" color="primary" id="rzp-button1" onClick={() => this.onPay()}>Pay</ButtonLayout>
+            <ButtonLayout variant="contained" color="primary" id="rzp-button1" onClick={() => this.onPay()}>Pay Now</ButtonLayout>
           </DetailsWrapper>
         </RowWrapper>
       </FlexView>
