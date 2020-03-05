@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import styled from 'styled-components';
 import {Typography} from "@material-ui/core";
 
-import {Container, Col, Row} from "../../components/layout";
+import {Container, Col, FlexView, Separator} from "../../components/layout";
 import General from "./profile";
 import History from "./history";
 import Security from "./security";
@@ -13,25 +13,29 @@ const OptionsWrapper = styled(Col)`
   padding-left: 24px;
   @media(min-width: 767px){
     border-right: 1px solid ${Theme.grey};
-    padding: 10px;
+    padding: 90px 10px 0px 0px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
   }
 `;
+const DetailWrapper = styled(Col)`
+  background: #e0e0e059;
+  padding-top: 90px;
+`;
 const ContainerWrapper = styled(Container)`
-  min-height: 80vh;
+  min-height: 100vh;
+  padding: 0px;
 `;
 
 const TypographyWrapper = styled(Typography)`
-  background: ${(props) => props.highlight==="true" && Theme.bgColor};
+  background: ${(props) => props.highlight==="true" && Theme.lightGrey};
   color: ${(props) => props.highlight==="true" && 'white'};
-  border-radius: 4px;
+  border-left: ${(props) => props.highlight==="true" && "5px solid #1488CC"};
+  border-bottom: 1px solid ${Theme.lightGrey};
+  padding: 4px 0px;
+  color: ${(props) => props.highlight==="true" && "rgba(0, 0, 0, 0.54)"};
+  font-weight: ${(props) => props.highlight==="true" && "600 !important"};
   &: hover{
     cursor: pointer;
-    border: 1px solid inherit;
-    border-radius: 4px;
-    @media(min-width: 767px){
-      color: black;
-      background: ${Theme.lightGrey};
-    }
   }
 `;
 
@@ -73,18 +77,20 @@ class Settings extends PureComponent{
     const {general, history, security} = this.state;
     return(
       <ContainerWrapper initial="exit" animate="enter" exit="exit">
-        <Row>
-          <OptionsWrapper xs={12} sm={2} smOffset={2}>
-            <TypographyWrapper highlight={general.toString()} gutterBottom align="center" variant="body1" onClick={() => this.onGeneralClick()}>General</TypographyWrapper>
-            <TypographyWrapper highlight={security.toString()} gutterBottom align="center" variant="body1" onClick={() => this.onSecurityClick()}>Security</TypographyWrapper>
-            <TypographyWrapper highlight={history.toString()} gutterBottom align="center" variant="body1" onClick={() => this.onHistoryClick()}>History</TypographyWrapper>
-          </OptionsWrapper>
-          <OptionsWrapper xs={12} sm={6}>
-            {general && <General/>}
-            {history && <History/>}
-            {security && <Security/>}
-          </OptionsWrapper>
-        </Row>
+        <OptionsWrapper xs={12} sm={2}>
+          <FlexView justify="center">
+            <img src="/static/images/icon_user.png"/>
+          </FlexView>
+          <Separator height={4}/>
+          <TypographyWrapper highlight={general.toString()} align="center" variant="body1" onClick={() => this.onGeneralClick()}>Profile</TypographyWrapper>
+          <TypographyWrapper highlight={security.toString()} align="center" variant="body1" onClick={() => this.onSecurityClick()}>Security</TypographyWrapper>
+          <TypographyWrapper highlight={history.toString()} align="center" variant="body1" onClick={() => this.onHistoryClick()}>History</TypographyWrapper>
+        </OptionsWrapper>
+        <DetailWrapper xs={12} sm={10}>
+          {general && <General/>}
+          {history && <History/>}
+          {security && <Security/>}
+        </DetailWrapper>
       </ContainerWrapper>
     )
   }

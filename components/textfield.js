@@ -20,7 +20,7 @@ class TextFieldInput extends React.PureComponent{
   };
 
   render() {
-    const {id, label, type, name, autoComplete, value, autoFocus} = this.props;
+    const {id, label, type, name, autoComplete, value, autoFocus, variant="outlined", fullWidth=false} = this.props;
 
     return(
         <TextField
@@ -34,6 +34,8 @@ class TextFieldInput extends React.PureComponent{
             autoFocus={autoFocus}
             required
             onChange={this.handleChange}
+            variant={variant}
+            fullWidth={fullWidth}
         />
     )
   }

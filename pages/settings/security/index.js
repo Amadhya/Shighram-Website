@@ -4,20 +4,19 @@ import styled from "styled-components";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
-import Theme from "../../../constants/theme";
-import {Col, Row} from "../../../components/layout";
+import {ButtonLayout} from ".../../../components/button";
+import TextFieldInput from ".../../../components/textfield";
+import {Col, Separator, Row} from "../../../components/layout";
 import fetchPasswordChange, {getError, getStatus, getSuccess} from "../../../Container/change_password/saga";
 
-const RowWrapper = styled(Row) `
-  padding: 10px 20px;
+const TitleWrapper = styled(Typography)`
+  font-weight: 600 !important;
+`;
+const SubTitleWrapper = styled(Typography)`
+  color: #1488CC !important;
 `;
 const TypographySuccess = styled(Typography)`
   color: #19ce19;
-`;
-const MobileWrapper = styled(Col)`
-  @media(max-width: 767px){
-    display: none;
-  }
 `;
 
 class Security extends PureComponent{
@@ -29,6 +28,7 @@ class Security extends PureComponent{
       rePassword: '',
       errorMatch: false,
       isClicked: false,
+      emptyField: false,
     }
   }
 
@@ -63,111 +63,98 @@ class Security extends PureComponent{
   handlePasswordSubmit = () => {
     //API call to be made
     const {actions} = this.props;
-    const {current, newPassword} = this.state;
+    const {current, newPassword, rePassword} = this.state;
 
-    actions.fetchPasswordChange(current, newPassword);
+    if(current==='' || newPassword==='' || rePassword===''){
+      this.setState({
+        emptyField: true,
+      });
+    }else{
+      actions.fetchPasswordChange(current, newPassword);
 
-    this.setState({
-      isClicked: true,
-      current: '',
-      newPassword: '',
-      rePassword: '',
-    })
+      this.setState({
+        isClicked: true,
+        current: '',
+        newPassword: '',
+        rePassword: '',
+        emptyField: false,
+      });
+    }
   };
 
   render() {
     const {success, pending, error} = this.props;
-    const {current, newPassword, rePassword, errorMatch, isClicked} = this.state;
+    const {current, newPassword, rePassword, errorMatch, isClicked, emptyField} = this.state;
 
     return(
-        <div>
-          <Box fontSize={20} mb={1} ml={0.5}>Change Password</Box>
-          <hr/>
-          <RowWrapper>
-            <MobileWrapper sm={4} margin={true}>
-              <Typography variant="body1">Current Password</Typography>
-            </MobileWrapper>
-            <Col sm={8}>
-              <TextField
-                  id="current-password"
-                  label="Current Password"
-                  type="password"
-                  value={current}
-                  margin="normal"
-                  autoFocus={true}
-                  required
-                  onChange={(e) => this.handlePasswordChange(e)}
-                  variant="outlined"
-              />
-              <br/>
-              <Typography variant="caption" color="textSecondary" gutterBottom={true}>Please enter your current password</Typography>
-              <br/>
-            </Col>
-          </RowWrapper>
-          <RowWrapper>
-            <MobileWrapper sm={4} margin={true}>
-              <Typography variant="body1">New Password</Typography>
-            </MobileWrapper>
-            <Col sm={8}>
-              <TextField
-                  id="new-password"
-                  label="New Password"
-                  type="password"
-                  value={newPassword}
-                  margin="normal"
-                  autoFocus={false}
-                  required
-                  onChange={(e) => this.handleNewPasswordChange(e)}
-                  variant="outlined"
-              />
-            </Col>
-          </RowWrapper>
-          <RowWrapper>
-            <MobileWrapper sm={4} margin={true}>
-              <Typography variant="body1">Re-type Password</Typography>
-            </MobileWrapper>
-            <Col sm={8}>
-              <TextField
-                  id="re-type-password"
-                  label="Re-type Password"
-                  type="password"
-                  value={rePassword}
-                  margin="normal"
-                  required
-                  error={errorMatch}
-                  onChange={(e) => this.handleRePasswordChange(e)}
-                  variant="outlined"
-              />
-            </Col>
-          </RowWrapper>
-          <Col smOffset={4}>
-            {errorMatch && (
-                <Fragment>
-                  <Typography variant="caption" color="error" gutterBottom={true}>Password does not match</Typography>
-                  <br/>
-                </Fragment>
-            )}
-            {isClicked && error !== null && (
-                <Fragment>
-                  <Typography variant="caption" color="error" gutterBottom={true}>{error}</Typography>
-                  <br/>
-                </Fragment>
-            )}
-            {isClicked && typeof pending !== undefined && typeof success !== undefined && !pending && success && error === null && (
-              <TypographySuccess variant="caption">
-                Password changed successfully
-              </TypographySuccess>
-            )}
-            <br/>
-            <Button 
-              variant="contained" 
-              color="primary" 
-              disabled={current==="" || newPassword==="" || rePassword===""}
-              onClick={() => this.handlePasswordSubmit()
-            }>Save</Button>
-          </Col>
-          <hr/>
-        </div>
+      <Col smOffset={2} sm={6}>
+        <TitleWrapper variant="h4" color="textSecondary">Security</TitleWrapper>
+        <Separator height={4}/>
+        <SubTitleWrapper variant="body1">Current Password</SubTitleWrapper>
+        <TextFieldInput
+            id="current-password"
+            label="Current Password"
+            type="password"
+            value={current}
+            autoFocus={true}
+            onChange={(e) => this.handlePasswordChange(e)}
+            fullWidth={true}
+        />
+        <Separator height={2}/>
+        <SubTitleWrapper variant="body1">New Password</SubTitleWrapper>
+        <TextFieldInput
+            id="new-password"
+            label="New Password"
+            type="password"
+            value={newPassword}
+            autoFocus={false}
+            onChange={(e) => this.handleNewPasswordChange(e)}
+            variant="outlined"
+            fullWidth={true}
+        />
+        <Separator height={2}/>
+        <SubTitleWrapper variant="body1">Re-type Password</SubTitleWrapper>
+        <TextFieldInput
+            id="re-type-password"
+            label="Re-type Password"
+            type="password"
+            value={rePassword}
+            error={errorMatch}
+            onChange={(e) => this.handleRePasswordChange(e)}
+            variant="outlined"
+            fullWidth={true}
+        />
+        <Separator height={2}/>
+        {emptyField && (
+          <Fragment>
+            <Typography variant="caption" color="error" gutterBottom={true}>Please fill all the fields*</Typography>
+            <Separator height={2}/>
+          </Fragment>
+        )}
+        {errorMatch && (
+            <Fragment>
+              <Typography variant="caption" color="error" gutterBottom={true}>Password does not match.</Typography>
+              <Separator height={2}/>
+            </Fragment>
+        )}
+        {isClicked && typeof pending !== undefined && typeof success !== undefined && !pending && success && error === null && (
+          <Fragment>
+            <TypographySuccess variant="caption">Successfully updated!</TypographySuccess>
+            <Separator height={2}/>
+          </Fragment>
+        )}
+        {isClicked && error !== null && (
+          <Fragment>
+            <Typography color="error" variant="caption">{error}</Typography>
+            <Separator height={2}/>
+          </Fragment>
+        )}
+        <ButtonLayout variant="contained" color="primary"
+         onClick={() => this.handlePasswordSubmit()}>
+           Update Password
+        </ButtonLayout>
+        <Separator height={2}/>
+      </Col>
     )
   }
 }

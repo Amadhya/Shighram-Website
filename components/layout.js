@@ -15,6 +15,7 @@ export const Col=styled(FlexCol)`
     ${({flex})=> flex && css `
         display: flex !important;
     `};
+    flex-direction: ${({reverse})=> (reverse ? 'column' : 'row')};
     ${({alignItems})=> alignItems && css `
         align-items: ${alignItems};
     `};

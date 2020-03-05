@@ -1,22 +1,63 @@
-import React, {PureComponent} from "react";
-import {Box, Typography} from "@material-ui/core";
+import React, {PureComponent, Fragment} from "react";
+import {Typography} from "@material-ui/core";
 import styled from "styled-components";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
-import Name from "./edit/name";
-import Phone from "./edit/phone";
-import Email from "./edit/email";
-import {FlexView} from "../../../components/layout";
+import {FlexView, Separator, Col} from "../../../components/layout";
+import TextFieldInput from ".../../../components/textfield";
+import {ButtonLayout} from ".../../../components/button";
 import fetchUserDetails, {getError, getStatus, getSuccess, getUserDetails} from "../../../Container/profile/saga";
+import fetchProfileEdit, {getError as getEditError, getStatus as getEditStatus, getSuccess as getEditSuccess} from "../../../Container/edit_profile/saga";
 
-const Wrapper = styled.div`
-  padding: 10px 20px;
+const TitleWrapper = styled(Typography)`
+  font-weight: 600 !important;
 `;
+const SubTitleWrapper = styled(Typography)`
+  color: #1488CC !important;
+`;
+const TypographySuccess = styled(Typography)`
+  color: #19ce19;
+`;
+
+const Form = [
+  {
+    id: 'firstName',
+    label: 'First Name',
+    type: 'text',
+    name: 'first name',
+    autoFocus: false,
+  },
+  {
+    id: 'lastName',
+    label: 'Last Name',
+    type: 'text',
+    name: 'last name',
+    autoFocus: false,
+  },
+  {
+    id: 'phone',
+    label: 'Phone',
+    type: 'tele',
+    name: 'phone',
+    autoFocus: false,
+  },
+  {
+    id: 'email',
+    label: 'Email',
+    type: 'email',
+    name: 'email',
+    autoFocus: false,
+  },
+];
 
 class General extends PureComponent{
   constructor(props){
     super(props);
+    this.state={
+      form: {},
+      isClicked: false,
+    };
   }
 
   componentDidMount(){
@@ -24,22 +65,86 @@ class General extends PureComponent{
     actions.fetchUserDetails();
   }
 
+  static getDerivedStateFromProps(props, state){
+    const {userDetails} = props;
+    const {form} = state;
+    
+    if(typeof userDetails!=="undefined" && Object.entries(form).length === 0 && form.constructor === Object){
+      return {
+        form: {
+          ...userDetails,
+        }
+      }
+    }
+
+    return {...state}
+  }
+
+  handleChange = (id,val) => {
+    const {form} = this.state;
+    
+    let temp = {};
+
+    temp[id]=val;
+    this.setState({
+      form: {
+        ...form,
+        ...temp,
+      }
+    });
+  };
+
+  onUpdate = () => {
+    const {form} = this.state;
+    const {actions} = this.props;
+
+    actions.fetchProfileEdit(form);
+
+    this.setState({
+      isClicked: true,
+    });
+  };
+
   renderDetails = () => {
-    const {userDetails} = this.props;
+    const {editError, editPending, editSuccess} = this.props;
+    const {form, isClicked} = this.state;
 
     return (
-      <div>
-        <Box fontSize={20} mb={1} ml={0.5}>General Account Settings</Box>
-        <hr/>
-        <Wrapper>
-          <Name firstName={userDetails.firstName} lastName={userDetails.lastName}/>
-          <hr/>
-          <Phone phone={userDetails.phone}/>
-          <hr/>
-          <Email email={userDetails.email}/>
-        </Wrapper>
-        <hr/>
-      </div>
+      <Col smOffset={2} sm={6}>
+        <TitleWrapper variant="h4" color="textSecondary">Profile</TitleWrapper>
+        <Separator height={4}/>
+        {Form.map(obj => (
+          <div key={obj.label}>
+            <SubTitleWrapper variant="body1">{obj.label}</SubTitleWrapper>
+            <TextFieldInput
+                id={obj.id}
+                label={obj.label}
+                type={obj.type}
+                name={obj.name}
+                value={form[obj.id]}
+                autoComplete={obj.autoComplete}
+                autoFocus={obj.autoFocus}
+                fullWidth={true}
+                onChange={(id,e) => this.handleChange(id,e)}
+            />
+            <Separator height={2}/>
+          </div>
+        ))}
+        {isClicked && typeof editPending !== undefined && typeof editSuccess !== undefined && !editPending && editSuccess && editError === null && (
+          <Fragment>
+            <TypographySuccess variant="caption">Successfully updated!</TypographySuccess>
+            <Separator height={2}/>
+          </Fragment>
+        )}
+        {isClicked && editError !== null && (
+          <Fragment>
+            <Typography color="error" variant="caption">{editError}</Typography>
+            <Separator height={2}/>
+          </Fragment>
+        )}
+        <ButtonLayout variant="contained" color="primary" onClick={() => this.onUpdate()}>Update Profile</ButtonLayout>
+        <Separator height={2}/>
+      </Col>
     )
   }
 
@@ -65,11 +170,14 @@ const mapStateToProps = (state) => ({
   pending: getStatus(state),
   success: getSuccess(state),
   userDetails: getUserDetails(state),
+  editError: getEditError(state),
+  editSuccess: getEditSuccess(state),
+  editPending: getEditStatus(state),
 });
 
 export default connect(
     mapStateToProps,
     dispatch => ({
-      actions: bindActionCreators({fetchUserDetails}, dispatch)
+      actions: bindActionCreators({fetchUserDetails, fetchProfileEdit}, dispatch)
     })
 )(General);
