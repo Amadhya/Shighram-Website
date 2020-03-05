@@ -4,7 +4,6 @@ import { Button, Typography, IconButton } from '@material-ui/core';
 import styled from 'styled-components';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import { motion } from 'framer-motion';
 
 import {Router} from "../../routes";
 import Theme from "../../constants/theme"
@@ -49,14 +48,14 @@ const Form = [
   },
 ];
 
-const easing = [0.175, 0.85, 0.42, 0.96];
+const easing = [0.35, 0.40, 0.45, 0.50];
 
 const backVariants = {
   exit: {
     x: '-100%',
     opacity: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.7,
       ease: easing
     }
   },
@@ -64,7 +63,7 @@ const backVariants = {
     x: 0,
     opacity: 1,
     transition: {
-      duration: 0.5,
+      duration: 0.7,
       ease: easing
     }
   }

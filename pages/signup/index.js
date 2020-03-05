@@ -80,7 +80,7 @@ const backVariants = {
     x: '100%',
     opacity: 0,
     transition: {
-      duration: 0.85,
+      duration: 0.7,
       ease: easing
     }
   },
@@ -88,7 +88,7 @@ const backVariants = {
     x: '0%',
     opacity: 1,
     transition: {
-      duration: 0.85,
+      duration: 0.7,
       ease: easing
     }
   }

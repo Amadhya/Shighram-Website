@@ -1,24 +1,80 @@
 import React, { Component, Fragment } from "react";
 import Head from "next/dist/next-server/lib/head";
-import { Button,  TextField, Typography } from '@material-ui/core';
+import { TextField, Typography } from '@material-ui/core';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import styled from "styled-components";
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import StarIcon from '@material-ui/icons/Star';
 
 
 import {Router} from "../../routes";
 import Theme from "../../constants/theme";
-import {Container, Card} from "../../components/layout";
+import {Container, Card, Row, Col, Separator, FlexView} from "../../components/layout";
 import {FormWrapper} from "../../components/form";
+import {ButtonLayout} from "../../components/button";
 import fetchOrederDetails, {getError, getStatus, getSucces, getOrder} from "../../Container/order/saga";
 import fetchPaymentVerification, {getError as VerificationError, getStatus as VerificationStatus, getSucces as VerificationSuccess} from "../../Container/login/saga";
 
 
-const DetailWrapper = styled.div`
-  background-color: ${Theme.lightGrey};
-  border-radius: 8px;
-  padding: 12px 15px;
+const ColWrapper = styled(Col)`
+  background: ${Theme.bgColor} !important;
+  padding: 20px 25px;
+  border-radius: 10px 0px 0px 10px;
+  @media(max-width: 767px){
+    border-radius: 10px 10px 0px 0px;
+  }
 `;
+const DetailsWrapper = styled(Col)`
+  padding: 20px 25px;
+`;
+const RowWrapper = styled(Row)`
+  background: white;
+  border-radius: 10px;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+  overflow: unset;
+  margin: 0px 25px;
+  @media(max-width: 767px){
+    min-width: 75%;
+    margin: 0px 25px 25px 25px;
+  }
+`;
+const TextWrapper = styled(Typography)`
+  color: white;
+`;
+const TitleWrapper = styled(Typography)`
+  color: ${Theme.primaryColor} !important;
+`;
+const IconWrapper = styled(Col)`
+  color: white;
+  padding: 0px;
+`;
+const HrWrapper = styled.hr`
+  background: white;
+  opacity: 0.4;
+  margin: 10px 0px;
+`;
+const GreetingWrapper = styled(Typography)`
+  font-weight: 600 !important;
+`;
+
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+function dateTime (t){
+  let newDate=new Date(t);
+
+  let date = newDate.getDate();
+  let month = newDate.getMonth();
+  let year = newDate.getFullYear();
+  let hour = newDate.getHours();
+  let min = newDate.getMinutes();
+  let sec = newDate.getSeconds(); 
+
+  return `${monthNames[month]} ${date}, ${year} ${hour}:${min}:${sec}`
+}
 
 class Checkout extends Component {
   constructor(props) {
@@ -82,47 +138,93 @@ class Checkout extends Component {
     const {error} = this.props;
 
     return (
-      <FormWrapper>
-        <TextField
-          id="rfid"
-          label="RFID Number"
-          type="text"
-          name="RFID Number"
-          value={rfid}
-          autoFocus={true}
-          onChange={(e) => this.handleRfidChange(e)}
-        />
-        <br/>
-        {isClicked && error !== null && (
-            <Fragment>
-              <Typography variant="caption" color="error">
-                {error}
-              </Typography>
-              <br/>
-            </Fragment>
-        )}
-        <Typography variant="caption" color="textSecondary" gutterBottom={true}>Enter the first 10 digits of rfid card number</Typography>
-        <Button variant="contained" color="primary" onClick={() => this.onSubmit()}>
-          Calculate Charge
-        </Button>
-      </FormWrapper>
+      <Card reverse>
+        <FormWrapper>
+          <TextField
+            id="rfid"
+            label="RFID Number"
+            type="text"
+            name="RFID Number"
+            value={rfid}
+            autoFocus={true}
+            onChange={(e) => this.handleRfidChange(e)}
+          />
+          <br/>
+          {isClicked && error !== null && (
+              <Fragment>
+                <Typography variant="caption" color="error">
+                  {error}
+                </Typography>
+                <br/>
+              </Fragment>
+          )}
+          <Typography variant="caption" color="textSecondary" gutterBottom={true}>Enter the first 10 digits of rfid card number</Typography>
+          <ButtonLayout variant="contained" color="primary" onClick={() => this.onSubmit()}>
+            Calculate Charge
+          </ButtonLayout>
+        </FormWrapper>
+      </Card>
     )
   }
 
   renderPaymentDetails = () => {
     const {order} = this.props;
+    console.log(this.props);
 
     return (
-      <Fragment>
-        <DetailWrapper>
-          <Typography variant="body1" gutterBottom>Payment&nbsp;Due:&nbsp;₹&nbsp;{parseFloat(order.amount)/100.00}</Typography>
-          <Typography variant="body1" gutterBottom>Location:&nbsp;{order.location}</Typography>
-          <Typography variant="body1" gutterBottom>RFID&nbsp;Number:&nbsp;{order.rfid}</Typography>
-          <Typography variant="body1">Entry&nbsp;time:&nbsp;{new Date(order.created_on).toString()}</Typography>
-        </DetailWrapper>
-        <br/>
-        <Button variant="contained" color="primary" id="rzp-button1" onClick={() => this.onPay()}>Pay Payment</Button>
-      </Fragment>
+      <FlexView>
+        <RowWrapper>
+          <ColWrapper sm={4} xs={12}>
+            <TextWrapper variant="body1" gutterBottom>Invoice for</TextWrapper>
+            <TextWrapper variant="h5">{order.user_name}</TextWrapper>
+            <HrWrapper/>
+            <Row>
+              <IconWrapper sm={2} xs={2}>
+                <AccountBalanceWalletIcon/>
+              </IconWrapper>
+              <Col sm={10} xs={10}>
+                <TextWrapper variant="body1" gutterBottom>Amount:</TextWrapper>
+                <TextWrapper variant="body1">₹{order.amount/100}</TextWrapper>
+              </Col>
+            </Row>
+            <HrWrapper/>
+            <Row>
+              <IconWrapper sm={2} xs={2}>
+                <DateRangeIcon/>
+              </IconWrapper>
+              <Col sm={10} xs={10}>
+                <TextWrapper variant="body1" gutterBottom>Date:</TextWrapper>
+                <TextWrapper variant="body1">{new Date().toString()}</TextWrapper>
+              </Col>
+            </Row>
+            <HrWrapper/>
+            <Row>
+              <IconWrapper sm={2} xs={2}>
+                <StarIcon/>
+              </IconWrapper>
+              <Col sm={10} xs={10}>
+                <TextWrapper variant="body1" gutterBottom>Issuer:</TextWrapper>
+                <TextWrapper variant="body1">Suvidham</TextWrapper>
+              </Col>
+            </Row>
+          </ColWrapper>
+          <DetailsWrapper sm={8} xs={12}>
+            <Row justify="space-between" alignItems="baseline">
+              <TitleWrapper variant="h4" display="inline" >Suvidham</TitleWrapper>
+              <Typography variant="body1" display="inline" align="justify" color="textSecondary">{dateTime(order.created_on)}</Typography>
+            </Row>
+            <hr/>
+            <Separator height={2}/>
+            <GreetingWrapper variant="body1" gutterBottom color="textSecondary">Hello&nbsp;{order.user_name},</GreetingWrapper>
+            <Typography variant="body1" gutterBottom color="textSecondary">Your parking details are mentioned as below:</Typography>
+            <Separator height={2}/>
+            <Typography variant="body1" gutterBottom color="textSecondary">Location:&nbsp;{order.location}</Typography>
+            <Typography variant="body1" gutterBottom color="textSecondary">RFID&nbsp;Number:&nbsp;{order.rfid}</Typography>
+            <Separator height={2}/>
+            <ButtonLayout variant="contained" color="primary" id="rzp-button1" onClick={() => this.onPay()}>Pay</ButtonLayout>
+          </DetailsWrapper>
+        </RowWrapper>
+      </FlexView>
     )
   }
 
@@ -135,9 +237,7 @@ class Checkout extends Component {
           <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
           <title>Payment</title>
         </Head>
-        <Card reverse={true} alignItems="center">
-          {typeof pending !== undefined && typeof success !== undefined && !pending && success ? this.renderPaymentDetails() : this.renderRFIDSearch()}
-        </Card> 
+        {typeof pending !== undefined && typeof success !== undefined && !pending && success ? this.renderPaymentDetails() : this.renderRFIDSearch()} 
       </Container>
     );
   }
