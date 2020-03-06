@@ -28,6 +28,17 @@ const ButtonWrapper = styled(Button)`
 `;
 const TitleWrapper = styled(Typography)`
   color: ${Theme.primaryColor} !important;
+  @media(max-width: 767px){
+    font-size: 36px !important;
+    padding-top: 20px;
+  }
+`;
+const MobileButtonWrapper = styled(Button)`
+  color: #1488CC !important;
+  text-transform: capitalize !important;
+  @media(min-width: 767px){
+    display: none !important;
+  }
 `;
 
 const Form = [
@@ -197,16 +208,16 @@ class SignUp extends PureComponent{
                   <Typography variant="caption" color="error">
                     {error}
                   </Typography>
-                  <br/>
+                  <Separator height={2}/>
                 </Fragment>
             )}
             <Row alignItems="center">
-              <Col sm={4} xs={4}>
+              <Col sm={4} xs={5}>
                 <ButtonLayout fullWidth variant="contained" color="primary" onClick={() => this.onSubmit()}>
                   Sign Up
                 </ButtonLayout>
               </Col>
-              <Col sm={7} xs={7}>
+              <Col sm={7} xs={5}>
                 <Typography variant="body2" align="right" color="textSecondary">
                   Or sign in with
                 </Typography>
@@ -217,6 +228,8 @@ class SignUp extends PureComponent{
                 </IconButton>
               </Col>
             </Row>
+            <Separator height={2}/>
+            <MobileButtonWrapper onClick={() => this.handleSignIn()}>Already have an account? Sign In.</MobileButtonWrapper>
           </FormWrapper>
         </LoginCol>
       </MotionRow>

@@ -18,6 +18,11 @@ const SubTitleWrapper = styled(Typography)`
 const TypographySuccess = styled(Typography)`
   color: #19ce19;
 `;
+const DesktopWrapper = styled.div`
+  @media(max-width: 767px){
+    display: none !important;
+  }
+`;
 
 class Security extends PureComponent{
   constructor(props){
@@ -88,8 +93,11 @@ class Security extends PureComponent{
 
     return(
       <Col smOffset={2} sm={6}>
-        <TitleWrapper variant="h4" color="textSecondary">Security</TitleWrapper>
-        <Separator height={4}/>
+        <DesktopWrapper>
+          <TitleWrapper variant="h4" color="textSecondary">Security</TitleWrapper>
+          <Separator height={2}/>
+        </DesktopWrapper>
+        <Separator height={2}/>
         <SubTitleWrapper variant="body1">Current Password</SubTitleWrapper>
         <TextFieldInput
             id="current-password"

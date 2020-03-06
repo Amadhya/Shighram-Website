@@ -10,7 +10,7 @@ import Theme from "../../constants/theme";
 
 
 const OptionsWrapper = styled(Col)`
-  padding-left: 24px;
+  padding-left: 8px;
   @media(min-width: 767px){
     border-right: 1px solid ${Theme.grey};
     padding: 90px 10px 0px 0px;
@@ -20,6 +20,15 @@ const OptionsWrapper = styled(Col)`
 const DetailWrapper = styled(Col)`
   background: #e0e0e059;
   padding-top: 90px;
+  @media(max-width: 767px){
+    display: none !important;
+  }
+`;
+const DetailMobileWrapper = styled(Col)`
+  background: #e0e0e059;
+  @media(min-width: 767px){
+    display: none !important;
+  }
 `;
 const ContainerWrapper = styled(Container)`
   min-height: 100vh;
@@ -83,8 +92,23 @@ class Settings extends PureComponent{
           </FlexView>
           <Separator height={4}/>
           <TypographyWrapper highlight={general.toString()} align="center" variant="body1" onClick={() => this.onGeneralClick()}>Profile</TypographyWrapper>
+          {general && (
+            <DetailMobileWrapper>
+              <General/>
+            </DetailMobileWrapper>
+          )}
           <TypographyWrapper highlight={security.toString()} align="center" variant="body1" onClick={() => this.onSecurityClick()}>Security</TypographyWrapper>
+          {security && (
+            <DetailMobileWrapper>
+              <Security/>
+            </DetailMobileWrapper>
+          )}
           <TypographyWrapper highlight={history.toString()} align="center" variant="body1" onClick={() => this.onHistoryClick()}>History</TypographyWrapper>
+          {history && (
+            <DetailMobileWrapper>
+              <History/>
+            </DetailMobileWrapper>
+          )}
         </OptionsWrapper>
         <DetailWrapper xs={12} sm={10}>
           {general && <General/>}

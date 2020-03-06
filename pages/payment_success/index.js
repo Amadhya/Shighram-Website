@@ -11,7 +11,16 @@ const Wrapper = styled(Container)`
     background: rgba(63, 81, 181, 0.04);
     height: 100vh;
     align-items: center;
-    padding: 0px;
+    padding: 10px;
+    @media(max-width: 767px){
+        background: white;
+        height: 100%;
+    }
+`;
+const ImageWrapper = styled.img`
+  @media(max-width: 767px){
+    width: 100% !important;
+  }
 `;
 
 const onBackToHome = () => {
@@ -25,7 +34,7 @@ const PaymentSuccess = () => {
                 <title>Payment</title>
             </Head>
             <Card reverse={true} alignItems="center">
-                <img src="/static/images/success.png"/>
+                <ImageWrapper src="/static/images/success.png"/>
                 <Separator height={4}/>
                 <Typography variant="h5" gutterBottom>Payment Successful!</Typography>
                 <Typography variant="body1" color="textSecondary">Your payment was successful. You can continue using Suvidham.</Typography>

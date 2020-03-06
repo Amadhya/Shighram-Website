@@ -87,6 +87,9 @@ export const MotionCol = styled(motion.div)`
     color: white;
     width: 100%;
     padding: 0px 25px;
+    @media(max-width: 767px){
+        display: none !important;
+    }
 `;
 
 export const MotionRow = styled(motion.div)`
