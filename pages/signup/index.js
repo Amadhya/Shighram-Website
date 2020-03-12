@@ -84,11 +84,11 @@ const Form = [
   },
 ];
 
-const easing = [0.35, 0.40, 0.45, 0.50];
+const easing = [0.25, 0.1, 0.25, 1];
 
 const backVariants = {
   exit: {
-    x: '100%',
+    x: '200%',
     opacity: 0,
     transition: {
       duration: 0.7,
@@ -172,7 +172,7 @@ class SignUp extends PureComponent{
           </TextWrapper>
           <Separator height={4}/>
           <TextWrapper variant="body1">
-            To keep connected with us please login with your personal information.
+            To be connected with us, please login with your personal details.
           </TextWrapper>
           <Separator height={8}/>
           <TextWrapper variant="body1">

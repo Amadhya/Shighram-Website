@@ -58,15 +58,12 @@ const Form = [
   },
 ];
 
-const easing = [0.35, 0.40, 0.45, 0.50];
-
 const backVariants = {
   exit: {
-    x: '-100%',
+    x: '-200%',
     opacity: 0,
     transition: {
       duration: 0.7,
-      ease: easing
     }
   },
   enter: {
@@ -74,7 +71,6 @@ const backVariants = {
     opacity: 1,
     transition: {
       duration: 0.7,
-      ease: easing
     }
   }
 };
@@ -194,7 +190,7 @@ class Login extends PureComponent{
           </TextWrapper>
           <Separator height={4}/>
           <TextWrapper variant="body1">
-            Enter your personal details and start journey with us.
+            Enter your personal details and start your journey with us.
           </TextWrapper>
           <Separator height={8}/>
           <TextWrapper variant="body1">
