@@ -62,6 +62,7 @@ class ForgotPassword extends PureComponent{
     super(props);
     this.state={
       isClicked: false,
+      emptyFields: false,
       email: '',
     }
   }
@@ -83,15 +84,23 @@ class ForgotPassword extends PureComponent{
     const {email} = this.state;
     const {actions} = this.props;
 
-    actions.fetchForgotPasswordDetails(email);
-    this.setState({
-      isClicked: true,
-      email: '',
-    });
+    if(email === ""){
+      this.setState({
+        isClicked: true,
+        emptyFields: true,
+      });
+    }else {
+      actions.fetchForgotPasswordDetails(email);
+      this.setState({
+        isClicked: true,
+        emptyFields: false,
+        email: '',
+      });
+    }
   };
 
   renderEmail = () => {
-      const {email, isClicked} = this.state;
+      const {email, isClicked, emptyFields} = this.state;
       const {error} = this.props;
 
       return (
@@ -118,12 +127,21 @@ class ForgotPassword extends PureComponent{
                 onChange={(v) => this.handleChange(v)}
                 margin="normal"
                 variant="outlined"
+                error={emptyFields}
             />
             <Separator height={2}/>
             {isClicked && error !== null && (
                 <Fragment>
                   <Typography variant="caption" color="error">
                     {error}
+                  </Typography>
+                  <Separator height={2}/>
+                </Fragment>
+            )}
+            {isClicked && emptyFields && (
+                <Fragment>
+                  <Typography variant="caption" color="error">
+                    Please fill all the required fields*.
                   </Typography>
                   <Separator height={2}/>
                 </Fragment>

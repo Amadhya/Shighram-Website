@@ -86,6 +86,7 @@ class Login extends PureComponent{
     super(props);
     this.state={
       form: {},
+      emptyFields: false,
       isClicked: false,
     }
   }
@@ -120,11 +121,22 @@ class Login extends PureComponent{
   onSubmit = () => {
     const {form} = this.state;
     const {actions} = this.props;
-    actions.fetchLoginDetails(form);
-    this.setState({
-      isClicked: true,
-      form: {},
-    });
+
+    const formSize = Object.keys(form).length;
+
+    if(formSize !== 2){
+      this.setState({
+        isClicked: true,
+        emptyFields: true,
+      });
+    }else{
+      actions.fetchLoginDetails(form);
+      this.setState({
+        isClicked: true,
+        emptyFields: false,
+        form: {},
+      });
+    }
   };
 
   forgotPassword = () => {
@@ -132,7 +144,7 @@ class Login extends PureComponent{
   }
 
   render() {
-    const {isClicked, form} = this.state;
+    const {isClicked, form, emptyFields} = this.state;
     const {error} = this.props;
     
     return (
@@ -159,11 +171,19 @@ class Login extends PureComponent{
                     key={obj.id}
                 />
             ))}
-            <br />
+            <Separator height={1}/>
             {isClicked && error !== null && (
                 <Fragment>
                   <Typography variant="caption" color="error">
                     {error}
+                  </Typography>
+                  <Separator height={2}/>
+                </Fragment>
+            )}
+            {isClicked && emptyFields && (
+                <Fragment>
+                  <Typography variant="caption" color="error">
+                    Please fill all the required fields*.
                   </Typography>
                   <Separator height={2}/>
                 </Fragment>
@@ -184,7 +204,7 @@ class Login extends PureComponent{
                 </Typography>
               </Col>
               <Col sm={1} xs={1}>
-                <IconButton>
+                <IconButton edge="start">
                   <img src="/static/images/google_plus_icon.png"/>
                 </IconButton>
               </Col>

@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 
 import {Router} from "../../../../routes";
 import Theme from "../../../../constants/theme"
-import {Row, Col, Separator, MotionCol, MotionRow} from "../../../../components/layout";
+import {Col, Separator, MotionCol, MotionRow} from "../../../../components/layout";
 import {FormWrapper} from "../../../../components/form";
 import {ButtonLayout} from "../../../../components/button";
 import TextFieldInput from "../../../../components/textfield";
@@ -83,6 +83,7 @@ class ResetPassword extends PureComponent{
     super(props);
     this.state={
       form: {},
+      emptyFields: false,
       isClicked: false,
     }
   }
@@ -110,18 +111,27 @@ class ResetPassword extends PureComponent{
   onSubmit = () => {
     let {form} = this.state;
     const {actions, route: {query: {uid, token}}} = this.props;
+    const formSize = Object.keys(form).length;
 
-    form = {
-      'uidb64': uid,
-      'token': token,
-      ...form
+    if(formSize !== 2){
+      this.setState({
+        isClicked: true,
+        emptyFields: true,
+      });
+    }else{
+      form = {
+        'uidb64': uid,
+        'token': token,
+        ...form
+      }
+  
+      actions.fetchPasswordReset(form);
+      this.setState({
+        isClicked: true,
+        emptyFields: false,
+        form: {},
+      });
     }
-
-    actions.fetchPasswordReset(form);
-    this.setState({
-      isClicked: true,
-      form: {},
-    });
   };
 
   forgotPassword = () => {
@@ -129,7 +139,7 @@ class ResetPassword extends PureComponent{
   }
 
   render() {
-    const {isClicked, form} = this.state;
+    const {isClicked, form, emptyFields} = this.state;
     const {error, pending, success} = this.props;
     
     return (
@@ -178,6 +188,14 @@ class ResetPassword extends PureComponent{
                 <Fragment>
                   <Typography variant="caption" color="error">
                     {error}
+                  </Typography>
+                  <Separator height={2}/>
+                </Fragment>
+            )}
+            {isClicked && emptyFields && (
+                <Fragment>
+                  <Typography variant="caption" color="error">
+                    Please fill all the required fields*.
                   </Typography>
                   <Separator height={2}/>
                 </Fragment>

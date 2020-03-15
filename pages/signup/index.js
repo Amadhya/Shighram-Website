@@ -1,5 +1,5 @@
 import React, {Fragment, PureComponent} from "react";
-import { Button, Typography, IconButton } from '@material-ui/core';
+import { Button, Typography, IconButton, Container } from '@material-ui/core';
 import styled from 'styled-components';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -84,8 +84,6 @@ const Form = [
   },
 ];
 
-const easing = [0.25, 0.1, 0.25, 1];
-
 const backVariants = {
   exit: {
     x: '175%',
@@ -109,6 +107,7 @@ class SignUp extends PureComponent{
     super(props);
     this.state={
       isClicked: false,
+      emptyFields: false,
       form: {
         phone: "",
       },
@@ -145,18 +144,27 @@ class SignUp extends PureComponent{
   onSubmit = () => {
     const {form} = this.state;
     const {actions} = this.props;
+    const formSize = Object.keys(form).length;
 
-    actions.fetchSignUpDetails(form);
-    this.setState({
-      isClicked: true,
-      form: {
-        phone: "",
-      },
-    });
+    if(formSize !== 5){
+      this.setState({
+        isClicked: true,
+        emptyFields: true,
+      });
+    }else{
+      actions.fetchSignUpDetails(form);
+      this.setState({
+        isClicked: true,
+        emptyFields: false,
+        form: {
+          phone: "",
+        },
+      });
+    }
   };
 
   render() {
-    const {isClicked, form} = this.state;
+    const {isClicked, form, emptyFields} = this.state;
     const {error} = this.props;
 
     return (
@@ -169,9 +177,11 @@ class SignUp extends PureComponent{
             Welcome Back!
           </TextWrapper>
           <Separator height={4}/>
-          <TextWrapper variant="body1">
-            To be connected with us, please login with your personal details.
-          </TextWrapper>
+          <Container maxWidth='xs'>
+            <TextWrapper variant="body1">
+              To be connected with us, please login with your personal details.
+            </TextWrapper>
+          </Container>
           <Separator height={8}/>
           <TextWrapper variant="body1">
             Already have an account?
@@ -200,11 +210,19 @@ class SignUp extends PureComponent{
                     key={obj.id}
                 />
             ))}
-            <br />
+            <Separator height={1}/>
             {isClicked && error !== null && (
                 <Fragment>
                   <Typography variant="caption" color="error">
                     {error}
+                  </Typography>
+                  <Separator height={2}/>
+                </Fragment>
+            )}
+            {isClicked && emptyFields && (
+                <Fragment>
+                  <Typography variant="caption" color="error">
+                    Please fill all the required fields*.
                   </Typography>
                   <Separator height={2}/>
                 </Fragment>
@@ -221,7 +239,7 @@ class SignUp extends PureComponent{
                 </Typography>
               </Col>
               <Col sm={1} xs={1}>
-                <IconButton>
+                <IconButton edge="start">
                   <img src="/static/images/google_plus_icon.png"/>
                 </IconButton>
               </Col>
