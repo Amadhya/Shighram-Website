@@ -38,6 +38,12 @@ const MobileButtonWrapper = styled(Button)`
     display: none !important;
   }
 `;
+const LinkWrapper = styled(Typography)`
+  &: hover{
+    cursor: pointer;
+    color: ${Theme.primaryColor} !important;
+  }
+`;
 
 const Form = [
   {
@@ -60,17 +66,17 @@ const Form = [
 
 const backVariants = {
   exit: {
-    x: '-200%',
+    x: '-175%',
     opacity: 0,
     transition: {
-      duration: 0.7,
+      duration: 0.9,
     }
   },
   enter: {
     x: 0,
     opacity: 1,
     transition: {
-      duration: 0.7,
+      duration: 0.9,
     }
   }
 };
@@ -121,9 +127,12 @@ class Login extends PureComponent{
     });
   };
 
+  forgotPassword = () => {
+    Router.pushRoute('forgot_password');
+  }
+
   render() {
     const {isClicked, form} = this.state;
-    console.log(form);
     const {error} = this.props;
     
     return (
@@ -159,9 +168,9 @@ class Login extends PureComponent{
                   <Separator height={2}/>
                 </Fragment>
             )}
-            <Typography variant="body2" align="right">
+            <LinkWrapper variant="body2" align="right" onClick={() => this.forgotPassword()}>
               Forgot Password?
-            </Typography>
+            </LinkWrapper>
             <Separator height={3}/>
             <Row alignItems="center">
               <Col sm={4} xs={5}>

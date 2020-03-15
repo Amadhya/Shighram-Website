@@ -1,18 +1,17 @@
-import React, {Fragment, PureComponent} from "react";
+import React, { PureComponent, Fragment } from "react";
+import Head from 'next/head';
 import { Button, Typography, IconButton } from '@material-ui/core';
 import styled from 'styled-components';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import Head from "next/dist/next-server/lib/head";
 
-import Theme from "../../constants/theme";
-import {FormWrapper} from "../../components/form";
-import {ButtonLayout} from "../../components/button";
-import {Router} from "../../routes";
-import {Row, Col, Separator, MotionCol, MotionRow} from "../../components/layout";
-import TextFieldInput from "../../components/textfield";
-import fetchSignUpDetails, {getSuccess, getError, getStatus} from "../../Container/signup/saga";
-
+import {Router} from "../../../../routes";
+import Theme from "../../../../constants/theme"
+import {Row, Col, Separator, MotionCol, MotionRow} from "../../../../components/layout";
+import {FormWrapper} from "../../../../components/form";
+import {ButtonLayout} from "../../../../components/button";
+import TextFieldInput from "../../../../components/textfield";
+import fetchPasswordReset, {getError, getStatus, getSuccess} from "../../../../Container/reset_password/saga";
 
 const LoginCol = styled(Col)`
   display: flex !important;
@@ -29,8 +28,7 @@ const ButtonWrapper = styled(Button)`
 const TitleWrapper = styled(Typography)`
   color: ${Theme.primaryColor} !important;
   @media(max-width: 767px){
-    font-size: 36px !important;
-    padding-top: 20px;
+    font-size: 42px !important;
   }
 `;
 const MobileButtonWrapper = styled(Button)`
@@ -40,62 +38,39 @@ const MobileButtonWrapper = styled(Button)`
     display: none !important;
   }
 `;
+const TypographySuccess = styled(Typography)`
+  color: #19ce19;
+`;
 
 const Form = [
   {
-    id: 'firstName',
-    label: 'First Name',
-    type: 'text',
-    name: 'First Name',
-    autoComplete: 'fisrtName',
+    id: 'new_password',
+    label: 'New Password',
+    type: 'password',
+    name: 'New Password',
+    autoComplete: 'password',
     autoFocus: true,
   },
   {
-    id: 'lastName',
-    label: 'Last Name',
-    type: 'text',
-    name: 'Last Name',
-    autoComplete: 'lastName',
-    autoFocus: false,
-  },
-  {
-    id: 'email',
-    label: 'Email',
-    type: 'email',
-    name: 'Email',
-    autoComplete: 'email',
-    autoFocus: false,
-  },
-  {
-    id: 'phone',
-    label: 'Phone Number',
-    type: 'text',
-    name: 'Phone Number',
-    autoComplete: 'phone',
-    autoFocus: false,
-  },
-  {
-    id: 'password',
-    label: 'Password',
+    id: 're_type_password',
+    label: 'Re-type Password',
     type: 'password',
-    name: 'Password',
+    name: 'Re-type Password',
     autoComplete: 'password',
     autoFocus: false,
-  },
+  }
 ];
-
-const easing = [0.25, 0.1, 0.25, 1];
 
 const backVariants = {
   exit: {
-    x: '175%',
+    x: '-175%',
     opacity: 0,
     transition: {
       duration: 0.9,
     }
   },
   enter: {
-    x: '0%',
+    x: 0,
     opacity: 1,
     transition: {
       duration: 0.9,
@@ -103,29 +78,19 @@ const backVariants = {
   }
 };
 
-
-class SignUp extends PureComponent{
+class ResetPassword extends PureComponent{
   constructor(props){
     super(props);
     this.state={
+      form: {},
       isClicked: false,
-      form: {
-        phone: "",
-      },
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { success, pending } = this.props;
-
-    if(typeof pending !== "undefined" && !pending){
-      if(typeof success !== "undefined" && success){
-        Router.pushRoute('feed');
-      }
     }
   }
 
   handleSignIn = () => {
+    this.setState({
+        isClicked: false,
+    })
     Router.pushRoute('login');
   }
 
@@ -143,28 +108,36 @@ class SignUp extends PureComponent{
   };
 
   onSubmit = () => {
-    const {form} = this.state;
-    const {actions} = this.props;
+    let {form} = this.state;
+    const {actions, route: {query: {uid, token}}} = this.props;
 
-    actions.fetchSignUpDetails(form);
+    form = {
+      'uidb64': uid,
+      'token': token,
+      ...form
+    }
+
+    actions.fetchPasswordReset(form);
     this.setState({
       isClicked: true,
-      form: {
-        phone: "",
-      },
+      form: {},
     });
   };
 
+  forgotPassword = () => {
+    Router.pushRoute('forgot_password');
+  }
+
   render() {
     const {isClicked, form} = this.state;
-    const {error} = this.props;
-
+    const {error, pending, success} = this.props;
+    
     return (
       <MotionRow initial="exit" animate="enter" exit="exit">
         <Head>
-          <title>Sign Up</title>
+          <title>Reset Password</title>
         </Head>
-        <MotionCol variants={backVariants} reverse>
+        <MotionCol variants={backVariants}>
           <TextWrapper component="h1" variant="h3">
             Welcome Back!
           </TextWrapper>
@@ -183,7 +156,7 @@ class SignUp extends PureComponent{
         </MotionCol>
         <LoginCol sm={8} xs={12} align="center">
           <TitleWrapper component="h1" variant="h2">
-            Create Account
+            Reset Password
           </TitleWrapper>
           <Separator height={4}/>
           <FormWrapper noValidate autoComplete="off">
@@ -200,7 +173,7 @@ class SignUp extends PureComponent{
                     key={obj.id}
                 />
             ))}
-            <br />
+            <Separator height={2}/>
             {isClicked && error !== null && (
                 <Fragment>
                   <Typography variant="caption" color="error">
@@ -209,25 +182,18 @@ class SignUp extends PureComponent{
                   <Separator height={2}/>
                 </Fragment>
             )}
-            <Row alignItems="center">
-              <Col sm={4} xs={5}>
-                <ButtonLayout fullWidth variant="contained" color="primary" onClick={() => this.onSubmit()}>
-                  Sign Up
-                </ButtonLayout>
-              </Col>
-              <Col sm={7} xs={5}>
-                <Typography variant="body2" align="right" color="textSecondary">
-                  Or sign in with
-                </Typography>
-              </Col>
-              <Col sm={1} xs={1}>
-                <IconButton>
-                  <img src="/static/images/google_plus_icon.png"/>
-                </IconButton>
-              </Col>
-            </Row>
+            {isClicked && typeof pending !== undefined && typeof success !== undefined && !pending && success && error === null && (
+              <Fragment>
+                <TypographySuccess variant="body1">Password has been successfully reset!</TypographySuccess>
+                <Separator height={2}/>
+              </Fragment>
+            )}
             <Separator height={2}/>
-            <MobileButtonWrapper onClick={() => this.handleSignIn()}>Already have an account? Sign In.</MobileButtonWrapper>
+            <ButtonLayout fullWidth variant="contained" color="primary" onClick={() => this.onSubmit()}>
+                Reset
+            </ButtonLayout>
+            <Separator height={2}/>
+            <MobileButtonWrapper onClick={() => this.handleSignIn()}>Back to Login.</MobileButtonWrapper>
           </FormWrapper>
         </LoginCol>
       </MotionRow>
@@ -244,6 +210,6 @@ const mapStateToProps = (state) => ({
 export default connect(
     mapStateToProps,
     dispatch => ({
-      actions: bindActionCreators({fetchSignUpDetails}, dispatch)
+      actions: bindActionCreators({fetchPasswordReset}, dispatch)
     })
-)(SignUp);
+)(ResetPassword);

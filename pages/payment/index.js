@@ -114,7 +114,6 @@ class Checkout extends Component {
       "description": "Parking Payement",
       "order_id": order.razorpay_order_id,//This is a sample Order ID. Create an Order using Orders API. (https://razorpay.com/docs/payment-gateway/orders/integration/#step-1-create-an-order). Refer the Checkout form table given below
       "handler": function (response){
-        console.log(response, 'after checkout...........');
         // fetch(`http://127.0.0.1:8000/api/paymentVerification/${options.order_id}`, {
         //   method: 'PATCH',
         //   body: JSON.stringify({...response})
@@ -169,7 +168,6 @@ class Checkout extends Component {
 
   renderPaymentDetails = () => {
     const {order} = this.props;
-    console.log(this.props);
 
     return (
       <FlexView>

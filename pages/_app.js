@@ -59,7 +59,7 @@ class MyApp extends React.PureComponent{
           {loggedIn && <Nav handleLogout={() => this.handleLogout()} loggedIn={loggedIn}/>}
           <main>
             <AnimatePresence exitBeforeEnter>
-              <Component loggedIn={loggedIn} key={router.route} {...pageProps} />
+              <Component loggedIn={loggedIn} route={router} key={router.route} {...pageProps} />
             </AnimatePresence>
           </main>
         </Provider>
