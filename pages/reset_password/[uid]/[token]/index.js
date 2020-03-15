@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from "react";
 import Head from 'next/head';
-import { Button, Typography, IconButton } from '@material-ui/core';
+import { Button, Typography, IconButton, Container } from '@material-ui/core';
 import styled from 'styled-components';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -152,9 +152,11 @@ class ResetPassword extends PureComponent{
             Welcome Back!
           </TextWrapper>
           <Separator height={4}/>
-          <TextWrapper variant="body1">
-            To be connected with us, please login with your personal details.
-          </TextWrapper>
+          <Container maxWidth='xs'>
+            <TextWrapper variant="body1">
+              To be connected with us, please login with your personal details.
+            </TextWrapper>
+          </Container>
           <Separator height={8}/>
           <TextWrapper variant="body1">
             Already have an account?

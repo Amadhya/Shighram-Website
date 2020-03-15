@@ -186,9 +186,11 @@ class ForgotPassword extends PureComponent{
             Welcome Back!
           </TextWrapper>
           <Separator height={4}/>
-          <TextWrapper variant="body1">
-            To be connected with us, please login with your personal details.
-          </TextWrapper>
+          <Container maxWidth='xs'>
+            <TextWrapper variant="body1">
+              To be connected with us, please login with your personal details.
+            </TextWrapper>
+          </Container>
           <Separator height={8}/>
           <TextWrapper variant="body1">
             Already have an account?
