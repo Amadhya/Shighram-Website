@@ -137,12 +137,14 @@ class Login extends PureComponent{
       this.setState({
         isClicked: true,
         emptyFields: true,
+        googleLoginError: false
       });
     }else{
       actions.fetchLoginDetails(form);
       this.setState({
         isClicked: true,
         emptyFields: false,
+        googleLoginError: false,
         form: {},
       });
     }
@@ -235,7 +237,7 @@ class Login extends PureComponent{
               </Col>
               <Col sm={6} xs={6}>
                 <GoogleLogin
-                  clientId={process.env.google_client_id}
+                  clientId={process.env.CLIENT_ID}
                   buttonText="Sign in with Google"
                   onSuccess={this.googleResponse}
                   onFailure={this.onFailure}
