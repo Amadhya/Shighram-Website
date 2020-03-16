@@ -132,7 +132,7 @@ class ForgotPassword extends PureComponent{
             <Separator height={2}/>
             {isClicked && error !== null && (
                 <Fragment>
-                  <Typography variant="caption" color="error">
+                  <Typography variant="caption" color="error" align="left">
                     {error}
                   </Typography>
                   <Separator height={2}/>
@@ -140,7 +140,7 @@ class ForgotPassword extends PureComponent{
             )}
             {isClicked && emptyFields && (
                 <Fragment>
-                  <Typography variant="caption" color="error">
+                  <Typography variant="caption" color="error" align="left">
                     Please fill all the required fields*.
                   </Typography>
                   <Separator height={2}/>
@@ -165,7 +165,7 @@ class ForgotPassword extends PureComponent{
         </TitleWrapper>
         <Separator height={2}/>
         <Container maxWidth='sm'>
-            <Typography variant="body1" gutterBottom color="textSecondary">
+            <Typography variant="body1" gutterBottom color="textSecondary" align="left">
                 {this.props.message}
             </Typography>
         </Container>

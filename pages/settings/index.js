@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import Head from 'next/head';
 import styled from 'styled-components';
 import {Typography} from "@material-ui/core";
 
@@ -41,7 +42,7 @@ const TypographyWrapper = styled(Typography)`
   border-left: ${(props) => props.highlight==="true" && "5px solid #1488CC"};
   border-bottom: 1px solid ${Theme.lightGrey};
   padding: 4px 0px;
-  color: ${(props) => props.highlight==="true" && "rgba(0, 0, 0, 0.54)"};
+  color: ${(props) => props.highlight==="true" && "black"};
   font-weight: ${(props) => props.highlight==="true" && "600 !important"};
   &: hover{
     cursor: pointer;
@@ -86,9 +87,12 @@ class Settings extends PureComponent{
     const {general, history, security} = this.state;
     return(
       <ContainerWrapper initial="exit" animate="enter" exit="exit">
+        <Head>
+          <title>Settings</title>
+        </Head>
         <OptionsWrapper xs={12} sm={2}>
           <FlexView justify="center">
-            <img src="/static/images/icon_user.png"/>
+            <img src="/static/images/icon_user.png" alt="profile"/>
           </FlexView>
           <Separator height={4}/>
           <TypographyWrapper highlight={general.toString()} align="center" variant="body1" onClick={() => this.onGeneralClick()}>Profile</TypographyWrapper>
@@ -111,9 +115,9 @@ class Settings extends PureComponent{
           )}
         </OptionsWrapper>
         <DetailWrapper xs={12} sm={10}>
-          {general && <General/>}
-          {history && <History/>}
-          {security && <Security/>}
+          {general && <General screen="Desktop"/>}
+          {history && <History screen="Desktop"/>}
+          {security && <Security screen="Desktop"/>}
         </DetailWrapper>
       </ContainerWrapper>
     )

@@ -9,9 +9,11 @@ import {editProfileReducer} from "../Container/edit_profile/saga";
 import {passwordChangeReducer} from "../Container/change_password/saga";
 import {forgotPasswordReducer} from "../Container/forgot_password/saga";
 import {passwordResetReducer} from "../Container/reset_password/saga";
+import {googleLoginReducer} from "../Container/google_login/saga";
 
 const rootReducer = combineReducers({
     loginReducer,
+    googleLoginReducer,
     signupReducer,
     orderReducer,
     paymentVerificationReducer,

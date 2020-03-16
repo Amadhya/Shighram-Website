@@ -1,9 +1,10 @@
 import React, { PureComponent, Fragment } from "react";
-import Head from 'next/head'
+import Head from 'next/head';
 import { Button, Typography, IconButton } from '@material-ui/core';
 import styled from 'styled-components';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import { GoogleLogin } from 'react-google-login';
 
 import {Router} from "../../routes";
 import Theme from "../../constants/theme"
@@ -12,6 +13,7 @@ import {FormWrapper} from "../../components/form";
 import {ButtonLayout} from "../../components/button";
 import TextFieldInput from "../../components/textfield";
 import fetchLoginDetails, {getError, getStatus, getSucces} from "../../Container/login/saga";
+import fetchGoogleLoginDetails, {getError as getGoogleError, getStatus as getGoogleStatus, getSuccess as getGoogleSuccess} from "../../Container/google_login/saga";
 
 const LoginCol = styled(Col)`
   display: flex !important;
@@ -49,7 +51,7 @@ const Form = [
   {
     id: 'email',
     label: 'Email',
-    type: 'email',
+    type: 'text',
     name: 'Email',
     autoComplete: 'email',
     autoFocus: true,
@@ -85,17 +87,26 @@ class Login extends PureComponent{
   constructor(props){
     super(props);
     this.state={
-      form: {},
+      form: {
+        'email': '',
+        'password': ''
+      },
       emptyFields: false,
       isClicked: false,
+      googleLoginError: false,
     }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { success, pending } = this.props;
+    const { success, pending, googleSuccess, googlePending } = this.props;
 
     if(typeof pending !== "undefined" && !pending){
       if(typeof success !== "undefined" && success){
+        Router.pushRoute('slots_view');
+      }
+    }
+    if(typeof googlePending !== "undefined" && !googlePending){
+      if(typeof googleSuccess !== "undefined" && googleSuccess){
         Router.pushRoute('slots_view');
       }
     }
@@ -122,9 +133,7 @@ class Login extends PureComponent{
     const {form} = this.state;
     const {actions} = this.props;
 
-    const formSize = Object.keys(form).length;
-
-    if(formSize !== 2){
+    if(form['email'] ==='' || form['password'] ===''){
       this.setState({
         isClicked: true,
         emptyFields: true,
@@ -143,8 +152,21 @@ class Login extends PureComponent{
     Router.pushRoute('forgot_password');
   }
 
+  googleResponse = (response) => {
+    const {actions} = this.props;
+    const {accessToken} = response;
+
+    actions.fetchGoogleLoginDetails(accessToken)
+  }
+
+  onFailure = () => {
+    this.setState({
+      googleLoginError: true,
+    })
+  }
+
   render() {
-    const {isClicked, form, emptyFields} = this.state;
+    const {isClicked, form, emptyFields, googleLoginError} = this.state;
     const {error} = this.props;
     
     return (
@@ -174,15 +196,23 @@ class Login extends PureComponent{
             <Separator height={1}/>
             {isClicked && error !== null && (
                 <Fragment>
-                  <Typography variant="caption" color="error">
+                  <Typography variant="caption" color="error" align="left">
                     {error}
+                  </Typography>
+                  <Separator height={2}/>
+                </Fragment>
+            )}
+            {googleLoginError && (
+                <Fragment>
+                  <Typography variant="caption" color="error" align="left">
+                    There was some error signing you in with Google.
                   </Typography>
                   <Separator height={2}/>
                 </Fragment>
             )}
             {isClicked && emptyFields && (
                 <Fragment>
-                  <Typography variant="caption" color="error">
+                  <Typography variant="caption" color="error" align="left">
                     Please fill all the required fields*.
                   </Typography>
                   <Separator height={2}/>
@@ -193,20 +223,23 @@ class Login extends PureComponent{
             </LinkWrapper>
             <Separator height={3}/>
             <Row alignItems="center">
-              <Col sm={4} xs={5}>
+              <Col sm={5} xs={5}>
                 <ButtonLayout fullWidth variant="contained" color="primary" onClick={() => this.onSubmit()}>
                   Sign In
                 </ButtonLayout>
               </Col>
-              <Col sm={7} xs={5}>
+              <Col sm={1} xs={1}>
                 <Typography variant="body2" align="right" color="textSecondary">
-                  Or sign in with
+                  Or
                 </Typography>
               </Col>
-              <Col sm={1} xs={1}>
-                <IconButton edge="start">
-                  <img src="/static/images/google_plus_icon.png"/>
-                </IconButton>
+              <Col sm={6} xs={6}>
+                <GoogleLogin
+                  clientId={process.env.google_client_id}
+                  buttonText="Sign in with Google"
+                  onSuccess={this.googleResponse}
+                  onFailure={this.onFailure}
+                />  
               </Col>
             </Row>
             <Separator height={2}/>
@@ -239,11 +272,14 @@ const mapStateToProps = (state) => ({
   error: getError(state),
   pending: getStatus(state),
   success: getSucces(state),
+  googleError: getGoogleError(state),
+  googlePending: getGoogleStatus(state),
+  googleSuccess: getGoogleSuccess(state),
 });
 
 export default connect(
     mapStateToProps,
     dispatch => ({
-      actions: bindActionCreators({fetchLoginDetails}, dispatch)
+      actions: bindActionCreators({fetchLoginDetails, fetchGoogleLoginDetails}, dispatch)
     })
 )(Login);

@@ -18,36 +18,42 @@ const HeaderWrapper = styled(Box)`
 `;
 const payment = [
   {
+    id: '1',
     area: 'Elante Mall',
     duration: '1 hour',
     charged: 'Rs 100',
     date: '29th December 2019'
   },
   {
+    id: '2',
     area: 'Sector 17',
     duration: '1 hour',
     charged: 'Rs 100',
     date: '29th December 2019'
   },
   {
+    id: '3',
     area: 'Sector 35',
     duration: '1 hour',
     charged: 'Rs 100',
     date: '29th December 2019'
   },
   {
+    id: '4',
     area: 'Sector 22',
     duration: '1 hour',
     charged: 'Rs 100',
     date: '29th December 2019'
   },
   {
+    id: '5',
     area: 'Sector 8',
     duration: '1 hour',
     charged: 'Rs 100',
     date: '29th December 2019'
   },
   {
+    id: '6',
     area: 'Sector 15',
     duration: '1 hour',
     charged: 'Rs 100',
@@ -57,12 +63,13 @@ const payment = [
 class History extends PureComponent{
 
   render() {
+    const {screen=""} = this.props;
     return(
         <div>
           <HeaderWrapper fontSize={20} mb={1} ml={0.5}>Parking & Payment History</HeaderWrapper>
           <hr/>
           {payment.map(obj => (
-              <Wrapper key={obj.date}>
+              <Wrapper key={obj.id+screen}>
                 <RowWrapper>
                   <Col sm={6}>
                     <Typography variant="body1"><Typography variant="body1" component="spam" color="textSecondary">Location:&nbsp;</Typography>{obj.area}</Typography>

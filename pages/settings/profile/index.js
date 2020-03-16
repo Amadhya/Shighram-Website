@@ -43,7 +43,7 @@ const Form = [
   {
     id: 'phone',
     label: 'Phone',
-    type: 'tele',
+    type: 'text',
     name: 'phone',
     autoFocus: false,
   },
@@ -111,7 +111,7 @@ class General extends PureComponent{
   };
 
   renderDetails = () => {
-    const {editError, editPending, editSuccess} = this.props;
+    const {editError, editPending, editSuccess,screen=""} = this.props;
     const {form, isClicked} = this.state;
 
     return (
@@ -122,18 +122,18 @@ class General extends PureComponent{
         </DesktopWrapper>
         <Separator height={2}/>
         {Form.map(obj => (
-          <div key={obj.label}>
+          <div key={obj.id+screen}>
             <SubTitleWrapper variant="body1">{obj.label}</SubTitleWrapper>
             <TextFieldInput
-                id={obj.id}
-                label={obj.label}
-                type={obj.type}
-                name={obj.name}
-                value={form[obj.id]}
-                autoComplete={obj.autoComplete}
-                autoFocus={obj.autoFocus}
-                fullWidth={true}
-                onChange={(id,e) => this.handleChange(id,e)}
+              id={obj.id+screen}
+              label={obj.label}
+              type={obj.type}
+              name={obj.name}
+              value={form[obj.id]}
+              autoComplete={obj.autoComplete}
+              autoFocus={obj.autoFocus}
+              onChange={(id,v) => this.handleChange(id,v)}
+              fullWidth
             />
             <Separator height={2}/>
           </div>
@@ -157,7 +157,7 @@ class General extends PureComponent{
   }
 
   renderLoading = () => (
-    <FlexView alignItems="center" justify="center">
+    <FlexView alignItcoems="center" justify="center">
       <Typography variant="body1">Loading...</Typography>
     </FlexView>
   )

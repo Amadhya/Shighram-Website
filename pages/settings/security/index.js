@@ -88,7 +88,7 @@ class Security extends PureComponent{
   };
 
   render() {
-    const {success, pending, error} = this.props;
+    const {success, pending, error, screen=''} = this.props;
     const {current, newPassword, rePassword, errorMatch, isClicked, emptyField} = this.state;
 
     return(
@@ -100,7 +100,7 @@ class Security extends PureComponent{
         <Separator height={2}/>
         <SubTitleWrapper variant="body1">Current Password</SubTitleWrapper>
         <TextFieldInput
-            id="current-password"
+            id={"current-password"+screen}
             label="Current Password"
             type="password"
             value={current}
@@ -111,7 +111,7 @@ class Security extends PureComponent{
         <Separator height={2}/>
         <SubTitleWrapper variant="body1">New Password</SubTitleWrapper>
         <TextFieldInput
-            id="new-password"
+            id={"new-password"+screen}
             label="New Password"
             type="password"
             value={newPassword}
@@ -123,7 +123,7 @@ class Security extends PureComponent{
         <Separator height={2}/>
         <SubTitleWrapper variant="body1">Re-type Password</SubTitleWrapper>
         <TextFieldInput
-            id="re-type-password"
+            id={"re-type-password"+screen}
             label="Re-type Password"
             type="password"
             value={rePassword}

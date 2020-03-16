@@ -9,7 +9,7 @@ class TextFieldInput extends React.PureComponent{
 
       if(id==="phone"){
         const len= e.target.value.length;
-        if(len<=10 && len>0 && e.target.value[len-1] >='0' && e.target.value[len-1]<='9'){
+        if(len===0 || (len<=10 && len>0 && e.target.value[len-1] >='0' && e.target.value[len-1]<='9')){
           onChange(id,e.target.value);
         }
       }else{
