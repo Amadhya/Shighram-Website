@@ -175,6 +175,10 @@ class Login extends PureComponent{
       <MotionRow initial="exit" animate="enter" exit="exit">
         <Head>
           <title>Sign In</title>
+          <meta
+            name="description"
+            content="Suvidham is a web application to ease and enhance your parking experience. Through Suvidham, users can reserve a parking slot and pay parking fee online through our website and android app."
+          />
         </Head>
         <LoginCol sm={8} xs={12} align="center">
           <TitleWrapper component="h1" variant="h2">

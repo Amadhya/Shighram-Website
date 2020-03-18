@@ -9,7 +9,7 @@ export default class MyDocument extends Document{
 
   render() {
     return(
-        <Html>
+        <Html lang="en">
           <Head>
             <style>
               {`
@@ -18,7 +18,7 @@ export default class MyDocument extends Document{
               }        
             `}
             </style>
-            <link rel="shortcut icon" href="./images/logo.png"/>
+            <link rel="shortcut icon" href="/static/images/logo.png"/>
           </Head>
           <body>
           <Main/>

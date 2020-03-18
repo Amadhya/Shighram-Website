@@ -234,6 +234,10 @@ class Checkout extends Component {
         <Head>
           <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
           <title>Payment</title>
+          <meta
+            name="description"
+            content="Suvidham is a web application to ease and enhance your parking experience. Through Suvidham, users can reserve a parking slot and pay parking fee online through our website and android app."
+          />
         </Head>
         {typeof pending !== undefined && typeof success !== undefined && !pending && success ? this.renderPaymentDetails() : this.renderRFIDSearch()} 
       </Container>

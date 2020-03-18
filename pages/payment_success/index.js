@@ -32,6 +32,10 @@ const PaymentSuccess = () => {
         <Wrapper justify="center" initial="exit" animate="enter" exit="exit">
             <Head>
                 <title>Payment</title>
+                <meta
+                    name="description"
+                    content="Suvidham is a web application to ease and enhance your parking experience. Through Suvidham, users can reserve a parking slot and pay parking fee online through our website and android app."
+                />
             </Head>
             <Card reverse={true} alignItems="center">
                 <ImageWrapper src="/static/images/success.png"/>

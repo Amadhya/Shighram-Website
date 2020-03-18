@@ -146,6 +146,10 @@ class ResetPassword extends PureComponent{
       <MotionRow initial="exit" animate="enter" exit="exit">
         <Head>
           <title>Reset Password</title>
+          <meta
+            name="description"
+            content="Suvidham is a web application to ease and enhance your parking experience. Through Suvidham, users can reserve a parking slot and pay parking fee online through our website and android app."
+          />
         </Head>
         <MotionCol variants={backVariants}>
           <TextWrapper component="h1" variant="h3">
