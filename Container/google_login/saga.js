@@ -64,13 +64,13 @@ const ACTIONS = {
   export default function fetchGoogleLoginDetails(token) {
     return dispatch => {
       dispatch(googleLoginPending());
-      return fetch('http://127.0.0.1:8000/api/google_login', {
+      return fetch('http://127.0.0.1:8000/api/google_login_access_token', {
         method: 'POST',
         body: JSON.stringify({'access_token':token})
       })
           .then(res => res.json())
           .then(res => {
-            if(res.status === 400)
+            if(res.status === '400')
               throw res.message;
   
             localStorage.setItem('token', res.token);

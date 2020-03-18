@@ -169,7 +169,7 @@ class Login extends PureComponent{
 
   render() {
     const {isClicked, form, emptyFields, googleLoginError} = this.state;
-    const {error} = this.props;
+    const {error, googleError} = this.props;
     
     return (
       <MotionRow initial="exit" animate="enter" exit="exit">
@@ -204,7 +204,7 @@ class Login extends PureComponent{
                   <Separator height={2}/>
                 </Fragment>
             )}
-            {googleLoginError && (
+            {googleLoginError || googleError && (
                 <Fragment>
                   <Typography variant="caption" color="error" align="left">
                     There was some error signing you in with Google.
