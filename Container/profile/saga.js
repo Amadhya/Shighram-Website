@@ -1,3 +1,5 @@
+import cookie from 'js-cookie';
+
 const ACTIONS = {
     GET: 'GET_USER',
     GET_SUCCESS: 'GET_USER_SUCCESS',
@@ -70,7 +72,7 @@ const ACTIONS = {
       dispatch(userPending());
       return fetch(`http://127.0.0.1:8000/api/profile`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${cookie.get('token')}`,
         }
       })
         .then(res => res.json())

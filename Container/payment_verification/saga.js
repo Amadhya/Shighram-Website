@@ -1,3 +1,5 @@
+import cookie from 'js-cookie';
+
 const ACTIONS = {
     PATCH: 'PAYMENT_VERIFICATION_PATCH',
     PATCH_SUCCESS: 'PAYMENT_VERIFICATION_PATCH_SUCCESS',

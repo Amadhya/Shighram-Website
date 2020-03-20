@@ -1,3 +1,5 @@
+import cookie from 'js-cookie';
+
 const ACTIONS = {
   POST: 'SIGNUP_POST',
   POST_SUCCESS: 'SIGNUP_POST_SUCCESS',
@@ -73,7 +75,7 @@ export default function fetchSignUpDetails(form) {
           if(res.status === 400)
             throw res.message;
 
-          localStorage.setItem('token', res.token);
+          cookie.set('token',res.token);
           dispatch(signupSuccess());
         })
         .catch(error => {

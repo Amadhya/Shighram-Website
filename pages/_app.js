@@ -5,6 +5,8 @@ import {applyMiddleware, createStore} from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import { AnimatePresence } from 'framer-motion';
+import nextCookie from 'next-cookies';
+import cookie from 'js-cookie';
 
 import {Router} from "../routes";
 import rootReducer from "../reducers";
@@ -12,6 +14,20 @@ import Nav from "../components/nav";
 
 const middlewares = [thunk];
 export const store = createStore(rootReducer,{},applyMiddleware(logger, ...middlewares));
+
+const privateUrl = [
+  "/slots_view",
+  "/payment",
+  "/settings",
+  "/payment_success"
+];
+
+const authUrl = [
+  "/login",
+  "/signup",
+  "/forgot_password",
+  "/reset_password"
+]
 
 class MyApp extends React.PureComponent{
   constructor(props){
@@ -23,27 +39,50 @@ class MyApp extends React.PureComponent{
 
   static async getInitialProps({Component, ctx}){
     let pageProps = {};
+    const {asPath} = ctx;
+    const { token } = nextCookie(ctx)
 
     if(Component.getInitialProps){
       pageProps = await Component.getInitialProps(ctx);
+    } 
+
+    if(typeof token === "undefined"){
+      var found = privateUrl.find(function(element) { 
+        return element == asPath; 
+      });
+      if (found || asPath === "/"){
+        if (typeof window === 'undefined') {
+          ctx.res.writeHead(302, { Location: '/login' })
+          ctx.res.end()
+        } else {
+          Router.push('/login')
+        }
+      }
+    }else{
+      var found = authUrl.find(function(element) { 
+        return element == asPath; 
+      });
+      if (found || asPath === "/"){
+        if (typeof window === 'undefined') {
+          ctx.res.writeHead(302, { Location: '/slots_view' })
+          ctx.res.end()
+        } else {
+          Router.push('/slots_view')
+        }
+      }
     }
+
+    const loggedIn = !(typeof token === "undefined");
 
     return {
       pageProps,
+      loggedIn, 
     };
-  }
-
-  static getDerivedStateFromProps(props, state){
-    if(typeof window !== 'undefined'){
-      return {
-        loggedIn: !!(localStorage.getItem('token')),
-      }
-    }
-    return state;
   }
 
   handleLogout = () => {
     if(typeof window !== 'undefined'){
+      cookie.remove('token')
       localStorage.removeItem('token');
       this.setState({ loggedIn: false });
       Router.pushRoute('login');
@@ -51,8 +90,7 @@ class MyApp extends React.PureComponent{
   };
 
   render(){
-    const {Component, pageProps, router} = this.props;
-    const {loggedIn} = this.state;
+    const {Component, pageProps, router, loggedIn} = this.props;
 
     return(
         <Provider store={store}>

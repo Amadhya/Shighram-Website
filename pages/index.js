@@ -3,9 +3,9 @@ import Nav from '../components/nav'
 import SlotView from "./slots_view";
 import Login from "./login";
 
-const Home = ({loggedIn}) => (
+const Home = () => (
   <div>
-    {loggedIn ? <SlotView/> : <Login/>}
+    <Login/>
   </div>
 );
 

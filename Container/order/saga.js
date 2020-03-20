@@ -1,3 +1,5 @@
+import cookie from 'js-cookie';
+
 const ACTIONS = {
     PATCH: 'ORDER_PATCH',
     PATCH_SUCCESS: 'ORDER_PATCH_SUCCESS',
@@ -71,7 +73,7 @@ const ACTIONS = {
       return fetch(`http://127.0.0.1:8000/api/verify_rfid`, {
         method: 'PATCH',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${cookie.get('token')}`,
         },
         body: JSON.stringify({
             'rfid': rfid,

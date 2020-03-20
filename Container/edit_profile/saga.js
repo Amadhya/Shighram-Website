@@ -1,3 +1,5 @@
+import cookie from 'js-cookie';
+
 const ACTIONS = {
     PATCH: 'PROFILE_PATCH',
     PATCH_SUCCESS: 'PROFILE_PATCH_SUCCESS',
@@ -68,7 +70,7 @@ const ACTIONS = {
       return fetch(`http://127.0.0.1:8000/api/editProfile`, {
         method: 'PATCH',
         headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${cookie.get('token')}`,
         },
         body: JSON.stringify({...form})
       })

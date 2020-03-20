@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
-import {Typography, Button} from '@material-ui/core';
+import {Typography, Button, IconButton, Menu, MenuItem, Box} from '@material-ui/core';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import {Row, Col} from "./layout"
 import {Router} from "../routes";
 import Theme from "../constants/theme";
@@ -24,12 +25,23 @@ const TypographyWrapper = styled(Typography)`
     cursor: pointer;
   }
 `;
+const DesktopButton = styled(Button)`
+  @media(max-width: 768px){
+    display: none !important;
+  }
+`;
+const MobileButton = styled(MenuItem)`
+  @media(min-width: 768px){
+    display: none !important;
+  }
+`;
 
 class Nav extends React.PureComponent{
   constructor(props){
     super(props);
     this.state={
       loggedIn: undefined,
+      anchorEl: null,
     };
   }
 
@@ -39,11 +51,25 @@ class Nav extends React.PureComponent{
     }
   }
 
+  handleMenu = event => {
+    this.setState({
+      anchorEl: event.target,
+    });
+  };
+
+  handleClose = () => {
+    this.setState({
+      anchorEl: null,
+    });
+  };
+
   handleLogout = () => {
+    this.handleClose();
     this.props.handleLogout()
   };
 
   handleSettings = () => {
+    this.handleClose();
     Router.pushRoute('settings');
   };
 
@@ -51,25 +77,54 @@ class Nav extends React.PureComponent{
     Router.pushRoute('slots_view');
   }
 
+  handlePayment = () => {
+    Router.pushRoute('payment');
+  }
+
   render() {
-    const {loggedIn} = this.props;
+    const {anchorEl} = this.state;
+
     return(
         <NavBar>
-          <Col smOffset={4} sm={4}><TypographyWrapper onClick={() => this.handleHome()} variant="h4">Suvidham</TypographyWrapper></Col>
-          <Col sm={4} justifyContent="flex-end">
-            <Button color="inherit" onClick={() => this.handleSettings()}>Settings</Button>
-            <Button color="inherit" onClick={() => this.handleLogout()}>Sign out</Button>
+          <Col smOffset={4} sm={5} xsOffset={3} xs={6}><TypographyWrapper onClick={() => this.handleHome()} variant="h4">Suvidham</TypographyWrapper></Col>
+          <Col sm={2} xs={2} justifyContent="flex-end">
+            <DesktopButton color="inherit" onClick={() => this.handlePayment()}>Payment</DesktopButton>
+            <Fragment>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={(e) => this.handleMenu(e)}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={anchorEl!==null}
+                onClose={() => this.handleClose()}
+              >
+                <MobileButton onClick={() => this.handlePayment()}>Payment</MobileButton>
+                <MenuItem onClick={() => this.handleSettings()}>Settings</MenuItem>
+                <MenuItem onClick={() => this.handleLogout()}>Sign out</MenuItem>
+              </Menu>
+            </Fragment>
           </Col>
           <style jsx>{`
           :global(body) {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir,
               Helvetica, sans-serif;
-          }
-          a{
-            color: white;
-            text-decoration: none;
-            margin-right: 24px;
           }
         `}</style>
         </NavBar>

@@ -1,3 +1,5 @@
+import cookie from 'js-cookie';
+
 const ACTIONS = {
     PATCH: 'PATCH_VERFIFICATION',
     PATCH_SUCCESS: 'PATCH_PASSWORD_SUCCESS',
@@ -77,7 +79,7 @@ const ACTIONS = {
           if(res.status === 400)
             throw res.message;
           
-          localStorage.setItem('token', res.token);
+          cookie.set('token',res.token);
           dispatch(passwordChangeSuccess());
         })
         .catch(error => {

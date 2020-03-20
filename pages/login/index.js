@@ -145,7 +145,10 @@ class Login extends PureComponent{
         isClicked: true,
         emptyFields: false,
         googleLoginError: false,
-        form: {},
+        form: {
+          'email': '',
+          'password': ''
+        },
       });
     }
   };

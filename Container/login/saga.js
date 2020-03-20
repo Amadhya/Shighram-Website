@@ -1,3 +1,5 @@
+import cookie from 'js-cookie';
+
 const ACTIONS = {
   POST: 'LOGIN_POST',
   POST_SUCCESS: 'LOGIN_POST_SUCCESS',
@@ -73,8 +75,8 @@ export default function fetchLoginDetails(form) {
         .then(res => {
           if(res.status === 400)
             throw res.message;
-
-          localStorage.setItem('token', res.token);
+          
+          cookie.set('token',res.token);
           dispatch(loginSuccess());
         })
         .catch(error => {

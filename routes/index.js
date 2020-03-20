@@ -7,7 +7,6 @@ const allRoutes=[
   ['forgot_password','/forgot_password','/forgot_password'],
   ['reset_password','/reset_password/[uid]/[token]','/reset_password/[uid]'],
   ['slots_view', '/slots_view', '/slots_view'],
-  ['profile', '/profile/:id', '/profile'],
   ['settings', '/settings', '/settings'],
   ['payment', '/payment', '/payment'],
   ['payment_success','/payment_success','/payment_success']
