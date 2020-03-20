@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import {Box, Typography} from "@material-ui/core";
 import styled from "styled-components";
 
-import {Row, Col} from "../../../components/layout";
+import {Row, Col, Separator} from "../../../components/layout";
 
 const Wrapper = styled.div`
   padding: 0px 20px;
@@ -16,6 +16,10 @@ const HeaderWrapper = styled(Box)`
     margin-top: 64px;
   }
 `;
+const TitleWrapper = styled(Typography)`
+  font-weight: 600 !important;
+`;
+
 const payment = [
   {
     id: '1',
@@ -65,10 +69,10 @@ class History extends PureComponent{
   render() {
     const {screen=""} = this.props;
     return(
-        <div>
-          <HeaderWrapper fontSize={20} mb={1} ml={0.5}>Parking & Payment History</HeaderWrapper>
-          <hr/>
-          {payment.map(obj => (
+      <Col smOffset={2} sm={6}>
+        <TitleWrapper variant="h4" color="textSecondary">Parking History</TitleWrapper>
+        <Separator height={4}/>
+        {payment.map(obj => (
               <Wrapper key={obj.id+screen}>
                 <RowWrapper>
                   <Col sm={6}>
@@ -83,7 +87,7 @@ class History extends PureComponent{
                 <hr/>
               </Wrapper>
           ))}
-        </div>
+      </Col>
     )
   }
 }

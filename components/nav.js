@@ -1,7 +1,10 @@
 import React, {Fragment} from 'react';
 
-import {Typography, Button, IconButton, Menu, MenuItem, Box} from '@material-ui/core';
+import {Typography, Button, IconButton, Menu, MenuItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PaymentIcon from '@material-ui/icons/Payment';
 import {Row, Col} from "./layout"
 import {Router} from "../routes";
 import Theme from "../constants/theme";
@@ -33,6 +36,24 @@ const DesktopButton = styled(Button)`
 const MobileButton = styled(MenuItem)`
   @media(min-width: 768px){
     display: none !important;
+  }
+`;
+const BorderWrapper = styled.hr`
+  color: ${Theme.lightGrey} !important;
+  margin: 0px 6px !important;
+`;
+const BorderMobileWrapper = styled.hr`
+  @media(max-width: 768px){
+    color: ${Theme.lightGrey} !important;
+    margin: 0px 8px !important;
+    display: block !important;
+  }
+  display: none !important;
+`;
+const MenuWrapper = styled(Menu)`
+  margin-top: 30px !important;
+  @media(max-width: 768px){
+    margin-top: 40px !important;
   }
 `;
 
@@ -88,7 +109,7 @@ class Nav extends React.PureComponent{
         <NavBar>
           <Col smOffset={4} sm={5} xsOffset={3} xs={6}><TypographyWrapper onClick={() => this.handleHome()} variant="h4">Suvidham</TypographyWrapper></Col>
           <Col sm={2} xs={2} justifyContent="flex-end">
-            <DesktopButton color="inherit" onClick={() => this.handlePayment()}>Payment</DesktopButton>
+            <DesktopButton color="inherit" startIcon={<PaymentIcon/>} onClick={() => this.handlePayment()}>Payment</DesktopButton>
             <Fragment>
               <IconButton
                 aria-label="account of current user"
@@ -99,7 +120,7 @@ class Nav extends React.PureComponent{
               >
                 <AccountCircle />
               </IconButton>
-              <Menu
+              <MenuWrapper
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
@@ -114,10 +135,27 @@ class Nav extends React.PureComponent{
                 open={anchorEl!==null}
                 onClose={() => this.handleClose()}
               >
-                <MobileButton onClick={() => this.handlePayment()}>Payment</MobileButton>
-                <MenuItem onClick={() => this.handleSettings()}>Settings</MenuItem>
-                <MenuItem onClick={() => this.handleLogout()}>Sign out</MenuItem>
-              </Menu>
+                <MobileButton onClick={() => this.handlePayment()}>
+                  <ListItemIcon>
+                    <PaymentIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Payment" />
+                </MobileButton>
+                <BorderMobileWrapper/>
+                <MenuItem onClick={() => this.handleSettings()}>
+                  <ListItemIcon>
+                    <SettingsIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Settings" />
+                </MenuItem>
+                <BorderWrapper/>
+                <MenuItem onClick={() => this.handleLogout()}>
+                  <ListItemIcon>
+                    <ExitToAppIcon fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText primary="Sign out" />
+                </MenuItem>
+              </MenuWrapper>
             </Fragment>
           </Col>
           <style jsx>{`
