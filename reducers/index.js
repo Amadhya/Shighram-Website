@@ -4,6 +4,7 @@ import {loginReducer} from "../Container/login/saga";
 import {signupReducer} from "../Container/signup/saga";
 import {orderReducer} from "../Container/order/saga";
 import {paymentVerificationReducer} from "../Container/payment_verification/saga";
+import {paymentHistoryReducer} from "../Container/payment_history/saga";
 import {userReducer} from "../Container/profile/saga";
 import {editProfileReducer} from "../Container/edit_profile/saga";
 import {passwordChangeReducer} from "../Container/change_password/saga";
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     signupReducer,
     orderReducer,
     paymentVerificationReducer,
+    paymentHistoryReducer,
     userReducer,
     editProfileReducer,
     passwordChangeReducer,

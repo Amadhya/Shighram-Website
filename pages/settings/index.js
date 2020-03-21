@@ -33,7 +33,10 @@ const DetailMobileWrapper = styled(Col)`
 `;
 const ContainerWrapper = styled(Container)`
   min-height: 100vh;
-  padding: 0px;
+  padding-top: 40px;
+  @media(min-width: 1026px){
+    padding-top: 20px;
+  }
 `;
 
 const TypographyWrapper = styled(Typography)`

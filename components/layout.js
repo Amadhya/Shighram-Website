@@ -66,7 +66,10 @@ export const Card = styled(FlexView)`
 `;
 
 export const Container = styled(FlexView)`
-    padding-top: 100px;
+    padding-top: 120px;
+    @media(min-width: 767px && max-width: 1026px){
+        padding-top: 140px;
+    }
     @media(max-width: 767px){
         padding-top: 120px;
     }
