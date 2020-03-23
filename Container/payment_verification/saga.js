@@ -63,11 +63,14 @@ const ACTIONS = {
   export const getSucces = state => state.paymentVerificationReducer.success;
   
   //SAGA
-  export default function fetchPaymentVerification(rfid, response) {
+  export default function fetchPaymentVerification(response) {
     return dispatch => {
       dispatch(paymentVerificationPending());
       return fetch(`http://127.0.0.1:8000/api/paymentVerification`, {
         method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${cookie.get('token')}`,
+        },
         body: JSON.stringify({...response})
       })
           .then(res => res.json())

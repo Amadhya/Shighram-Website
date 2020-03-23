@@ -99,6 +99,7 @@ class Nav extends React.PureComponent{
   }
 
   handlePayment = () => {
+    this.handleClose();
     Router.pushRoute('payment');
   }
 

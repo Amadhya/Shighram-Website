@@ -15,7 +15,7 @@ import {Container, Card, Row, Col, Separator, FlexView} from "../../components/l
 import {FormWrapper} from "../../components/form";
 import {ButtonLayout} from "../../components/button";
 import fetchOrederDetails, {getError, getStatus, getSucces, getOrder} from "../../Container/order/saga";
-import fetchPaymentVerification, {getError as VerificationError, getStatus as VerificationStatus, getSucces as VerificationSuccess} from "../../Container/login/saga";
+import fetchPaymentVerification, {getError as VerificationError, getStatus as VerificationStatus, getSucces as VerificationSuccess} from "../../Container/payment_verification/saga";
 
 
 const ColWrapper = styled(Col)`
@@ -104,7 +104,7 @@ class Checkout extends Component {
   }
 
   onPay = () => {
-    const {order, paymentPending, paymentSuccess} = this.props;
+    const {order, actions} = this.props;
 
     let options = {
       "key": process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
@@ -118,6 +118,7 @@ class Checkout extends Component {
         //   method: 'PATCH',
         //   body: JSON.stringify({...response})
         // })
+        actions.fetchPaymentVerification(response)
         Router.pushRoute('payment_success');
       },
       "prefill": {

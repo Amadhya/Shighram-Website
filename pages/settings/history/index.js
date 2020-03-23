@@ -64,7 +64,7 @@ function dateTime (t){
   let min = newDate.getMinutes();
   let sec = newDate.getSeconds(); 
 
-  return `${monthNames[month]} ${date}, ${year} ${hour}:${min}:${sec}`
+  return `${monthNames[month]} ${date}, ${year} at ${hour}:${min}`
 }
 
 class History extends PureComponent{
@@ -135,7 +135,7 @@ class History extends PureComponent{
                   <Typography variant="body1" color="textSecondary">{dateTime(obj.created_on)}</Typography>
                 </Col>
                 <Col sm={1}>
-                  <StatusWrapper variant="body1" color="textSecondary" done={obj.payment_verified==="true"}>{obj.payment_verified==="true" ? 'Paid' : 'Pending'}</StatusWrapper>
+                  <StatusWrapper variant="body1" color="textSecondary" done={obj.payment_verified==="True"}>{obj.payment_verified==="True" ? 'Paid' : 'Pending'}</StatusWrapper>
                 </Col>
               </RowWrapper>
             ))}
@@ -148,7 +148,7 @@ class History extends PureComponent{
                 <Typography variant="body1" color="textSecondary" gutterBottom>RFID Number:&nbsp;{obj.rfid}</Typography>
                 <Typography variant="body1" color="textSecondary" gutterBottom>Slot Number:&nbsp;{obj.slot_number}</Typography>
             <Typography variant="body1" color="textSecondary" gutterBottom>Date:&nbsp;{dateTime(obj.created_on)}</Typography>
-                <StatusWrapper variant="body1" color="textSecondary" done={obj.payment_verified==="true"}>Status:&nbsp;{obj.payment_verified==="true" ? 'Paid' : 'Pending'}</StatusWrapper>
+                <StatusWrapper variant="body1" color="textSecondary" done={obj.payment_verified==="True"}>Status:&nbsp;{obj.payment_verified==="True" ? 'Paid' : 'Pending'}</StatusWrapper>
               </ColWrapper>
             ))}
           </MobileWrapper>
