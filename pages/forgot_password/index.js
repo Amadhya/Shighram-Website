@@ -27,8 +27,8 @@ const ButtonWrapper = styled(Button)`
 `;
 const TitleWrapper = styled(Typography)`
   color: ${Theme.primaryColor} !important;
-  @media(max-width: 767px){
-    font-size: 36px !important;
+  @media(max-width: 769px){
+    font-size: 41px !important;
     padding-top: 20px;
   }
 `;
@@ -38,6 +38,9 @@ const MobileButtonWrapper = styled(Button)`
   @media(min-width: 767px){
     display: none !important;
   }
+`;
+const Wrapper = styled(FormWrapper)`
+  width: 90%;
 `;
 
 const backVariants = {
@@ -105,17 +108,17 @@ class ForgotPassword extends PureComponent{
 
       return (
         <Fragment>
-            <TitleWrapper component="h1" variant="h3">
-                Forgot Password?
-            </TitleWrapper>
-            <Separator height={2}/>
-            <Container maxWidth='sm'>
-                <Typography variant="body1" gutterBottom color="textSecondary">
-                    Don't worry! Enter your email below and we'll email you with instructions on how to reset your password.
-                </Typography>
-            </Container>
-            <Separator height={2}/>
-            <FormWrapper noValidate autoComplete="off">
+          <TitleWrapper component="h1" variant="h3">
+              Forgot Password?
+          </TitleWrapper>
+          <Separator height={2}/>
+          <Container maxWidth='sm'>
+              <Typography variant="body1" gutterBottom color="textSecondary">
+                  Don't worry! Enter your email below and we'll email you with instructions on how to reset your password.
+              </Typography>
+          </Container>
+          <Separator height={2}/>
+          <Wrapper noValidate autoComplete="off">
             <TextField
                 id="email"
                 label="Email"
@@ -128,6 +131,7 @@ class ForgotPassword extends PureComponent{
                 margin="normal"
                 variant="outlined"
                 error={emptyFields}
+                fullWidth={true}
             />
             <Separator height={2}/>
             {isClicked && error !== null && (
@@ -151,7 +155,7 @@ class ForgotPassword extends PureComponent{
             </ButtonLayout>
             <Separator height={2}/>
             <MobileButtonWrapper onClick={() => this.handleSignIn()}>Back to Login</MobileButtonWrapper>
-          </FormWrapper>
+          </Wrapper>
         </Fragment>
       )
   }
@@ -200,7 +204,7 @@ class ForgotPassword extends PureComponent{
             Sign in
           </ButtonWrapper>
         </MotionCol>
-        <LoginCol sm={8} xs={12} align="center">
+        <LoginCol sm={7} md={8} xs={12} align="center">
             {
                 typeof pending !== "undefined" && typeof success !== "undefined" && !pending && success && emailVerified === "true" && isClicked
                 ? this.renderEmailSuccess() : this.renderEmail()
