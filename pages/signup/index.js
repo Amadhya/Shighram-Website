@@ -141,6 +141,11 @@ class SignUp extends PureComponent{
   handleSignIn = () => {
     this.setState({
       next: false,
+      form: {
+        'first_name': '',
+        'last_name': '',
+        'email': '',
+      },
     })
     Router.pushRoute('login');
   }
