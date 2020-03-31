@@ -25,12 +25,12 @@ const TextWrapper = styled(Typography)`
   color: white;
 `;
 const ButtonWrapper = styled(Button)`
-  width: 30%;
+  width: 31%;
 `;
 const TitleWrapper = styled(Typography)`
   color: ${Theme.primaryColor} !important;
-  @media(max-width: 767px){
-    font-size: 42px !important;
+  @media(max-width: 769px){
+    font-size: 41px !important;
   }
 `;
 const MobileButtonWrapper = styled(Button)`
@@ -183,7 +183,7 @@ class Login extends PureComponent{
             content="Suvidham is a web application to ease and enhance your parking experience. Through Suvidham, users can reserve a parking slot and pay parking fee online through our website and android app."
           />
         </Head>
-        <LoginCol sm={8} xs={12} align="center">
+        <LoginCol sm={7} md={8} xs={12} align="center">
           <TitleWrapper component="h1" variant="h2">
             Sign in to Suvidham
           </TitleWrapper>

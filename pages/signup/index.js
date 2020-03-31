@@ -26,12 +26,12 @@ const TextWrapper = styled(Typography)`
   color: white;
 `;
 const ButtonWrapper = styled(Button)`
-  width: 30%;
+  width: 31%;
 `;
 const TitleWrapper = styled(Typography)`
   color: ${Theme.primaryColor} !important;
-  @media(max-width: 767px){
-    font-size: 36px !important;
+  @media(max-width: 769px){
+    font-size: 42px !important;
     padding-top: 20px;
   }
 `;
@@ -43,7 +43,7 @@ const MobileButtonWrapper = styled(Button)`
   }
 `;
 
-const Form = [
+const Form1 = [
   {
     id: 'first_name',
     label: 'First Name',
@@ -68,13 +68,15 @@ const Form = [
     autoComplete: 'email',
     autoFocus: false,
   },
+];
+const Form2 = [
   {
     id: 'phone',
     label: 'Phone Number',
     type: 'text',
     name: 'Phone Number',
     autoComplete: 'phone',
-    autoFocus: false,
+    autoFocus: true,
   },
   {
     id: 'password',
@@ -110,6 +112,7 @@ class SignUp extends PureComponent{
     this.state={
       isClicked: false,
       emptyFields: false,
+      next: false,
       form: {
         'first_name': '',
         'last_name': '',
@@ -136,6 +139,9 @@ class SignUp extends PureComponent{
   }
 
   handleSignIn = () => {
+    this.setState({
+      next: false,
+    })
     Router.pushRoute('login');
   }
 
@@ -152,11 +158,27 @@ class SignUp extends PureComponent{
     });
   };
 
+  onNext = () => {
+    const {form} = this.state;
+
+    if(form['firstName'] ==='' || form['lastName'] ==='' || form['email'] ===''){
+      this.setState({
+        isClicked: true,
+        emptyFields: true,
+        googleLoginError: false
+      });
+    }else{
+      this.setState({
+        next: true,
+      });
+    }
+  }
+
   onSubmit = () => {
     const {form} = this.state;
     const {actions} = this.props;
 
-    if(form['firstName'] ==='' || form['lastName'] ==='' || form['email'] ==='' || form['password'] ==='' || form['phone'] ===''){
+    if(form['password'] ==='' || form['phone'] ===''){
       this.setState({
         isClicked: true,
         emptyFields: true,
@@ -193,8 +215,10 @@ class SignUp extends PureComponent{
   }
 
   render() {
-    const {isClicked, form, emptyFields, googleLoginError} = this.state;
+    const {isClicked, form, emptyFields, googleLoginError, next} = this.state;
     const {error, googleError} = this.props;
+
+    const Form = next ? Form2 : Form1;
 
     return (
       <MotionRow initial="exit" animate="enter" exit="exit">
@@ -224,7 +248,7 @@ class SignUp extends PureComponent{
             Sign in
           </ButtonWrapper>
         </MotionCol>
-        <LoginCol sm={8} xs={12} align="center">
+        <LoginCol sm={7} md={8} xs={12} align="center">
           <TitleWrapper component="h1" variant="h2">
             Create Account
           </TitleWrapper>
@@ -268,11 +292,19 @@ class SignUp extends PureComponent{
                   <Separator height={2}/>
                 </Fragment>
             )}
+            <Separator height={1}/>
             <Row alignItems="center">
               <Col sm={5} xs={5}>
-                <ButtonLayout fullWidth variant="contained" color="primary" onClick={() => this.onSubmit()}>
-                  Sign Up
-                </ButtonLayout>
+                {!next 
+                  ? 
+                    <ButtonLayout fullWidth variant="contained" color="primary" onClick={() => this.onNext()}>
+                      Next
+                    </ButtonLayout>
+                  :
+                    <ButtonLayout fullWidth variant="contained" color="primary" onClick={() => this.onSubmit()}>
+                      Sign Up
+                    </ButtonLayout>
+                }
               </Col>
               <Col sm={1} xs={1}>
                 <Typography variant="body2" align="right" color="textSecondary">
