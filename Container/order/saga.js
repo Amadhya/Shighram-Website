@@ -84,7 +84,7 @@ const ACTIONS = {
             if(res.status === 400)
               throw res.message;
 
-            if(res.amount==="0")
+            if(res.payment_verified==="True")
               throw "No due amount remaining."
   
             dispatch(orderSuccess(res));

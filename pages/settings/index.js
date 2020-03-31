@@ -56,33 +56,39 @@ class Settings extends PureComponent{
   constructor(props){
     super(props);
     this.state={
-      general: true,
+      general: typeof window !== "undefined" && window.innerWidth < 768 ? false : true,
       security: false,
       history: false,
     }
   }
 
   onGeneralClick = () => {
+    const {general} = this.state;
+
     this.setState({
-      general: true,
+      general: !general,
       security: false,
       history: false,
     })
   };
 
   onSecurityClick = () => {
+    const {security} = this.state;
+
     this.setState({
       general: false,
-      security: true,
+      security: !security,
       history: false,
     })
   };
 
   onHistoryClick = () => {
+    const {history} = this.state;
+
     this.setState({
       general: false,
       security: false,
-      history: true,
+      history: !history,
     })
   };
 

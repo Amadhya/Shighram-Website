@@ -11,6 +11,9 @@ import fetchPaymentHistoryDetails, {getError, getStatus, getSuccess, getPaymentH
 const RowWrapper = styled(Row)`
   padding: 20px 25px;
   background: ${(props) => props.bgGrey && Theme.lightGrey};
+  @media(max-width: 769px){
+    padding: 11px;
+  }
 `;
 const TitleWrapper = styled(Typography)`
   font-weight: 600 !important;
@@ -22,8 +25,9 @@ const Card = styled(FlexView)`
   overflow: unset;
   flex-direction: column;
   margin-bottom: 20px;
-  @media(max-width: 767px){
+  @media(max-width: 769px){
     min-width: 75%;
+    border-left: 4px solid ${(props) => props.done ? '#32CD32' : 'red'} !important;
   }
 `;
 const HeaderWrapper = styled(Row)`
@@ -32,19 +36,14 @@ const HeaderWrapper = styled(Row)`
   z-index: 1;
 `;
 const DesktopWrapper = styled.div`
-  @media(max-width: 767px){
+  @media(max-width: 769px){
     display: none !important;
   }
 `;
 const MobileWrapper = styled.div`
-  @media(min-width: 767px){
+  @media(min-width: 769px){
     display: none;
   }
-`;
-const ColWrapper = styled(Col)`
-  padding: 10px 0px;
-  border-bottom: 1px solid ${Theme.grey};
-  margin: 0px 15px;
 `;
 const StatusWrapper = styled(Typography)`
   color: ${(props) => props.done ? '#32CD32' : 'red'} !important;
@@ -89,14 +88,14 @@ class History extends PureComponent{
       )
     
     return(
-      <Col mdOffset={1} md={10} smOffset={1} sm={11}>
+      <Col mdOffset={1} md={10} smOffset={1} sm={10}>
         <DesktopWrapper>
           <TitleWrapper variant="h4" color="textSecondary">Parking History</TitleWrapper>
           <Separator height={2}/>
         </DesktopWrapper>
         <Separator height={2}/>
-        <Card>
-          <DesktopWrapper>
+        <DesktopWrapper>
+          <Card>
             <HeaderWrapper>
               <Col sm={3}>
                 <Typography variant="body1" color="textSecondary">Location</Typography>
@@ -123,7 +122,7 @@ class History extends PureComponent{
                   <Typography variant="body1" color="textSecondary">{obj.location}</Typography>
                 </Col>
                 <Col sm={2}>
-                  <Typography variant="body1" color="textSecondary">{obj.amount}</Typography>
+                  <Typography variant="body1" color="textSecondary">₹&nbsp;{obj.amount/100}</Typography>
                 </Col>
                 <Col sm={2}>
                   <Typography variant="body1" color="textSecondary">{obj.rfid}</Typography>
@@ -139,20 +138,25 @@ class History extends PureComponent{
                 </Col>
               </RowWrapper>
             ))}
-          </DesktopWrapper>
-          <MobileWrapper>
-            {history.map((obj,index) => (
-              <ColWrapper key={index.toString()+screen+screen}>
-                <Typography variant="body1" color="textSecondary" gutterBottom>Location:&nbsp;{obj.location}</Typography>
-                <Typography variant="body1" color="textSecondary" gutterBottom>Amount:&nbsp;{obj.amount}</Typography>
-                <Typography variant="body1" color="textSecondary" gutterBottom>RFID Number:&nbsp;{obj.rfid}</Typography>
-                <Typography variant="body1" color="textSecondary" gutterBottom>Slot Number:&nbsp;{obj.slot_number}</Typography>
-            <Typography variant="body1" color="textSecondary" gutterBottom>Date:&nbsp;{dateTime(obj.created_on)}</Typography>
-                <StatusWrapper variant="body1" color="textSecondary" done={obj.payment_verified==="True"}>Status:&nbsp;{obj.payment_verified==="True" ? 'Paid' : 'Pending'}</StatusWrapper>
-              </ColWrapper>
-            ))}
-          </MobileWrapper>
-        </Card>
+          </Card>
+        </DesktopWrapper>
+        <MobileWrapper>
+          {history.map((obj,index) => (
+            <Card done={obj.payment_verified==="True"} key={index.toString()+screen+screen}>
+              <RowWrapper>
+                <Col xs={8}>
+                  <Typography variant="body1" gutterBottom>{obj.location}</Typography>
+                  <Typography variant="body2" color="textSecondary" gutterBottom>Slot number is&nbsp;{obj.slot_number}</Typography>
+                  <Typography variant="body2" color="textSecondary" gutterBottom>{dateTime(obj.created_on)}</Typography>
+                </Col>
+                <Col xs={4} flex reverse justify="space-between">
+                  <Typography align="right" variant="body1" gutterBottom>₹&nbsp;{obj.amount/100}</Typography>
+                  <StatusWrapper align="right" variant="body2" color="textSecondary" done={obj.payment_verified==="True"}>{obj.payment_verified==="True" ? 'Paid' : 'Pending'}</StatusWrapper>
+                </Col>
+              </RowWrapper>
+            </Card>
+          ))}
+        </MobileWrapper>
         <Separator height={1}/>
       </Col>
     )
