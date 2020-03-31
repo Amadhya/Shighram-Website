@@ -89,7 +89,7 @@ class History extends PureComponent{
       )
     
     return(
-      <Col smOffset={2} sm={9}>
+      <Col mdOffset={1} md={10} smOffset={1} sm={11}>
         <DesktopWrapper>
           <TitleWrapper variant="h4" color="textSecondary">Parking History</TitleWrapper>
           <Separator height={2}/>

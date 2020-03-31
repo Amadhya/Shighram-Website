@@ -1,3 +1,5 @@
+import cookie from 'js-cookie';
+
 const ACTIONS = {
     POST: 'GOOGLE_LOGIN_POST',
     POST_SUCCESS: 'GOOGLE_LOGIN_POST_SUCCESS',
@@ -73,7 +75,7 @@ const ACTIONS = {
             if(res.status === '400')
               throw res.message;
   
-            localStorage.setItem('token', res.token);
+            cookie.set('token',res.token);
             dispatch(googleLoginSuccess());
           })
           .catch(error => {

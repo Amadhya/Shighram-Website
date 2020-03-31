@@ -97,7 +97,7 @@ class Settings extends PureComponent{
             content="Suvidham is a web application to ease and enhance your parking experience. Through Suvidham, users can reserve a parking slot and pay parking fee online through our website and android app."
           />
         </Head>
-        <OptionsWrapper xs={12} sm={2}>
+        <OptionsWrapper xs={12} sm={3} md={2}>
           <FlexView justify="center">
             <img src="/static/images/icon_user.png" alt="profile"/>
           </FlexView>
@@ -121,7 +121,7 @@ class Settings extends PureComponent{
             </DetailMobileWrapper>
           )}
         </OptionsWrapper>
-        <DetailWrapper xs={12} sm={10}>
+        <DetailWrapper xs={12} sm={9} md={10}>
           {general && <General screen="Desktop"/>}
           {history && <History screen="Desktop"/>}
           {security && <Security screen="Desktop"/>}

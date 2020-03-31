@@ -115,7 +115,7 @@ class General extends PureComponent{
     const {form, isClicked} = this.state;
 
     return (
-      <Col smOffset={2} sm={6}>
+      <Col mdOffset={1} md={6} smOffset={1} sm={10}>
         <DesktopWrapper>
           <TitleWrapper variant="h4" color="textSecondary">Profile</TitleWrapper>
           <Separator height={2}/>

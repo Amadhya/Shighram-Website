@@ -85,7 +85,7 @@ const ACTIONS = {
               throw res.message;
 
             if(res.amount==="0")
-              throw res.message
+              throw "No due amount remaining."
   
             dispatch(orderSuccess(res));
           })

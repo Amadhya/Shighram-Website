@@ -92,7 +92,7 @@ class Security extends PureComponent{
     const {current, newPassword, rePassword, errorMatch, isClicked, emptyField} = this.state;
 
     return(
-      <Col smOffset={2} sm={6}>
+      <Col mdOffset={1} md={6} smOffset={1} sm={10}>
         <DesktopWrapper>
           <TitleWrapper variant="h4" color="textSecondary">Security</TitleWrapper>
           <Separator height={2}/>
