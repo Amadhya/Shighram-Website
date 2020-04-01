@@ -70,7 +70,7 @@ const ACTIONS = {
   export default function fetchOrederDetails(rfid) {
     return dispatch => {
       dispatch(orderPending());
-      return fetch(`http://127.0.0.1:8000/api/verify_rfid`, {
+      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/verify_rfid`, {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${cookie.get('token')}`,

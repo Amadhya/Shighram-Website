@@ -72,7 +72,7 @@ const ACTIONS = {
   export default function fetchForgotPasswordDetails(email) {
     return dispatch => {
       dispatch(forgotPasswordPending());
-      return fetch('http://127.0.0.1:8000/api/password_reset_request', {
+      return fetch('https://rhubarb-pie-74723.herokuapp.com/api/password_reset_request', {
         method: 'POST',
         body: JSON.stringify({'email': email})
       })

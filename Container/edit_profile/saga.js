@@ -67,7 +67,7 @@ const ACTIONS = {
   export default function fetchProfileEdit(form) {
     return dispatch => {
       dispatch(editProfilePending());
-      return fetch(`http://127.0.0.1:8000/api/editProfile`, {
+      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/editProfile`, {
         method: 'PATCH',
         headers: {
         Authorization: `Bearer ${cookie.get('token')}`,

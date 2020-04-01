@@ -67,7 +67,7 @@ export const getSucces = state => state.loginReducer.success;
 export default function fetchLoginDetails(form) {
   return dispatch => {
     dispatch(loginPending());
-    return fetch('http://127.0.0.1:8000/api/login', {
+    return fetch('https://rhubarb-pie-74723.herokuapp.com/api/login', {
       method: 'POST',
       body: JSON.stringify({...form})
     })

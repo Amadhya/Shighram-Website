@@ -9,6 +9,7 @@ const allRoutes=[
   ['slots_view', '/slots_view', '/slots_view'],
   ['settings', '/settings', '/settings'],
   ['payment', '/payment', '/payment'],
+  ['pay_order', '/pay_order', '/pay_order'],
   ['payment_success','/payment_success','/payment_success']
 ];
 

@@ -65,7 +65,7 @@ const ACTIONS = {
   export default function fetchPasswordReset(form) {
     return dispatch => {
       dispatch(passwordResetPending());
-      return fetch(`http://127.0.0.1:8000/api/reset_password`, {
+      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/reset_password`, {
         method: 'PATCH',
         body: JSON.stringify({...form})
       })

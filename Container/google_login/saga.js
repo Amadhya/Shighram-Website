@@ -66,7 +66,7 @@ const ACTIONS = {
   export default function fetchGoogleLoginDetails(token) {
     return dispatch => {
       dispatch(googleLoginPending());
-      return fetch('http://127.0.0.1:8000/api/google_login_access_token', {
+      return fetch('https://rhubarb-pie-74723.herokuapp.com/api/google_login_access_token', {
         method: 'POST',
         body: JSON.stringify({'access_token':token})
       })

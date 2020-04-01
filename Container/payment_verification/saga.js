@@ -66,7 +66,7 @@ const ACTIONS = {
   export default function fetchPaymentVerification(response) {
     return dispatch => {
       dispatch(paymentVerificationPending());
-      return fetch(`http://127.0.0.1:8000/api/paymentVerification`, {
+      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/paymentVerification`, {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${cookie.get('token')}`,

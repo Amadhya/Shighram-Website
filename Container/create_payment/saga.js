@@ -1,25 +1,25 @@
 import cookie from 'js-cookie';
 
 const ACTIONS = {
-  POST: 'SIGNUP_POST',
-  POST_SUCCESS: 'SIGNUP_POST_SUCCESS',
-  POST_FAILURE: 'SIGNUP_POST_FAILURE',
+  POST: 'PAY_POST',
+  POST_SUCCESS: 'PAY_POST_SUCCESS',
+  POST_FAILURE: 'PAY_POST_FAILURE',
 };
 
 //ACTIONS
-const signupPending = () => {
+const payPending = () => {
   return {
     type: ACTIONS.POST,
   }
 };
 
-const signupSuccess = () => {
+const paySuccess = () => {
   return{
     type: ACTIONS.POST_SUCCESS,
   }
 };
 
-const signupFailure = (error) => {
+const payFailure = (error) => {
   return{
     type: ACTIONS.POST_FAILURE,
     error,
@@ -30,11 +30,10 @@ const signupFailure = (error) => {
 const initialState = {
   pending: false,
   error: null,
-  user: null,
   success: false,
 };
 
-export function signupReducer(state=initialState, action) {
+export function payReducer(state=initialState, action) {
   switch (action.type) {
     case ACTIONS.POST:
       return {
@@ -44,6 +43,7 @@ export function signupReducer(state=initialState, action) {
     case ACTIONS.POST_SUCCESS:
       return {
         ...state,
+        error: null,
         pending: false,
         success: true,
       };
@@ -58,29 +58,30 @@ export function signupReducer(state=initialState, action) {
 }
 
 //SELECTORS
-export const getStatus = state => state.signupReducer.pending;
-export const getSuccess = state => state.signupReducer.success;
-export const getError = state => state.signupReducer.error;
+export const getStatus = state => state.payReducer.pending;
+export const getError = state => state.payReducer.error;
+export const getSucces = state => state.payReducer.success;
 
 //SAGA
-export default function fetchSignUpDetails(form) {
+export default function fetchPayDetails(data) {
   return dispatch => {
-    dispatch(signupPending());
-    return fetch('https://rhubarb-pie-74723.herokuapp.com/api/signup', {
+    dispatch(payPending());
+    return fetch('https://rhubarb-pie-74723.herokuapp.com/api/payment', {
       method: 'POST',
-      body: JSON.stringify({...form})
+      headers: {
+        Authorization: `Bearer ${cookie.get('token')}`,
+      },
+      body: JSON.stringify({...data})
     })
         .then(res => res.json())
         .then(res => {
-          console.log(res);
           if(res.status === 400)
             throw res.message;
-
-          cookie.set('token',res.token);
-          dispatch(signupSuccess());
+          
+          dispatch(paySuccess());
         })
         .catch(error => {
-          dispatch(signupFailure(error))
+          dispatch(payFailure(error))
         })
   };
 };

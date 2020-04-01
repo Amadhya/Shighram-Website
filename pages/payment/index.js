@@ -106,6 +106,10 @@ class Checkout extends Component {
   onPay = () => {
     const {order, actions} = this.props;
 
+    this.setState({
+      isClicked: false,
+    });
+
     let options = {
       "key": process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
       "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise or INR 500.

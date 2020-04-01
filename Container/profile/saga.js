@@ -70,7 +70,7 @@ const ACTIONS = {
   export default function fetchUserDetails() {
     return dispatch => {
       dispatch(userPending());
-      return fetch(`http://127.0.0.1:8000/api/profile`, {
+      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/profile`, {
         headers: {
           Authorization: `Bearer ${cookie.get('token')}`,
         }

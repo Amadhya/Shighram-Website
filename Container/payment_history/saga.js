@@ -70,7 +70,7 @@ const ACTIONS = {
   export default function fetchPaymentHistoryDetails() {
     return dispatch => {
       dispatch(paymentHistoryPending());
-      return fetch(`http://127.0.0.1:8000/api/payment_history`, {
+      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/payment_history`, {
         headers: {
           Authorization: `Bearer ${cookie.get('token')}`,
         }
