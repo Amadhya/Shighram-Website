@@ -66,12 +66,13 @@ export const getError = state => state.signupReducer.error;
 export default function fetchSignUpDetails(form) {
   return dispatch => {
     dispatch(signupPending());
-    return fetch('http://127.0.0.1:8000/api/signup', {
+    return fetch('http://suvidham-dev2.ap-south-1.elasticbeanstalk.com/api/signup', {
       method: 'POST',
       body: JSON.stringify({...form})
     })
         .then(res => res.json())
         .then(res => {
+          console.log(res);
           if(res.status === 400)
             throw res.message;
 
