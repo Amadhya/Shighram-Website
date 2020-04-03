@@ -13,7 +13,7 @@ import rootReducer from "../reducers";
 import Nav from "../components/nav";
 
 const middlewares = [thunk];
-export const store = createStore(rootReducer,{},applyMiddleware(logger, ...middlewares));
+export const store = createStore(rootReducer,{},applyMiddleware(...middlewares));
 
 const privateUrl = [
   "/slots_view",
