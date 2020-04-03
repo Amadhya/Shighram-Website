@@ -34,7 +34,7 @@ const DesktopButton = styled(Button)`
   }
 `;
 const MobileButton = styled(MenuItem)`
-  @media(min-width: 768px){
+  @media(min-width: 769px){
     display: none !important;
   }
 `;

@@ -33,9 +33,13 @@ const slots = [
 
 const SlotView = () => (
     <Container justify="center" initial="exit" animate="enter" exit="exit">
-        <SlotWrapper wrap="true" justify="center">
-            <Typography variant="h4" component="h2" align="center" color="textSecondary">
-                Coming Up Soon. Stay tuned!
+        <SlotWrapper wrap="true" justify="center" reverse>
+            <Typography variant="h4" component="h2" align="center" color="textSecondary" gutterBottom>
+                Arduino Offline
+            </Typography>
+            <Typography variant="body1" align="center" color="textSecondary" gutterBottom>
+                To view other features of the website login with tony@avengers.com and the password is tony.
+                For payment feature use RFID Number: 10101010.
             </Typography>
         </SlotWrapper>
     </Container>

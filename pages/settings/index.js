@@ -11,16 +11,16 @@ import Theme from "../../constants/theme";
 
 
 const OptionsWrapper = styled(Col)`
-  padding-left: 8px;
+  padding-left: 1rem;
   @media(min-width: 767px){
     border-right: 1px solid ${Theme.grey};
-    padding: 90px 10px 0px 0px;
+    padding: 1rem 0.5rem 0 0;
     box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
   }
 `;
 const DetailWrapper = styled(Col)`
   background: #e0e0e059;
-  padding-top: 90px;
+  padding-top: 2rem;
   @media(max-width: 767px){
     display: none !important;
   }
@@ -32,10 +32,11 @@ const DetailMobileWrapper = styled(Col)`
   }
 `;
 const ContainerWrapper = styled(Container)`
-  min-height: 100vh;
-  padding-top: 40px;
-  @media(min-width: 1026px){
-    padding-top: 20px;
+  min-height: 80vh;
+  padding-top: 6rem;
+  @media(min-width: 767px){
+    min-height: 90vh;
+    padding-top: 4.5rem;
   }
 `;
 

@@ -60,18 +60,15 @@ export const Card = styled(FlexView)`
   box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
   overflow: unset;
   padding: 15px;
-  @media(max-width: 767px){
+  @media(max-width: 769px){
     min-width: 75%;
   }
 `;
 
 export const Container = styled(FlexView)`
-    padding-top: 120px;
+    padding-top: 7rem;
     @media(min-width: 767px && max-width: 1026px){
         padding-top: 140px;
-    }
-    @media(max-width: 767px){
-        padding-top: 120px;
     }
 `;
 

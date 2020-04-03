@@ -12,6 +12,7 @@ import {ButtonLayout} from "../../components/button";
 import {Router} from "../../routes";
 import {Row, Col, Separator, MotionCol, MotionRow} from "../../components/layout";
 import TextFieldInput from "../../components/textfield";
+import {CircularProgressWrapper} from "../../components/progress";
 import fetchSignUpDetails, {getSuccess, getError, getStatus} from "../../Container/signup/saga";
 import fetchGoogleLoginDetails, {getError as getGoogleError, getStatus as getGoogleStatus, getSuccess as getGoogleSuccess} from "../../Container/google_login/saga";
 
@@ -306,7 +307,17 @@ class SignUp extends PureComponent{
                       Next
                     </ButtonLayout>
                   :
-                    <ButtonLayout fullWidth variant="contained" color="primary" onClick={() => this.onSubmit()}>
+                    <ButtonLayout 
+                      fullWidth 
+                      variant="contained" 
+                      color="primary"
+                      endIcon={
+                        isClicked && !emptyFields && !error 
+                        && 
+                        <CircularProgressWrapper size={18}/>
+                      }
+                      onClick={() => this.onSubmit()}
+                    >
                       Sign Up
                     </ButtonLayout>
                 }

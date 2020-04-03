@@ -156,6 +156,7 @@ class History extends PureComponent{
               </RowWrapper>
             </Card>
           ))}
+          {history.length===0 && <Typography color="textSecondary" align="center" variant="body1" gutterBottom>No history available.</Typography>}
         </MobileWrapper>
         <Separator height={1}/>
       </Col>

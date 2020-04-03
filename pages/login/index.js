@@ -12,6 +12,7 @@ import {Row, Col, Separator, MotionCol, MotionRow} from "../../components/layout
 import {FormWrapper} from "../../components/form";
 import {ButtonLayout} from "../../components/button";
 import TextFieldInput from "../../components/textfield";
+import {CircularProgressWrapper} from "../../components/progress";
 import fetchLoginDetails, {getError, getStatus, getSucces} from "../../Container/login/saga";
 import fetchGoogleLoginDetails, {getError as getGoogleError, getStatus as getGoogleStatus, getSuccess as getGoogleSuccess} from "../../Container/google_login/saga";
 
@@ -233,7 +234,17 @@ class Login extends PureComponent{
             <Separator height={3}/>
             <Row alignItems="center">
               <Col sm={5} xs={5}>
-                <ButtonLayout fullWidth variant="contained" color="primary" onClick={() => this.onSubmit()}>
+                <ButtonLayout 
+                  fullWidth 
+                  variant="contained" 
+                  color="primary" 
+                  endIcon={
+                    isClicked && !emptyFields && !error 
+                    && 
+                    <CircularProgressWrapper size={18}/>
+                  }
+                  onClick={() => this.onSubmit()}
+                >
                   Sign In
                 </ButtonLayout>
               </Col>

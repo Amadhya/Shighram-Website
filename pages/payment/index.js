@@ -14,6 +14,7 @@ import Theme from "../../constants/theme";
 import {Container, Card, Row, Col, Separator, FlexView} from "../../components/layout";
 import {FormWrapper} from "../../components/form";
 import {ButtonLayout} from "../../components/button";
+import {CircularProgressWrapper} from "../../components/progress";
 import fetchOrederDetails, {getError, getStatus, getSucces, getOrder} from "../../Container/order/saga";
 import fetchPaymentVerification, {getError as VerificationError, getStatus as VerificationStatus, getSucces as VerificationSuccess} from "../../Container/payment_verification/saga";
 
@@ -139,7 +140,7 @@ class Checkout extends Component {
 
   renderRFIDSearch = () => {
     const {rfid, isClicked} = this.state;
-    const {error} = this.props;
+    const {error, success, pending} = this.props;
 
     return (
       <Card reverse>
@@ -163,7 +164,16 @@ class Checkout extends Component {
               </Fragment>
           )}
           <Typography variant="caption" color="textSecondary" gutterBottom={true}>Enter the first 10 digits of rfid card number</Typography>
-          <ButtonLayout variant="contained" color="primary" onClick={() => this.onSubmit()}>
+          <ButtonLayout 
+            variant="contained"
+            color="primary" 
+            endIcon={
+              isClicked && !((typeof pending !== undefined && typeof success !== undefined && !pending && success) || error) 
+              && 
+              <CircularProgressWrapper size={18}/>
+            } 
+            onClick={() => this.onSubmit()}
+          >
             Calculate Charge
           </ButtonLayout>
         </FormWrapper>
@@ -212,9 +222,13 @@ class Checkout extends Component {
             </Row>
           </ColWrapper>
           <DetailsWrapper sm={8} xs={12}>
-            <Row justify="space-between" alignItems="baseline">
-              <TitleWrapper variant="h4" display="inline" >Suvidham</TitleWrapper>
-              <Typography variant="body1" display="inline" align="justify" color="textSecondary">{dateTime(order.created_on)}</Typography>
+            <Row alignItems="baseline">
+              <Col sm={6}>
+                <TitleWrapper variant="h4">Suvidham</TitleWrapper>
+              </Col>
+              <Col sm={6}>
+                <Typography variant="body1" align="right" color="textSecondary">{dateTime(order.created_on)}</Typography>
+              </Col>
             </Row>
             <hr/>
             <Separator height={2}/>
@@ -224,7 +238,14 @@ class Checkout extends Component {
             <Typography variant="body1" gutterBottom color="textSecondary">Location:&nbsp;{order.location}</Typography>
             <Typography variant="body1" gutterBottom color="textSecondary">RFID&nbsp;Number:&nbsp;{order.rfid}</Typography>
             <Separator height={2}/>
-            <ButtonLayout variant="contained" color="primary" id="rzp-button1" onClick={() => this.onPay()}>Pay Now</ButtonLayout>
+            <ButtonLayout 
+              variant="contained" 
+              color="primary" 
+              id="rzp-button1"
+              onClick={() => this.onPay()}
+            >
+                Pay Now
+            </ButtonLayout>
           </DetailsWrapper>
         </RowWrapper>
       </FlexView>
@@ -233,6 +254,7 @@ class Checkout extends Component {
 
   render() {
     const {success, pending} = this.props;
+    const {isClicked} = this.state;
 
     return (
       <Container justify="center" initial="exit" animate="enter" exit="exit">
@@ -244,7 +266,7 @@ class Checkout extends Component {
             content="Suvidham is a web application to ease and enhance your parking experience. Through Suvidham, users can reserve a parking slot and pay parking fee online through our website and android app."
           />
         </Head>
-        {typeof pending !== undefined && typeof success !== undefined && !pending && success ? this.renderPaymentDetails() : this.renderRFIDSearch()} 
+        {isClicked && typeof pending !== undefined && typeof success !== undefined && !pending && success ? this.renderPaymentDetails() : this.renderRFIDSearch()} 
       </Container>
     );
   }
