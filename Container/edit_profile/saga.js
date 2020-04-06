@@ -68,7 +68,7 @@ const ACTIONS = {
   export default function fetchProfileEdit(form) {
     return dispatch => {
       dispatch(editProfilePending());
-      return fetch(`${DOMAIN_URL}${BASE_URL}api/editProfile`, {
+      return fetch(`${DOMAIN_URL}${BASE_URL}editProfile`, {
         method: 'PATCH',
         headers: {
         Authorization: `Bearer ${cookie.get('token')}`,

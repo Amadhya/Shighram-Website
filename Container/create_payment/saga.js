@@ -67,7 +67,7 @@ export const getSucces = state => state.payReducer.success;
 export default function fetchPayDetails(data) {
   return dispatch => {
     dispatch(payPending());
-    return fetch(`${DOMAIN_URL}${BASE_URL}api/payment`, {
+    return fetch(`${DOMAIN_URL}${BASE_URL}payment`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${cookie.get('token')}`,
