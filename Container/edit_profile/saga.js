@@ -1,4 +1,5 @@
 import cookie from 'js-cookie';
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
 
 const ACTIONS = {
     PATCH: 'PROFILE_PATCH',
@@ -67,7 +68,7 @@ const ACTIONS = {
   export default function fetchProfileEdit(form) {
     return dispatch => {
       dispatch(editProfilePending());
-      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/editProfile`, {
+      return fetch(`${DOMAIN_URL}${BASE_URL}api/editProfile`, {
         method: 'PATCH',
         headers: {
         Authorization: `Bearer ${cookie.get('token')}`,

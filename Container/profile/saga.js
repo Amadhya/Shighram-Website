@@ -1,4 +1,5 @@
 import cookie from 'js-cookie';
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
 
 const ACTIONS = {
     GET: 'GET_USER',
@@ -70,7 +71,7 @@ const ACTIONS = {
   export default function fetchUserDetails() {
     return dispatch => {
       dispatch(userPending());
-      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/profile`, {
+      return fetch(`${DOMAIN_URL}${BASE_URL}profile`, {
         headers: {
           Authorization: `Bearer ${cookie.get('token')}`,
         }

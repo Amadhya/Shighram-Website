@@ -1,4 +1,5 @@
 import cookie from 'js-cookie';
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
 
 const ACTIONS = {
   POST: 'PAY_POST',
@@ -66,7 +67,7 @@ export const getSucces = state => state.payReducer.success;
 export default function fetchPayDetails(data) {
   return dispatch => {
     dispatch(payPending());
-    return fetch('https://rhubarb-pie-74723.herokuapp.com/api/payment', {
+    return fetch(`${DOMAIN_URL}${BASE_URL}api/payment`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${cookie.get('token')}`,

@@ -1,4 +1,5 @@
 import cookie from 'js-cookie';
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
 
 const ACTIONS = {
     PATCH: 'ORDER_PATCH',
@@ -70,7 +71,7 @@ const ACTIONS = {
   export default function fetchOrederDetails(rfid) {
     return dispatch => {
       dispatch(orderPending());
-      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/verify_rfid`, {
+      return fetch(`${DOMAIN_URL}${BASE_URL}verify_rfid`, {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${cookie.get('token')}`,

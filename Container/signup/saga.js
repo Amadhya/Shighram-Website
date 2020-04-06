@@ -1,4 +1,5 @@
 import cookie from 'js-cookie';
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
 
 const ACTIONS = {
   POST: 'SIGNUP_POST',
@@ -66,7 +67,7 @@ export const getError = state => state.signupReducer.error;
 export default function fetchSignUpDetails(form) {
   return dispatch => {
     dispatch(signupPending());
-    return fetch('https://rhubarb-pie-74723.herokuapp.com/api/signup', {
+    return fetch(`${DOMAIN_URL}${BASE_URL}signup`, {
       method: 'POST',
       body: JSON.stringify({...form})
     })

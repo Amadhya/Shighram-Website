@@ -1,4 +1,5 @@
 import cookie from 'js-cookie';
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
 
 const ACTIONS = {
     GET: 'GET_PAYMENT_HISTORY',
@@ -70,7 +71,7 @@ const ACTIONS = {
   export default function fetchPaymentHistoryDetails() {
     return dispatch => {
       dispatch(paymentHistoryPending());
-      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/payment_history`, {
+      return fetch(`${DOMAIN_URL}${BASE_URL}payment_history`, {
         headers: {
           Authorization: `Bearer ${cookie.get('token')}`,
         }

@@ -1,4 +1,5 @@
 import cookie from 'js-cookie';
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
 
 const ACTIONS = {
     POST: 'GOOGLE_LOGIN_POST',
@@ -66,7 +67,7 @@ const ACTIONS = {
   export default function fetchGoogleLoginDetails(token) {
     return dispatch => {
       dispatch(googleLoginPending());
-      return fetch('https://rhubarb-pie-74723.herokuapp.com/api/google_login_access_token', {
+      return fetch(`${DOMAIN_URL}${BASE_URL}google_login_access_token`, {
         method: 'POST',
         body: JSON.stringify({'access_token':token})
       })

@@ -1,4 +1,5 @@
 import cookie from 'js-cookie';
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
 
 const ACTIONS = {
     PATCH: 'PAYMENT_VERIFICATION_PATCH',
@@ -66,7 +67,7 @@ const ACTIONS = {
   export default function fetchPaymentVerification(response) {
     return dispatch => {
       dispatch(paymentVerificationPending());
-      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/paymentVerification`, {
+      return fetch(`${DOMAIN_URL}${BASE_URL}paymentVerification`, {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${cookie.get('token')}`,

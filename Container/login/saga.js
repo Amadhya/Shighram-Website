@@ -1,4 +1,5 @@
 import cookie from 'js-cookie';
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
 
 const ACTIONS = {
   POST: 'LOGIN_POST',
@@ -67,7 +68,7 @@ export const getSucces = state => state.loginReducer.success;
 export default function fetchLoginDetails(form) {
   return dispatch => {
     dispatch(loginPending());
-    return fetch('https://rhubarb-pie-74723.herokuapp.com/api/login', {
+    return fetch(`${DOMAIN_URL}${BASE_URL}login`, {
       method: 'POST',
       body: JSON.stringify({...form})
     })

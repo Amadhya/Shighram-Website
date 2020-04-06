@@ -1,3 +1,5 @@
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
+
 const ACTIONS = {
     PATCH: 'PASSWORD_PATCH',
     PATCH_SUCCESS: 'PASSWORD_PATCH_SUCCESS',
@@ -65,7 +67,7 @@ const ACTIONS = {
   export default function fetchPasswordReset(form) {
     return dispatch => {
       dispatch(passwordResetPending());
-      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/reset_password`, {
+      return fetch(`${DOMAIN_URL}${BASE_URL}reset_password`, {
         method: 'PATCH',
         body: JSON.stringify({...form})
       })

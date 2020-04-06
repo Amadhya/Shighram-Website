@@ -1,3 +1,5 @@
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
+
 const ACTIONS = {
     POST: 'FORGOT_PASSWORD_POST',
     POST_SUCCESS: 'FORGOT_PASSWORD_POST_SUCCESS',
@@ -72,7 +74,7 @@ const ACTIONS = {
   export default function fetchForgotPasswordDetails(email) {
     return dispatch => {
       dispatch(forgotPasswordPending());
-      return fetch('https://rhubarb-pie-74723.herokuapp.com/api/password_reset_request', {
+      return fetch(`${DOMAIN_URL}${BASE_URL}password_reset_request`, {
         method: 'POST',
         body: JSON.stringify({'email': email})
       })

@@ -1,5 +1,7 @@
 import cookie from 'js-cookie';
 
+import {DOMAIN_URL, BASE_URL} from "../../constants/api";
+
 const ACTIONS = {
     PATCH: 'PATCH_VERFIFICATION',
     PATCH_SUCCESS: 'PATCH_PASSWORD_SUCCESS',
@@ -67,7 +69,7 @@ const ACTIONS = {
   export default function fetchPasswordChange(current, newPassword) {
     return dispatch => {
       dispatch(passwordChangePending());
-      return fetch(`https://rhubarb-pie-74723.herokuapp.com/api/change_password`, {
+      return fetch(`${DOMAIN_URL}${BASE_URL}change_password`, {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
