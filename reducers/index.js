@@ -11,7 +11,6 @@ import {passwordChangeReducer} from "../Container/change_password/saga";
 import {forgotPasswordReducer} from "../Container/forgot_password/saga";
 import {passwordResetReducer} from "../Container/reset_password/saga";
 import {googleLoginReducer} from "../Container/google_login/saga";
-import {payReducer} from "../Container/create_payment/saga";
 
 const rootReducer = combineReducers({
     loginReducer,
@@ -25,7 +24,6 @@ const rootReducer = combineReducers({
     passwordChangeReducer,
     forgotPasswordReducer,
     passwordResetReducer,
-    payReducer
 });
 
 export default rootReducer;
