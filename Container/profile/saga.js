@@ -78,10 +78,10 @@ const ACTIONS = {
       })
         .then(res => res.json())
         .then(res => {
-          if(res.status === 400)
+          if(res.status == 200){
+            dispatch(userSuccess(res));
+          }else
             throw res.message;
-  
-          dispatch(userSuccess(res));
         })
         .catch(error => {
           dispatch(userFailure(error))

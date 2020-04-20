@@ -74,11 +74,11 @@ export default function fetchSignUpDetails(form) {
         .then(res => res.json())
         .then(res => {
           console.log(res);
-          if(res.status === 400)
+          if(res.status == 200){
+            cookie.set('token',res.token);
+            dispatch(signupSuccess());
+          }else
             throw res.message;
-
-          cookie.set('token',res.token);
-          dispatch(signupSuccess());
         })
         .catch(error => {
           dispatch(signupFailure(error))

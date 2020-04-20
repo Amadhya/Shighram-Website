@@ -77,13 +77,13 @@ const ACTIONS = {
       })
           .then(res => res.json())
           .then(res => {
-            if(res.status === 400)
-              throw res.message;
-            
-            if(res.token)
-              localStorage.setItem('token', res.token); 
+            if(res.status === 200){
+              if(res.token)
+              cookie.set('token', res.token); 
                
-            dispatch(editProfileSuccess());
+              dispatch(editProfileSuccess());
+            }else
+              throw res.message;
           })
           .catch(error => {
             dispatch(editProfileFailure(error))

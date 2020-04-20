@@ -73,11 +73,11 @@ const ACTIONS = {
       })
           .then(res => res.json())
           .then(res => {
-            if(res.status === '400')
+            if(res.status == 200){
+              cookie.set('token',res.token);
+              dispatch(googleLoginSuccess());
+            }else
               throw res.message;
-  
-            cookie.set('token',res.token);
-            dispatch(googleLoginSuccess());
           })
           .catch(error => {
             dispatch(googleLoginFailure(error))

@@ -80,10 +80,10 @@ const ACTIONS = {
       })
           .then(res => res.json())
           .then(res => {
-            if(res.status === '400')
+            if(res.status == 200){
+              dispatch(forgotPasswordSuccess(res.verified,res.message));
+            }else
               throw res.message;
-            
-            dispatch(forgotPasswordSuccess(res.verified,res.message));
           })
           .catch(error => {
             dispatch(forgotPasswordFailure(error))

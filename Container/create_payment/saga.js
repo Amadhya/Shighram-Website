@@ -76,10 +76,10 @@ export default function fetchPayDetails(data) {
     })
         .then(res => res.json())
         .then(res => {
-          if(res.status === 400)
+          if(res.status == 200){
+            dispatch(paySuccess());
+          }else
             throw res.message;
-          
-          dispatch(paySuccess());
         })
         .catch(error => {
           dispatch(payFailure(error))

@@ -76,10 +76,10 @@ const ACTIONS = {
       })
           .then(res => res.json())
           .then(res => {
-            if(res.status === 400)
+            if(res.status == 200){
+              dispatch(paymentVerificationSuccess());
+            }else
               throw res.message;
-  
-            dispatch(paymentVerificationSuccess());
           })
           .catch(error => {
             dispatch(paymentVerificationFailure(error))

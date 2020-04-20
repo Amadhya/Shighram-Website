@@ -13,7 +13,7 @@ import rootReducer from "../reducers";
 import Nav from "../components/nav";
 
 const middlewares = [thunk];
-export const store = createStore(rootReducer,{},applyMiddleware(...middlewares));
+export const store = createStore(rootReducer,{},applyMiddleware(logger,...middlewares));
 
 const privateUrl = [
   "/slots_view",
@@ -30,12 +30,6 @@ const authUrl = [
 ]
 
 class MyApp extends React.PureComponent{
-  constructor(props){
-    super(props);
-    this.state = {
-      loggedIn: !!(typeof window !== 'undefined' && localStorage.getItem('token')),
-    };
-  }
 
   static async getInitialProps({Component, ctx}){
     let pageProps = {};
@@ -83,8 +77,6 @@ class MyApp extends React.PureComponent{
   handleLogout = () => {
     if(typeof window !== 'undefined'){
       cookie.remove('token')
-      localStorage.removeItem('token');
-      this.setState({ loggedIn: false });
       Router.pushRoute('login');
     }
   };

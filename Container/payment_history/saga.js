@@ -78,10 +78,10 @@ const ACTIONS = {
       })
         .then(res => res.json())
         .then(res => {
-          if(res.status === '400')
+          if(res.status == 200){
+            dispatch(paymentHistorySuccess(res.history));
+          }else
             throw res.message;
-  
-          dispatch(paymentHistorySuccess(res.history));
         })
         .catch(error => {
           dispatch(paymentHistoryFailure(error))

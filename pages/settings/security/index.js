@@ -1,5 +1,5 @@
 import React,{PureComponent, Fragment} from "react";
-import {Box, Button, TextField, Typography} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import styled from "styled-components";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -24,115 +24,112 @@ const DesktopWrapper = styled.div`
   }
 `;
 
+const Form = [
+  {
+    id: 'current_password',
+    label: 'Current Password',
+    type: 'password',
+    name: 'Current Password',
+    autoComplete: 'Current Password',
+    autoFocus: true,
+  },
+  {
+    id: 'new_password',
+    label: 'New Password',
+    type: 'password',
+    name: 'New Password',
+    autoComplete: 'New Password',
+    autoFocus: false,
+  },
+  {
+    id: 're_type_password',
+    label: 'Re-type Password',
+    type: 'password',
+    name: 'Re-type Password',
+    autoComplete: 'Re-type Password',
+    autoFocus: false,
+  },
+];
+
 class Security extends PureComponent{
   constructor(props){
     super(props);
     this.state={
-      current: '',
-      newPassword: '',
-      rePassword: '',
       errorMatch: false,
       isClicked: false,
       emptyField: false,
+      form: {
+        'new_password': '',
+        'current_password': '',
+        're_type_password': ''
+      }
     }
   }
 
-  handlePasswordChange = (e) => {
+  handleChange = (id,val) => {
+    const {form} = this.state;
+    let temp = {};
+
+    temp[id]=val;
     this.setState({
-      current: e.target.value,
+      form: {
+        ...form,
+        ...temp,
+      }
     });
-  };
-
-  handleNewPasswordChange = (e) => {
-    this.setState({
-      newPassword: e.target.value,
-    });
-  };
-
-  handleRePasswordChange = (e) => {
-    const {newPassword} = this.state;
-
-    if(newPassword !== e.target.value){
-      this.setState({
-        errorMatch: true,
-        rePassword: e.target.value,
-      });
-    }else{
-      this.setState({
-        rePassword: e.target.value,
-        errorMatch: false,
-      });
-    }
   };
 
   handlePasswordSubmit = () => {
     //API call to be made
     const {actions} = this.props;
-    const {current, newPassword, rePassword} = this.state;
+    const {form: {current_password, new_password, retype_password}} = this.state;
 
-    if(current==='' || newPassword==='' || rePassword===''){
+    if(current_password==='' || new_password==='' || retype_password===''){
       this.setState({
         emptyField: true,
       });
+    }else if(new_password === retype_password){
+      this.setState({
+        errorMatch: true,
+      });
     }else{
-      actions.fetchPasswordChange(current, newPassword);
+      actions.fetchPasswordChange(current_password, new_password);
 
       this.setState({
         isClicked: true,
-        current: '',
-        newPassword: '',
-        rePassword: '',
+        form: {
+          'new_password': '',
+          'current_password': '',
+          're_type_password': ''
+        },
         emptyField: false,
       });
     }
   };
 
   render() {
-    const {success, pending, error, screen=''} = this.props;
-    const {current, newPassword, rePassword, errorMatch, isClicked, emptyField} = this.state;
+    const {success, pending, error} = this.props;
+    const {errorMatch, isClicked, emptyField, form} = this.state;
 
     return(
       <Col mdOffset={1} md={6} smOffset={1} sm={10}>
-        <DesktopWrapper>
-          <TitleWrapper variant="h4" color="textSecondary">Security</TitleWrapper>
-          <Separator height={2}/>
-        </DesktopWrapper>
-        <Separator height={2}/>
-        <SubTitleWrapper variant="body1">Current Password</SubTitleWrapper>
-        <TextFieldInput
-            id={"current-password"+screen}
-            label="Current Password"
-            type="password"
-            value={current}
-            autoFocus={true}
-            onChange={(e) => this.handlePasswordChange(e)}
-            fullWidth={true}
-        />
-        <Separator height={2}/>
-        <SubTitleWrapper variant="body1">New Password</SubTitleWrapper>
-        <TextFieldInput
-            id={"new-password"+screen}
-            label="New Password"
-            type="password"
-            value={newPassword}
-            autoFocus={false}
-            onChange={(e) => this.handleNewPasswordChange(e)}
-            variant="outlined"
-            fullWidth={true}
-        />
-        <Separator height={2}/>
-        <SubTitleWrapper variant="body1">Re-type Password</SubTitleWrapper>
-        <TextFieldInput
-            id={"re-type-password"+screen}
-            label="Re-type Password"
-            type="password"
-            value={rePassword}
-            error={errorMatch}
-            onChange={(e) => this.handleRePasswordChange(e)}
-            variant="outlined"
-            fullWidth={true}
-        />
-        <Separator height={2}/>
+        {Form.map(obj => (
+          <div key={obj.id}>
+            <SubTitleWrapper variant="body1">{obj.label}</SubTitleWrapper>
+            <TextFieldInput
+              id={obj.id}
+              label={obj.label}
+              type={obj.type}
+              name={obj.name}
+              value={form[obj.id]}
+              autoComplete={obj.autoComplete}
+              autoFocus={obj.autoFocus}
+              onChange={(id,v) => this.handleChange(id,v)}
+              fullWidth
+            />
+            <Separator height={2}/>
+          </div>
+        ))}
         {emptyField && (
           <Fragment>
             <Typography variant="caption" color="error" gutterBottom={true}>Please fill all the fields*</Typography>

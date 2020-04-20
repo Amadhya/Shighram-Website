@@ -73,10 +73,10 @@ const ACTIONS = {
       })
           .then(res => res.json())
           .then(res => {
-            if(res.status === '400')
+            if(res.status == 200){
+              dispatch(passwordResetSuccess());
+            }else
               throw res.message;
-               
-            dispatch(passwordResetSuccess());
           })
           .catch(error => {
             dispatch(passwordResetFailure(error))

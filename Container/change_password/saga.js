@@ -72,17 +72,17 @@ const ACTIONS = {
       return fetch(`${DOMAIN_URL}${BASE_URL}change_password`, {
         method: 'PATCH',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${cookie.get('token')}`,
         },
         body: JSON.stringify({'current_password': current, 'new_password': newPassword})
       })
         .then(res => res.json())
         .then(res => {
-          if(res.status === 400)
+          if(res.status == 200){
+            cookie.set('token',res.token);
+            dispatch(passwordChangeSuccess());
+          }else
             throw res.message;
-          
-          cookie.set('token',res.token);
-          dispatch(passwordChangeSuccess());
         })
         .catch(error => {
           dispatch(passwordChangeFailure(error))

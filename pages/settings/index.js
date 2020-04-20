@@ -1,102 +1,24 @@
 import React, {PureComponent} from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
-import {Typography} from "@material-ui/core";
+import {Typography, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails} from "@material-ui/core";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import {Container, Col, FlexView, Separator} from "../../components/layout";
+import {Container, Col, Separator} from "../../components/layout";
 import General from "./profile";
 import History from "./history";
 import Security from "./security";
-import Theme from "../../constants/theme";
 
-
-const OptionsWrapper = styled(Col)`
-  padding-left: 1rem;
-  @media(min-width: 767px){
-    border-right: 1px solid ${Theme.grey};
-    padding: 1rem 0.5rem 0 0;
-    box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
-  }
-`;
-const DetailWrapper = styled(Col)`
-  background: #e0e0e059;
-  padding-top: 2rem;
-  @media(max-width: 767px){
-    display: none !important;
-  }
-`;
-const DetailMobileWrapper = styled(Col)`
-  background: #e0e0e059;
-  @media(min-width: 767px){
-    display: none !important;
-  }
-`;
 const ContainerWrapper = styled(Container)`
-  min-height: 80vh;
   padding-top: 6rem;
-  @media(min-width: 767px){
-    min-height: 90vh;
-    padding-top: 4.5rem;
-  }
-`;
-
-const TypographyWrapper = styled(Typography)`
-  background: ${(props) => props.highlight==="true" && Theme.lightGrey};
-  color: ${(props) => props.highlight==="true" && 'white'};
-  border-left: ${(props) => props.highlight==="true" && "5px solid #1488CC"};
-  border-bottom: 1px solid ${Theme.lightGrey};
-  padding: 4px 0px;
-  color: ${(props) => props.highlight==="true" && "black"};
-  font-weight: ${(props) => props.highlight==="true" && "600 !important"};
-  &: hover{
-    cursor: pointer;
-  }
 `;
 
 class Settings extends PureComponent{
-  constructor(props){
-    super(props);
-    this.state={
-      general: typeof window !== "undefined" && window.innerWidth < 768 ? false : true,
-      security: false,
-      history: false,
-    }
-  }
-
-  onGeneralClick = () => {
-    const {general} = this.state;
-
-    this.setState({
-      general: !general,
-      security: false,
-      history: false,
-    })
-  };
-
-  onSecurityClick = () => {
-    const {security} = this.state;
-
-    this.setState({
-      general: false,
-      security: !security,
-      history: false,
-    })
-  };
-
-  onHistoryClick = () => {
-    const {history} = this.state;
-
-    this.setState({
-      general: false,
-      security: false,
-      history: !history,
-    })
-  };
 
   render() {
-    const {general, history, security} = this.state;
+
     return(
-      <ContainerWrapper initial="exit" animate="enter" exit="exit">
+      <Container initial="exit" animate="enter" exit="exit">
         <Head>
           <title>Settings</title>
           <meta
@@ -104,36 +26,48 @@ class Settings extends PureComponent{
             content="Suvidham is a web application to ease and enhance your parking experience. Through Suvidham, users can reserve a parking slot and pay parking fee online through our website and android app."
           />
         </Head>
-        <OptionsWrapper xs={12} sm={3} md={2}>
-          <FlexView justify="center">
-            <img src="/static/images/icon_user.png" alt="profile"/>
-          </FlexView>
+        <Col smOffset={1} sm={9} xs={12}>
+          <Typography variant="h5">Settings</Typography>
+          <hr/>
           <Separator height={4}/>
-          <TypographyWrapper highlight={general.toString()} align="center" variant="body1" onClick={() => this.onGeneralClick()}>Profile</TypographyWrapper>
-          {general && (
-            <DetailMobileWrapper>
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="general-header"
+            >
+              <Typography>General</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
               <General/>
-            </DetailMobileWrapper>
-          )}
-          <TypographyWrapper highlight={security.toString()} align="center" variant="body1" onClick={() => this.onSecurityClick()}>Security</TypographyWrapper>
-          {security && (
-            <DetailMobileWrapper>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="security-header"
+            >
+              <Typography>Security</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
               <Security/>
-            </DetailMobileWrapper>
-          )}
-          <TypographyWrapper highlight={history.toString()} align="center" variant="body1" onClick={() => this.onHistoryClick()}>History</TypographyWrapper>
-          {history && (
-            <DetailMobileWrapper>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="history-header"
+            >
+              <Typography>Parking History</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
               <History/>
-            </DetailMobileWrapper>
-          )}
-        </OptionsWrapper>
-        <DetailWrapper xs={12} sm={9} md={10}>
-          {general && <General screen="Desktop"/>}
-          {history && <History screen="Desktop"/>}
-          {security && <Security screen="Desktop"/>}
-        </DetailWrapper>
-      </ContainerWrapper>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        </Col>
+      </Container>
     )
   }
 }

@@ -74,11 +74,11 @@ export default function fetchLoginDetails(form) {
     })
         .then(res => res.json())
         .then(res => {
-          if(res.status === 400)
+          if(res.status == 200){
+            cookie.set('token',res.token);
+            dispatch(loginSuccess());
+          }else
             throw res.message;
-          
-          cookie.set('token',res.token);
-          dispatch(loginSuccess());
         })
         .catch(error => {
           dispatch(loginFailure(error))

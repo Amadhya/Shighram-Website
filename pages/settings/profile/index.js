@@ -10,20 +10,16 @@ import {ButtonLayout} from ".../../../components/button";
 import fetchUserDetails, {getError, getStatus, getSuccess, getUserDetails} from "../../../Container/profile/saga";
 import fetchProfileEdit, {getError as getEditError, getStatus as getEditStatus, getSuccess as getEditSuccess} from "../../../Container/edit_profile/saga";
 
-const TitleWrapper = styled(Typography)`
-  font-weight: 600 !important;
-`;
 const SubTitleWrapper = styled(Typography)`
   color: #1488CC !important;
 `;
 const TypographySuccess = styled(Typography)`
   color: #19ce19;
 `;
-const DesktopWrapper = styled.div`
-  @media(max-width: 767px){
-    display: none !important;
-  }
+const Wrapper = styled.div`
+  width: 100%;
 `;
+
 
 const Form = [
   {
@@ -111,21 +107,16 @@ class General extends PureComponent{
   };
 
   renderDetails = () => {
-    const {editError, editPending, editSuccess,screen=""} = this.props;
+    const {editError, editPending, editSuccess} = this.props;
     const {form, isClicked} = this.state;
 
     return (
       <Col mdOffset={1} md={6} smOffset={1} sm={10}>
-        <DesktopWrapper>
-          <TitleWrapper variant="h4" color="textSecondary">Profile</TitleWrapper>
-          <Separator height={2}/>
-        </DesktopWrapper>
-        <Separator height={2}/>
         {Form.map(obj => (
-          <div key={obj.id+screen}>
+          <div key={obj.id}>
             <SubTitleWrapper variant="body1">{obj.label}</SubTitleWrapper>
             <TextFieldInput
-              id={obj.id+screen}
+              id={obj.id}
               label={obj.label}
               type={obj.type}
               name={obj.name}
@@ -166,9 +157,9 @@ class General extends PureComponent{
     const {pending, success} = this.props;
 
     return (
-      <div>
+      <Wrapper>
         {typeof pending !== undefined && typeof success !== undefined && !pending && success ? this.renderDetails() : this.renderLoading()}
-      </div>
+      </Wrapper>
     )
   }
 }

@@ -82,13 +82,13 @@ const ACTIONS = {
       })
           .then(res => res.json())
           .then(res => {
-            if(res.status === 400)
-              throw res.message;
-
-            if(res.payment_verified==="True")
-              throw "No due amount remaining."
+            if(res.status == 200){
+              if(res.payment_verified==="True")
+                throw "No due amount remaining."
   
-            dispatch(orderSuccess(res));
+              dispatch(orderSuccess(res));
+            }else
+              throw res.message; 
           })
           .catch(error => {
             dispatch(orderFailure(error))
