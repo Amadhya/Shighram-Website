@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from "react";
 import Head from 'next/head';
-import { Button, Typography, IconButton } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
@@ -100,10 +100,19 @@ class Login extends PureComponent{
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { success, pending, googleSuccess, googlePending } = this.props;
+    const {isClicked} = this.state;
 
-    if(typeof pending !== "undefined" && !pending){
-      if(typeof success !== "undefined" && success){
-        Router.pushRoute('slots_view');
+    if(isClicked){
+      if(typeof pending !== "undefined" && !pending){  
+        if(typeof success !== "undefined" && success){
+          this.setState({
+            form: {
+              'email': '',
+              'password': ''
+            },
+          });
+          Router.pushRoute('slots_view');
+        }
       }
     }
     if(typeof googlePending !== "undefined" && !googlePending){
@@ -146,10 +155,6 @@ class Login extends PureComponent{
         isClicked: true,
         emptyFields: false,
         googleLoginError: false,
-        form: {
-          'email': '',
-          'password': ''
-        },
       });
     }
   };

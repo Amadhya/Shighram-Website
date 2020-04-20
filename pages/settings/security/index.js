@@ -66,6 +66,26 @@ class Security extends PureComponent{
     }
   }
 
+  componentDidUpdate(){
+    const {success, pending, error} = this.props;
+    const {isClicked} = this.state;
+
+    if(isClicked){
+      if(typeof pending !== "undefined" && !pending){  
+        if(typeof success !== "undefined" && success){
+          this.setState({
+            form: {
+              'new_password': '',
+              'current_password': '',
+              're_type_password': ''
+            },
+          });
+          Router.pushRoute('slots_view');
+        }
+      }
+    }
+  }
+
   handleChange = (id,val) => {
     const {form} = this.state;
     let temp = {};
@@ -97,11 +117,6 @@ class Security extends PureComponent{
 
       this.setState({
         isClicked: true,
-        form: {
-          'new_password': '',
-          'current_password': '',
-          're_type_password': ''
-        },
         emptyField: false,
       });
     }

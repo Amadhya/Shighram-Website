@@ -87,6 +87,21 @@ class Checkout extends Component {
     };
   }
 
+  componentDidUpdate(){
+    const {isClicked} = this.state;
+    const {error, pending, success} = this.state;
+
+    if(isClicked){
+      if(typeof pending !== "undefined" && !pending){  
+        if(typeof success !== "undefined" && success){
+          this.setState({
+            rfid: '',
+          });
+        }
+      }
+    }
+  }
+
   handleRfidChange = (e) => {
     this.setState({
       rfid: e.target.value,
@@ -99,7 +114,6 @@ class Checkout extends Component {
 
     actions.fetchOrederDetails(rfid);
     this.setState({
-      rfid: '',
       isClicked: true,
     })
   }
