@@ -10,6 +10,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.7",
     "framer-motion": "^1.10.0",
+    "google-maps-react": "^2.0.6",
     "js-cookie": "^2.2.1",
     "material-ui-phone-number": "^2.2.5",
     "next": "9.1.5",
