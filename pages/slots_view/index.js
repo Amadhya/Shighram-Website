@@ -2,19 +2,26 @@ import React from "react";
 import styled from "styled-components";
 import {Dialog, DialogContent, DialogActions, Typography, Button, Chip, Divider} from "@material-ui/core";
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 
 import Theme from "../../constants/theme"
 import {Separator, Container, Row, Col} from "../../components/layout";
+import { motion } from "framer-motion";
 
 const ColWrapper = styled(Col)`
     border-top: 1px solid ${Theme.grey};
     border-bottom: 1px solid ${Theme.grey};
     padding: 0;
 `;
+const ImageWrapper = styled(motion.img)`
+    width: 20px;
+`;
 const SlotWrapper = styled(Col)`
     padding: 1rem;
     border-left: 1px solid ${Theme.grey};
     border-right: 1px solid ${Theme.grey};
+    display: flex !important;
+    justify-content: center;
 `;
 const Wrapper = styled(Container)`
     margin: 0 2rem;
@@ -25,9 +32,30 @@ const ChipWrapper = styled(Chip)`
 `;
 const DialogWrapper = styled(Dialog)`
     .MuiDialog-paperWidthSm{
-        width: 100% !important;
+        width: 80% !important;
+        @media(min-width: 769px){
+            width: 30% !important;
+        }
     }
 `;
+const TypographyWrapper = styled(Typography)`
+    color: ${Theme.primaryColor} !important;
+`;
+
+const backVariants = {
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 3,
+      }
+    },
+    enter: {
+      opacity: 1,
+      transition: {
+        duration: 3,
+      }
+    }
+  };
 
 class SlotView extends React.Component  {
     constructor(props){
@@ -74,11 +102,14 @@ class SlotView extends React.Component  {
     }
 
     renderModal = () => (
-        <DialogWrapper open={true} onClose={() => this.handleClose()} aria-labelledby="form-dialog-title">
+        <DialogWrapper open={this.state.open} onClose={() => this.handleClose()} aria-labelledby="form-dialog-title">
             <DialogContent>
-                <Typography align="center" variant="h5">
-                    Parking Layout of Punjab Engineering College
-                </Typography>
+                <Row alignItems="center" justify="center">
+                    <RoomOutlinedIcon/>
+                    <Typography align="center" variant="h6">
+                        Punjab Engineering College
+                    </Typography>
+                </Row>
                 <Separator height={1}/>
                 <Divider />
                 <Separator height={3}/>
@@ -89,13 +120,13 @@ class SlotView extends React.Component  {
                     <ColWrapper sm={8}>
                         <Row>
                             <SlotWrapper sm={4}>
-                                <Typography variant="h6" color="primary" align="center">1</Typography>
+                                <ImageWrapper variants={backVariants} alt="slot occupied" src="/static/images/car.png"/>
                             </SlotWrapper>
                             <SlotWrapper sm={4}>
-                                <Typography variant="h6" color="primary" align="center">2</Typography>
+                                <TypographyWrapper variant="h6" color="primary" align="center">2</TypographyWrapper>
                             </SlotWrapper>
                             <SlotWrapper sm={4}>
-                                <Typography variant="h6" color="primary" align="center">3</Typography>
+                                <ImageWrapper variants={backVariants} alt="slot occupied" src="/static/images/car.png"/>
                             </SlotWrapper>
                         </Row>
                         <Separator height={2}/>
@@ -103,13 +134,13 @@ class SlotView extends React.Component  {
                         <Separator height={2}/>
                         <Row>
                             <SlotWrapper sm={4}>
-                                <Typography variant="h6" color="primary" align="center">6</Typography>
+                                <TypographyWrapper variant="h6" color="primary" align="center">6</TypographyWrapper>
                             </SlotWrapper>
                             <SlotWrapper sm={4}>
-                                <Typography variant="h6" color="primary" align="center">5</Typography>
+                                <TypographyWrapper variant="h6" color="primary" align="center">5</TypographyWrapper>
                             </SlotWrapper>
                             <SlotWrapper sm={4}>
-                                <Typography variant="h6" color="primary" align="center">4</Typography>
+                                <TypographyWrapper variant="h6" color="primary" align="center">4</TypographyWrapper>
                             </SlotWrapper>
                         </Row>
                     </ColWrapper>
@@ -150,7 +181,7 @@ class SlotView extends React.Component  {
                     containerStyle={containerStyle}
                     initialCenter={cord}
                     center={cord}
-                    zoom={13}
+                    zoom={12}
                 >
                     <Marker
                         name={'Current location'} 
