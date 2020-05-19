@@ -4,7 +4,6 @@ import {Dialog, DialogContent, DialogActions, Typography, Button} from "@materia
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
 import {FlexView, Container} from "../../components/layout";
-import SlotsModel from "./slotsModel";
 
 const SlotWrapper = styled(FlexView)`
     background-color: white;
@@ -102,7 +101,7 @@ class SlotView extends React.Component  {
                     containerStyle={containerStyle}
                     initialCenter={cord}
                     center={cord}
-                    zoom={12}
+                    zoom={13}
                 >
                     <Marker
                         name={'Current location'} 
@@ -119,5 +118,5 @@ class SlotView extends React.Component  {
 };
 
 export default GoogleApiWrapper({
-    apiKey: '#GOOGLE API KEY',
+    apiKey: process.env.MAP_API_KEY,
 })(SlotView);
