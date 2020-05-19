@@ -119,5 +119,5 @@ class SlotView extends React.Component  {
 };
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyDvicC6UYMCuGvWO21mfW7R0YQWCmgV_hs',
+    apiKey: '#GOOGLE API KEY',
 })(SlotView);
