@@ -70,11 +70,10 @@ function dateTime (t){
   let date = newDate.getDate();
   let month = newDate.getMonth();
   let year = newDate.getFullYear();
-  let hour = newDate.getHours();
-  let min = newDate.getMinutes();
-  let sec = newDate.getSeconds(); 
+  let hours = (newDate.getHours() < 10 ? '0' : '') + newDate.getHours(); 
+  let minutes = (newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes(); 
 
-  return `${monthNames[month]} ${date}, ${year} ${hour}:${min}:${sec}`
+  return `${monthNames[month]} ${date}, ${year} ${hours}:${minutes}`
 }
 
 class Checkout extends Component {
@@ -223,7 +222,7 @@ class Checkout extends Component {
               </IconWrapper>
               <Col sm={10} xs={10}>
                 <TextWrapper variant="body1" gutterBottom>Date:</TextWrapper>
-                <TextWrapper variant="body1">{new Date().toString()}</TextWrapper>
+                <TextWrapper variant="body1">{dateTime(new Date().toString())}</TextWrapper>
               </Col>
             </Row>
             <HrWrapper/>
