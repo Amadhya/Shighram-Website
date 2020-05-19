@@ -88,7 +88,7 @@ class History extends PureComponent{
       )
     
     return(
-      <Col mdOffset={1} md={11} smOffset={1} sm={11}>
+      <Col mdOffset={1} md={11} smOffset={1} sm={11} xs ={12}>
         <DesktopWrapper>
           <Card>
             <HeaderWrapper>

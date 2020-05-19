@@ -110,6 +110,7 @@ class Login extends PureComponent{
               'email': '',
               'password': ''
             },
+            isClicked: false,
           });
           Router.pushRoute('slots_view');
         }
