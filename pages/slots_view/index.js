@@ -1,17 +1,32 @@
 import React from "react";
 import styled from "styled-components";
-import {Dialog, DialogContent, DialogActions, Typography, Button} from "@material-ui/core";
+import {Dialog, DialogContent, DialogActions, Typography, Button, Chip, Divider} from "@material-ui/core";
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 
-import {FlexView, Container} from "../../components/layout";
+import Theme from "../../constants/theme"
+import {Separator, Container, Row, Col} from "../../components/layout";
 
-const SlotWrapper = styled(FlexView)`
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 12px;
-    padding: 60px 40px;
+const ColWrapper = styled(Col)`
+    border-top: 1px solid ${Theme.grey};
+    border-bottom: 1px solid ${Theme.grey};
+    padding: 0;
+`;
+const SlotWrapper = styled(Col)`
+    padding: 1rem;
+    border-left: 1px solid ${Theme.grey};
+    border-right: 1px solid ${Theme.grey};
 `;
 const Wrapper = styled(Container)`
     margin: 0 2rem;
+`;
+const ChipWrapper = styled(Chip)`
+    display: flex !important;
+    margin: 0 3rem;
+`;
+const DialogWrapper = styled(Dialog)`
+    .MuiDialog-paperWidthSm{
+        width: 100% !important;
+    }
 `;
 
 class SlotView extends React.Component  {
@@ -59,22 +74,56 @@ class SlotView extends React.Component  {
     }
 
     renderModal = () => (
-        <Dialog open={this.state.open} onClose={() => this.handleClose()} aria-labelledby="form-dialog-title">
+        <DialogWrapper open={true} onClose={() => this.handleClose()} aria-labelledby="form-dialog-title">
             <DialogContent>
-                <Typography variant="h4" component="h2" align="center" color="textSecondary" gutterBottom>
-                    Arduino Offline
+                <Typography align="center" variant="h5">
+                    Parking Layout of Punjab Engineering College
                 </Typography>
-                <Typography variant="body1" align="center" color="textSecondary" gutterBottom>
-                    To view other features of the website login with tony@avengers.com and the password is tony.
-                    For payment feature use RFID Number: 10101010.
-                </Typography>
+                <Separator height={1}/>
+                <Divider />
+                <Separator height={3}/>
+                <Row alignItems="center">
+                    <Col sm={2}>
+                        <Typography align="center" style={{color: '#32CD32'}}>Entry</Typography>
+                    </Col>
+                    <ColWrapper sm={8}>
+                        <Row>
+                            <SlotWrapper sm={4}>
+                                <Typography variant="h6" color="primary" align="center">1</Typography>
+                            </SlotWrapper>
+                            <SlotWrapper sm={4}>
+                                <Typography variant="h6" color="primary" align="center">2</Typography>
+                            </SlotWrapper>
+                            <SlotWrapper sm={4}>
+                                <Typography variant="h6" color="primary" align="center">3</Typography>
+                            </SlotWrapper>
+                        </Row>
+                        <Separator height={2}/>
+                        <ChipWrapper label="4 SLOTS FREE"/>
+                        <Separator height={2}/>
+                        <Row>
+                            <SlotWrapper sm={4}>
+                                <Typography variant="h6" color="primary" align="center">6</Typography>
+                            </SlotWrapper>
+                            <SlotWrapper sm={4}>
+                                <Typography variant="h6" color="primary" align="center">5</Typography>
+                            </SlotWrapper>
+                            <SlotWrapper sm={4}>
+                                <Typography variant="h6" color="primary" align="center">4</Typography>
+                            </SlotWrapper>
+                        </Row>
+                    </ColWrapper>
+                    <Col sm={2}>
+                        <Typography align="center" style={{color: 'red'}}>Exit</Typography>
+                    </Col>
+                </Row>
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => this.handleClose()} color="primary">
                     Close
                 </Button>
             </DialogActions>
-        </Dialog>
+        </DialogWrapper>
     )
 
     render() {
