@@ -127,7 +127,7 @@ class Security extends PureComponent{
     const {errorMatch, isClicked, emptyField, form} = this.state;
 
     return(
-      <Col mdOffset={1} md={6} smOffset={1} sm={10}>
+      <Col md={6} sm={10}>
         {Form.map(obj => (
           <div key={obj.id}>
             <SubTitleWrapper variant="body1">{obj.label}</SubTitleWrapper>

@@ -163,6 +163,12 @@ class Checkout extends Component {
             value={rfid}
             autoFocus={true}
             onChange={(e) => this.handleRfidChange(e)}
+            onKeyPress={(e) => {
+              if(e.key === "Enter"){
+                e.preventDefault();
+                this.onSubmit();
+              }
+            }}
           />
           <br/>
           {isClicked && error !== null && (

@@ -62,8 +62,8 @@ class SlotView extends React.Component  {
         super(props);
         this.state = {
             cord: {
-                lat: 30.7673,
-                lng: 76.7870,
+                lat: 30.7411,
+                lng: 76.7790,
             },
             open: false,
         }
@@ -180,8 +180,7 @@ class SlotView extends React.Component  {
                     style={{height: '70vh', position: 'relative'}}
                     containerStyle={containerStyle}
                     initialCenter={cord}
-                    center={cord}
-                    zoom={12}
+                    zoom={13}
                 >
                     <Marker
                         name={'Current location'} 

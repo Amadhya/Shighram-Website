@@ -188,8 +188,7 @@ class Settings extends PureComponent{
         </Head>
         <Col smOffset={1} sm={9} xs={12}>
           <Typography variant="h5">Settings</Typography>
-          <hr/>
-          <Separator height={4}/>
+          <Separator height={2}/>
           <ExpansionPanel>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}

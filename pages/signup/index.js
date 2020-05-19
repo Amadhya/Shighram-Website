@@ -125,23 +125,22 @@ class SignUp extends PureComponent{
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { success, pending, googleSuccess, googlePending, isClicked } = this.props;
+    const { success, pending, googleSuccess, googlePending } = this.props;
+    const {isClicked} = this.state;
 
     if(isClicked){
-      if(typeof pending !== "undefined" && !pending){
-        if(typeof success !== "undefined" && success){
-          this.setState({
-            form: {
-              'first_name': '',
-              'last_name': '',
-              'phone': '',
-              'email': '',
-              'password': ''
-            },
-            isClicked: false
-          });
-          Router.pushRoute('slots_view');
-        }
+      if(typeof pending !== "undefined" && !pending && typeof success !== "undefined" && success){
+        this.setState({
+          form: {
+            'first_name': '',
+            'last_name': '',
+            'phone': '',
+            'email': '',
+            'password': ''
+          },
+          isClicked: false
+        });
+        Router.pushRoute('slots_view');
       }
     }
     if(typeof googlePending !== "undefined" && !googlePending){

@@ -15,9 +15,6 @@ const RowWrapper = styled(Row)`
     padding: 11px;
   }
 `;
-const TitleWrapper = styled(Typography)`
-  font-weight: 600 !important;
-`;
 const Card = styled(FlexView)`
   background: white;
   border-radius: 4px;
@@ -80,15 +77,16 @@ class History extends PureComponent{
   render() {
     const {pending, success, history, screen=""} = this.props;
 
-    if(!(typeof pending !== undefined && typeof success !== undefined && !pending && success))
+    if(!(typeof pending !== undefined && typeof success !== undefined && !pending && success)){
       return (
         <Col smOffset={2} sm={9}>
           <Typography variant="body1" color="textSecondary">Loading...</Typography>
         </Col>
       )
+    }
     
     return(
-      <Col mdOffset={1} md={11} smOffset={1} sm={11} xs ={12}>
+      <Col md={12} sm={12} xs ={12}>
         <DesktopWrapper>
           <Card>
             <HeaderWrapper>
@@ -129,7 +127,7 @@ class History extends PureComponent{
                   <Typography variant="body1" color="textSecondary">{dateTime(obj.created_on)}</Typography>
                 </Col>
                 <Col sm={1}>
-                  <StatusWrapper variant="body1" color="textSecondary" done={obj.payment_verified==="True"}>{obj.payment_verified==="True" ? 'Paid' : 'Pending'}</StatusWrapper>
+                  <StatusWrapper variant="body1" color="textSecondary" done={obj.payment_verified==="True" ? 1 : 0}>{obj.payment_verified==="True" ? 'Paid' : 'Pending'}</StatusWrapper>
                 </Col>
               </RowWrapper>
             ))}
@@ -146,7 +144,7 @@ class History extends PureComponent{
                 </Col>
                 <Col xs={4} flex reverse justify="space-between">
                   <Typography align="right" variant="body1" gutterBottom>₹&nbsp;{obj.amount/100}</Typography>
-                  <StatusWrapper align="right" variant="body2" color="textSecondary" done={obj.payment_verified==="True"}>{obj.payment_verified==="True" ? 'Paid' : 'Pending'}</StatusWrapper>
+                  <StatusWrapper align="right" variant="body2" color="textSecondary" done={obj.payment_verified==="True" ? 1 : 0}>{obj.payment_verified==="True" ? 'Paid' : 'Pending'}</StatusWrapper>
                 </Col>
               </RowWrapper>
             </Card>
