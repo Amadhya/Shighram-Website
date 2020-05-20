@@ -78,6 +78,7 @@ const ACTIONS = {
       })
         .then(res => res.json())
         .then(res => {
+          console.log(res,'<><><><>');
           if(res.status == 200){
             cookie.set('token',res.token);
             dispatch(passwordChangeSuccess());

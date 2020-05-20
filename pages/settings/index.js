@@ -92,10 +92,6 @@ class Settings extends PureComponent{
     actions.fetchUserDetails();
   }
 
-  componentDidUpdate(){
-
-  }
-
   static getDerivedStateFromProps(props, state){
     const {userDetails} = props;
     const {form} = state;

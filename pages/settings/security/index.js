@@ -6,22 +6,15 @@ import {connect} from "react-redux";
 
 import {ButtonLayout} from ".../../../components/button";
 import TextFieldInput from ".../../../components/textfield";
+import {CircularProgressWrapper} from "../../../components/progress";
 import {Col, Separator, Row} from "../../../components/layout";
 import fetchPasswordChange, {getError, getStatus, getSuccess} from "../../../Container/change_password/saga";
 
-const TitleWrapper = styled(Typography)`
-  font-weight: 600 !important;
-`;
 const SubTitleWrapper = styled(Typography)`
   color: #1488CC !important;
 `;
 const TypographySuccess = styled(Typography)`
   color: #19ce19;
-`;
-const DesktopWrapper = styled.div`
-  @media(max-width: 767px){
-    display: none !important;
-  }
 `;
 
 const Form = [
@@ -62,7 +55,8 @@ class Security extends PureComponent{
         'new_password': '',
         'current_password': '',
         're_type_password': ''
-      }
+      },
+      status: false,
     }
   }
 
@@ -79,8 +73,9 @@ class Security extends PureComponent{
               'current_password': '',
               're_type_password': ''
             },
+            isClicked: false,
+            status: true,
           });
-          Router.pushRoute('slots_view');
         }
       }
     }
@@ -124,7 +119,7 @@ class Security extends PureComponent{
 
   render() {
     const {success, pending, error} = this.props;
-    const {errorMatch, isClicked, emptyField, form} = this.state;
+    const {errorMatch, isClicked, emptyField, form, status} = this.state;
 
     return(
       <Col md={6} sm={10}>
@@ -157,7 +152,7 @@ class Security extends PureComponent{
               <Separator height={2}/>
             </Fragment>
         )}
-        {isClicked && typeof pending !== undefined && typeof success !== undefined && !pending && success && error === null && (
+        {status && typeof pending !== undefined && typeof success !== undefined && !pending && success && error === null && (
           <Fragment>
             <TypographySuccess variant="caption">Successfully updated!</TypographySuccess>
             <Separator height={2}/>
@@ -170,7 +165,13 @@ class Security extends PureComponent{
           </Fragment>
         )}
         <ButtonLayout variant="contained" color="primary"
-         onClick={() => this.handlePasswordSubmit()}>
+         onClick={() => this.handlePasswordSubmit()}
+         endIcon={
+            isClicked && !((typeof pending !== undefined && typeof success !== undefined && !pending && success) || error) 
+            && 
+            <CircularProgressWrapper size={18}/>
+          }
+        >
            Update Password
         </ButtonLayout>
         <Separator height={2}/>
