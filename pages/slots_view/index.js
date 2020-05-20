@@ -37,6 +37,11 @@ const DialogWrapper = styled(Dialog)`
             width: 30% !important;
         }
     }
+    .MuiDialogContent-root{
+        @media(max-width: 767px){
+            padding: 12px;
+        }
+    }
 `;
 const TypographyWrapper = styled(Typography)`
     color: ${Theme.primaryColor} !important;
@@ -114,18 +119,18 @@ class SlotView extends React.Component  {
                 <Divider />
                 <Separator height={3}/>
                 <Row alignItems="center">
-                    <Col sm={2}>
+                    <Col sm={2} xs={2}>
                         <Typography align="center" style={{color: '#32CD32'}}>Entry</Typography>
                     </Col>
-                    <ColWrapper sm={8}>
+                    <ColWrapper sm={8} xs={8}>
                         <Row>
-                            <SlotWrapper sm={4}>
+                            <SlotWrapper sm={4} xs={4}>
                                 <ImageWrapper variants={backVariants} alt="slot occupied" src="/static/images/car.png"/>
                             </SlotWrapper>
-                            <SlotWrapper sm={4}>
+                            <SlotWrapper sm={4} xs={4}>
                                 <TypographyWrapper variant="h6" color="primary" align="center">2</TypographyWrapper>
                             </SlotWrapper>
-                            <SlotWrapper sm={4}>
+                            <SlotWrapper sm={4} xs={4}>
                                 <ImageWrapper variants={backVariants} alt="slot occupied" src="/static/images/car.png"/>
                             </SlotWrapper>
                         </Row>
@@ -133,18 +138,18 @@ class SlotView extends React.Component  {
                         <ChipWrapper label="4 SLOTS FREE"/>
                         <Separator height={2}/>
                         <Row>
-                            <SlotWrapper sm={4}>
+                            <SlotWrapper sm={4} xs={4}>
                                 <TypographyWrapper variant="h6" color="primary" align="center">6</TypographyWrapper>
                             </SlotWrapper>
-                            <SlotWrapper sm={4}>
+                            <SlotWrapper sm={4} xs={4}>
                                 <TypographyWrapper variant="h6" color="primary" align="center">5</TypographyWrapper>
                             </SlotWrapper>
-                            <SlotWrapper sm={4}>
+                            <SlotWrapper sm={4} xs={4}>
                                 <TypographyWrapper variant="h6" color="primary" align="center">4</TypographyWrapper>
                             </SlotWrapper>
                         </Row>
                     </ColWrapper>
-                    <Col sm={2}>
+                    <Col sm={2} xs={2}>
                         <Typography align="center" style={{color: 'red'}}>Exit</Typography>
                     </Col>
                 </Row>

@@ -1,10 +1,11 @@
 import React, {Fragment, PureComponent} from "react";
-import { Button, Typography, IconButton, Container } from '@material-ui/core';
+import { Button, Typography, Container } from '@material-ui/core';
 import styled from 'styled-components';
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import Head from "next/dist/next-server/lib/head";
 import { GoogleLogin } from 'react-google-login';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 import Theme from "../../constants/theme";
 import {FormWrapper} from "../../components/form";
@@ -125,7 +126,7 @@ class SignUp extends PureComponent{
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { success, pending, googleSuccess, googlePending } = this.props;
+    const { success, pending, error, googleSuccess, googlePending } = this.props;
     const {isClicked} = this.state;
 
     if(isClicked){
@@ -189,6 +190,12 @@ class SignUp extends PureComponent{
         next: true,
       });
     }
+  }
+
+  onBack = () => {
+    this.setState({
+      next: false,
+    })
   }
 
   onSubmit = () => {
@@ -342,6 +349,13 @@ class SignUp extends PureComponent{
             </Row>
             <Separator height={2}/>
             <MobileButtonWrapper onClick={() => this.handleSignIn()}>Already have an account? Sign In.</MobileButtonWrapper>
+            {next && (
+              <Row>
+                <Button style={{color: '#1488CC'}} startIcon={<ArrowBackIosIcon/>} color="primary" onClick={() => this.onBack()}>
+                  Back
+                </Button>
+              </Row>
+            )}
           </FormWrapper>
         </LoginCol>
       </MotionRow>

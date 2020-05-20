@@ -70,10 +70,14 @@ function dateTime (t){
   let date = newDate.getDate();
   let month = newDate.getMonth();
   let year = newDate.getFullYear();
-  let hours = (newDate.getHours() < 10 ? '0' : '') + newDate.getHours(); 
-  let minutes = (newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes(); 
+  let hours = newDate.getHours();
+  let minutes = newDate.getMinutes();
+  let ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes; 
 
-  return `${monthNames[month]} ${date}, ${year} ${hours}:${minutes}`
+  return `${monthNames[month]} ${date}, ${year} ${hours}:${minutes} ${ampm}`
 }
 
 class Checkout extends Component {

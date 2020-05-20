@@ -1,14 +1,14 @@
 import React, {PureComponent, Fragment} from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
-import {Typography, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails} from "@material-ui/core";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {Typography, Tabs, Tab, Box} from "@material-ui/core";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
 import History from "./history";
 import Security from "./security";
 import {FlexView, Separator, Col, Container} from "../../components/layout";
+import Theme from "../../constants/theme";
 import TextFieldInput from "../../components/textfield";
 import {ButtonLayout} from "../../components/button";
 import {CircularProgressWrapper} from "../../components/progress";
@@ -21,10 +21,9 @@ const SubTitleWrapper = styled(Typography)`
 const TypographySuccess = styled(Typography)`
   color: #19ce19;
 `;
-const Wrapper = styled.div`
-  width: 100%;
+const TabsWrapper = styled(Tabs)`
+  border-bottom: 1px solid ${Theme.grey};
 `;
-
 
 const Form = [
   {
@@ -57,6 +56,26 @@ const Form = [
   },
 ];
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box paddingTop={3} paddingLeft={3}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
+
 class Settings extends PureComponent{
 
   constructor(props){
@@ -64,6 +83,7 @@ class Settings extends PureComponent{
     this.state={
       form: {},
       isClicked: false,
+      value: 0
     };
   }
 
@@ -116,12 +136,18 @@ class Settings extends PureComponent{
     });
   };
 
+  onTabChange = (e,newVal) => {
+    this.setState({
+      value: newVal,
+    })
+  }
+
   renderDetails = () => {
     const {editError, editPending, editSuccess} = this.props;
     const {form, isClicked} = this.state;
 
     return (
-      <Col mdOffset={1} md={6} smOffset={1} sm={10}>
+      <Col md={6} sm={10}>
         {Form.map(obj => (
           <div key={obj.id}>
             <SubTitleWrapper variant="body1">{obj.label}</SubTitleWrapper>
@@ -163,7 +189,6 @@ class Settings extends PureComponent{
         >
           Update Profile
         </ButtonLayout>
-        <Separator height={2}/>
       </Col>
     )
   }
@@ -174,8 +199,16 @@ class Settings extends PureComponent{
     </FlexView>
   )
 
+  a11yProps = (index) => {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
+
   render() {
     const {pending, success} = this.props;
+    const {value} = this.state;
 
     return(
       <Container initial="exit" animate="enter" exit="exit">
@@ -187,46 +220,20 @@ class Settings extends PureComponent{
           />
         </Head>
         <Col smOffset={1} sm={9} xs={12}>
-          <Typography variant="h5">Settings</Typography>
-          <Separator height={2}/>
-          <ExpansionPanel>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="general-header"
-            >
-              <Typography>General</Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Wrapper>
-                {typeof pending !== undefined && typeof success !== undefined && !pending && success ? this.renderDetails() : this.renderLoading()}
-              </Wrapper>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-          <ExpansionPanel>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="security-header"
-            >
-              <Typography>Security</Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Security/>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-          <ExpansionPanel>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="history-header"
-            >
-              <Typography>Parking History</Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <History/>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+          <TabsWrapper value={value} onChange={(e,newVal) => this.onTabChange(e,newVal)} indicatorColor="primary" aria-label="settings tabs">
+            <Tab label="General" {...this.a11yProps(0)} />
+            <Tab label="Security" {...this.a11yProps(1)} />
+            <Tab label="History" {...this.a11yProps(2)} />
+          </TabsWrapper>
+          <TabPanel value={value} index={0}>
+            {typeof pending !== undefined && typeof success !== undefined && !pending && success ? this.renderDetails() : this.renderLoading()}
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Security/>
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <History/>
+          </TabPanel>
         </Col>
       </Container>
     )
