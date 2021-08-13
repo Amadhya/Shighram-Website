@@ -14,7 +14,7 @@
     "google-maps-react": "^2.0.6",
     "js-cookie": "^2.2.1",
     "material-ui-phone-number": "^2.2.6",
-    "next": "9.1.5",
+    "next": "11.1.0",
     "next-cookies": "^2.0.3",
     "next-routes": "^1.4.2",
     "react": "16.12.0",
